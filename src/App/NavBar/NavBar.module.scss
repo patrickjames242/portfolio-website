@@ -1,0 +1,75 @@
+@use "helpers/general" as *;
+@use "helpers/colors.module" as colors;
+
+.NavBar {
+	padding: 40px;
+	display: grid;
+	justify-content: space-between;
+	grid-auto-flow: column;
+
+	> .nameBox {
+		display: grid;
+		grid-auto-flow: column;
+		align-items: center;
+		gap: 10px;
+
+		> svg {
+			height: 40px;
+			width: 40px;
+			fill: colors.$accent;
+		}
+
+		> .nameText {
+			font-size: 22px;
+			font-weight: 500;
+			> .firstName {
+				color: colors.$lighter-text;
+			}
+
+			> .lastName {
+				color: colors.$light-text;
+			}
+		}
+	}
+
+	> .rightSide {
+		display: grid;
+		grid-auto-flow: column;
+		gap: 30px;
+		align-items: center;
+
+		> .navLink {
+			font-size: 18px;
+			color: colors.$lighter-text;
+			font-weight: 500;
+			display: grid;
+			grid-auto-flow: column;
+			gap: 5px;
+			align-items: center;
+
+			> svg {
+				height: 20px;
+				width: 20px;
+				fill: colors.$accent;
+				transform: rotate(90deg);
+				margin-top: -5px;
+			}
+
+			&.selected {
+				color: colors.$accent;
+			}
+
+			> .text {
+				line-height: 1;
+			}
+		}
+
+		> .resumeButton {
+			font-size: 14px;
+			font-weight: 300;
+			padding: 14px;
+			padding-left: 23px;
+			padding-right: 23px;
+		}
+	}
+}

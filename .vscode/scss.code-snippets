@@ -1,0 +1,11 @@
+{
+	"defaultImports": {
+		"prefix": "defaultImports",
+		"body": [
+			"@use 'helpers/general' as *;",
+			"@use 'helpers/colors.module' as colors;",
+			"$0"
+		],
+		"description": ""
+	}
+}

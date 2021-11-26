@@ -1,0 +1,51 @@
+@use "helpers/general" as *;
+@use "helpers/colors.module" as colors;
+
+.HomeScreen {
+	height: 100vh;
+	display: grid;
+	grid-template-rows: auto 1fr;
+
+	.highlighted {
+		color: colors.$accent;
+	}
+
+	> .centerView {
+		align-self: center;
+		justify-self: center;
+		max-width: 900px;
+		margin: {
+			left: 50px;
+			right: 50px;
+		}
+
+		> .titleText,
+		.subtitleText {
+			font-size: 70px;
+			font-weight: 600;
+			line-height: 1;
+		}
+
+		> .titleText {
+			color: colors.$light-text;
+		}
+
+		> .subtitleText {
+			color: colors.$lighter-text;
+			margin-top: 13px;
+		}
+
+		> .descriptionText {
+			margin-top: 20px;
+			font-size: 20px;
+			color: colors.$lighter-text;
+			max-width: 500px;
+			line-height: 26px;
+			font-weight: 300;
+		}
+
+		> .getInTouchButton {
+			margin-top: 30px;
+		}
+	}
+}

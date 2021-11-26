@@ -1,0 +1,28 @@
+@use "helpers/general" as *;
+@use "helpers/colors.module" as colors;
+
+.BubbleTextButton {
+	position: relative;
+	display: inline-grid;
+	place-items: center;
+	padding: 20px;
+	border-radius: 8px;
+	border: 2px solid colors.$accent;
+	font-weight: 600;
+	color: colors.$accent;
+
+	> .BubbleEffect {
+		@include absolute-pin-all-sides;
+	}
+
+	> .title {
+		transition-property: color;
+		transition-duration: 0.7s;
+		pointer-events: none;
+		position: relative;
+	}
+
+	&:hover {
+		color: colors.$main-background;
+	}
+}
