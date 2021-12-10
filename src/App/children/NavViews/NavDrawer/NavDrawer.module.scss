@@ -1,0 +1,48 @@
+@use "helpers/general" as *;
+@use "helpers/colors.module" as colors;
+
+$drawer-width: 400px;
+
+:export {
+	menu_OpenRightValue: 0px;
+	menu_ClosedRightValue: $drawer-width * -1;
+
+	content_OpenRightValue: $drawer-width / 2;
+	content_ClosedRightValue: 0px;
+}
+
+.NavDrawer {
+	position: relative;
+
+	> .contentCover {
+		position: absolute;
+		@include setprops(left right top bottom, 0);
+	}
+}
+
+.menuView {
+	position: fixed;
+	height: 100vh;
+	top: 0;
+	bottom: 0;
+	right: -$drawer-width;
+	width: $drawer-width;
+	background-color: rgb(1, 30, 82);
+	display: grid;
+	align-content: center;
+
+	> .xButton {
+		position: absolute;
+		top: 20px;
+		right: 10px;
+		> svg {
+			height: 55px;
+			width: 55px;
+			fill: colors.$accent;
+		}
+	}
+
+	> .NavBarVertical {
+		position: relative;
+	}
+}

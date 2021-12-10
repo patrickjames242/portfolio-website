@@ -1,16 +1,16 @@
-import { classNames, HTMLAttributes } from "helpers/general";
+import React from 'react';
 import styles from "./<FTName>.module.scss";
 
 export interface <FTName>Props
-	extends HTMLAttributes <HTMLDivElement> {
+	extends React.HTMLAttributes<HTMLDivElement> {
       
 }
 
-function <FTName>(props: <FTName>Props) {
+const <FTName>: React.FC<<FTName>Props> = ({...htmlAttributes}: <FTName>Props) => {
 	return (
 		<div
-			{...props}
-			className={classNames(styles.<FTName>, props.className)}
+			{...htmlAttributes}
+			className={[styles.<FTName>, htmlAttributes.className].asClassString()}
 		></div>
 	);
 }

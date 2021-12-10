@@ -1,14 +1,17 @@
-import NavBar from "App/NavBar/NavBar";
 import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
-import { classNames, HTMLAttributes } from "helpers/general";
+import React from "react";
+import NavBarHorizontal from "../NavViews/NavBarHorizontal/NavBarHorizontal";
 import styles from "./HomeScreen.module.scss";
 
-export interface HomeScreenProps extends HTMLAttributes<HTMLDivElement> {}
+export interface HomeScreenProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 function HomeScreen(props: HomeScreenProps) {
 	return (
-		<div {...props} className={classNames(styles.HomeScreen, props.className)}>
-			<NavBar />
+		<div
+			{...props}
+			className={[styles.HomeScreen, props.className].asClassString()}
+		>
+			<NavBarHorizontal />
 			<div className={styles.centerView}>
 				<div className={styles.titleText}>
 					Hey, I'm <span className={styles.highlighted}>Patrick Hanna</span>.
@@ -21,7 +24,7 @@ function HomeScreen(props: HomeScreenProps) {
 					neque excepturi amet facilis quis reiciendis consequatur itaque harum?
 				</div>
 				<BubbleTextButton
-					title="Get in touch"
+					title="View my work"
 					className={styles.getInTouchButton}
 				/>
 			</div>

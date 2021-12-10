@@ -1,0 +1,80 @@
+@use "helpers/general" as *;
+@use "helpers/colors.module" as colors;
+@use "../nav-constants.module" as nav-constants;
+
+.NavBar {
+	height: nav-constants.$expanded-nav-bar-height;
+	display: grid;
+	justify-content: space-between;
+	grid-auto-flow: column;
+	padding-left: var(--screen-side-insets);
+	padding-right: var(--screen-side-insets);
+
+	> .nameBox {
+		display: grid;
+		grid-auto-flow: column;
+		align-items: center;
+		gap: 10px;
+		position: relative;
+		transition: 0.3s opacity;
+
+		&:hover {
+			opacity: 0.5;
+		}
+
+		> svg {
+			margin-top: -8px;
+			width: 35px;
+			fill: colors.$accent;
+		}
+
+		> .nameText {
+			font-size: 22px;
+			font-weight: 500;
+			line-height: 1;
+			> .firstName {
+				color: colors.$lighter-text;
+			}
+
+			> .lastName {
+				color: colors.$light-text;
+			}
+		}
+	}
+
+	> .rightSide {
+		display: grid;
+		grid-auto-flow: column;
+		gap: 30px;
+		align-items: center;
+
+		> .resumeButton {
+			font-size: 14px;
+			font-weight: 300;
+			padding: 14px;
+			padding-left: 23px;
+			padding-right: 23px;
+		}
+
+		> .menuButton {
+			> svg {
+				height: 30px;
+				width: 30px;
+				fill: colors.$accent;
+			}
+		}
+
+		> .menuButton {
+			display: none;
+		}
+
+		@media (max-width: 850px) {
+			> .menuButton {
+				display: unset;
+			}
+			> :not(.menuButton) {
+				display: none;
+			}
+		}
+	}
+}

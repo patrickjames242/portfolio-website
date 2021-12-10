@@ -1,8 +1,8 @@
 import React, { useCallback, useRef } from "react";
-import { classNames, HTMLAttributes } from "../../helpers/general";
 import styles from "./BubbleEffect.module.scss";
 
-export interface BubbleEffectProps extends HTMLAttributes<HTMLDivElement> {
+export interface BubbleEffectProps
+	extends React.HTMLAttributes<HTMLDivElement> {
 	bubbleColor?: string;
 }
 
@@ -42,7 +42,7 @@ function BubbleEffect(props: BubbleEffectProps) {
 		<div
 			{...props}
 			ref={rootRef}
-			className={classNames(styles.BubbleEffect, props.className)}
+			className={[styles.BubbleEffect, props.className].asClassString()}
 			onMouseEnter={(event) => animateBubble("expand", event.nativeEvent)}
 			onMouseLeave={(event) => animateBubble("contract", event.nativeEvent)}
 		>
