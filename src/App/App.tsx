@@ -1,5 +1,4 @@
 import { BrowserRouter } from "react-router-dom";
-import styles from "./App.module.scss";
 import HomeScreen from "./children/HomeScreen/HomeScreen";
 import NavDrawer from "./children/NavViews/NavDrawer/NavDrawer";
 import "helpers/prototypeExtensions";
@@ -20,11 +19,8 @@ function App() {
 	return (
 		<BrowserRouter>
 			<AppContext.Provider value={contextValue}>
-				<NavDrawer shouldBeOpen={shouldDrawerBeOpen}>
-					<div className={styles.App}>
-						<HomeScreen />
-					</div>
-					<div style={{ marginTop: 500 }}></div>
+				<NavDrawer>
+					<HomeScreen />
 				</NavDrawer>
 			</AppContext.Provider>
 		</BrowserRouter>

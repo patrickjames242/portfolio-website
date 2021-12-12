@@ -1,7 +1,6 @@
 import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
 import React from "react";
 import { appRoutes } from "../helpers";
-import XIconSVG from "../NavDrawer/XIconSVG";
 import NavLink from "../NavLink/NavLink";
 import styles from "./NavBarVertical.module.scss";
 

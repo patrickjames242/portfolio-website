@@ -2,7 +2,6 @@ import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
 import React from "react";
 import NavBarHorizontal from "../NavViews/NavBarHorizontal/NavBarHorizontal";
 import styles from "./HomeScreen.module.scss";
-
 export interface HomeScreenProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 function HomeScreen(props: HomeScreenProps) {
@@ -11,7 +10,7 @@ function HomeScreen(props: HomeScreenProps) {
 			{...props}
 			className={[styles.HomeScreen, props.className].asClassString()}
 		>
-			<NavBarHorizontal />
+			<NavBarHorizontal className={styles.NavBarHorizontal} />
 			<div className={styles.centerView}>
 				<div className={styles.titleText}>
 					Hey, I'm <span className={styles.highlighted}>Patrick Hanna</span>.

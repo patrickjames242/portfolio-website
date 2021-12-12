@@ -3,7 +3,7 @@ import BracketsSVG from "./brackets-icon";
 import styles from "./NavBarHorizontal.module.scss";
 import { Link } from "react-router-dom";
 import MenuSVG from "../MenuSVG";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "App/helpers";
 import NavLink from "../NavLink/NavLink";
 import React from "react";
@@ -14,14 +14,34 @@ export interface NavBarHorizontalProps
 
 function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 	const appContext = useContext(AppContext);
+
+	const [shouldContractNavBar, setShouldContractNavBar] = useState(false);
+
+	useEffect(() => {
+		const listener = () => {
+			setShouldContractNavBar(window.scrollY > 5);
+		};
+		window.addEventListener("scroll", listener);
+		return () => {
+			window.removeEventListener("scroll", listener);
+		};
+	}, []);
+
 	return (
 		<div
 			{...reactProps}
-			className={[styles.NavBar, reactProps.className].asClassString()}
+			className={[
+				styles.NavBar,
+				reactProps.className,
+				shouldContractNavBar ? styles.contracted : undefined,
+			].asClassString()}
 		>
-			<Link className={styles.nameBox} to="/">
+			<Link
+				className={[styles.nameBox, "fade-on-hover"].asClassString()}
+				to="/"
+			>
 				<BracketsSVG />
-				<div className={styles.nameText}>
+				<div className={[styles.nameText].asClassString()}>
 					<span className={styles.firstName}>Patrick</span>{" "}
 					<span className={styles.lastName}>Hanna</span>
 				</div>
@@ -32,7 +52,7 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 				))}
 				<BubbleTextButton className={styles.resumeButton} title="Resume" />
 				<button
-					className={styles.menuButton}
+					className={[styles.menuButton, "fade-on-hover"].asClassString()}
 					onClick={() =>
 						appContext.setMenuDrawerOpened(!appContext.menuDrawerIsOpened)
 					}

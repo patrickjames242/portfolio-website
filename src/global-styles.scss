@@ -65,3 +65,10 @@ input {
 	min-width: 0;
 	-webkit-appearance: none;
 }
+
+.fade-on-hover {
+	transition: 0.2s opacity;
+	&:hover {
+		opacity: 0.5;
+	}
+}

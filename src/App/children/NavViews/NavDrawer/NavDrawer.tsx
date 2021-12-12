@@ -1,38 +1,67 @@
 import { animated, useSpring } from "@react-spring/web";
 import { AppContext } from "App/helpers";
-import React, { useContext, useEffect, useRef } from "react";
+import { clampNum, useDidValueChange } from "helpers/hooks";
+import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import NavBarVertical from "../NavBarVertical/NavBarVertical";
 import styles from "./NavDrawer.module.scss";
 import XIconSVG from "./XIconSVG";
+import navConstants from "../_nav-constants.module.scss";
 
-export interface NavDrawerProps extends React.HTMLAttributes<HTMLDivElement> {
-	shouldBeOpen: boolean;
-}
+export interface NavDrawerProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const NavDrawer: React.FC<NavDrawerProps> = ({
-	shouldBeOpen,
 	...reactProps
 }: NavDrawerProps) => {
-	const rootRef = useRef<HTMLDivElement>(null);
-	const menuViewRef = useRef<HTMLDivElement>(null);
 	const appContext = useContext(AppContext);
+	const [menuWidth, setMenuWidth] = useState(0);
+
+	const shouldBeOpen = appContext.menuDrawerIsOpened;
+	const shouldBeOpenChanged = useDidValueChange(shouldBeOpen);
+
+	useLayoutEffect(() => {
+		function updateMenuWidth() {
+			setMenuWidth(
+				clampNum(document.body.clientWidth - 50, {
+					min: 200,
+					max: 400,
+				})
+			);
+		}
+		function closeMenuIfNeeded() {
+			if (
+				document.body.offsetWidth >
+					Number(navConstants.maxShortenedHorizontalNavBarWidth) &&
+				shouldBeOpen
+			) {
+				appContext?.setMenuDrawerOpened(false);
+			}
+		}
+		const listener = () => {
+			updateMenuWidth();
+			closeMenuIfNeeded();
+		};
+		listener();
+		window.addEventListener("resize", listener);
+		return () => window.removeEventListener("resize", listener);
+	}, [appContext, shouldBeOpen]);
 
 	useEffect(() => {
 		document.body.style.overflow = shouldBeOpen ? "hidden" : "";
+		return () => {
+			document.body.style.overflow = null as any;
+		};
 	}, [shouldBeOpen]);
 
 	return (
 		<animated.div
 			{...reactProps}
-			ref={rootRef}
 			className={[styles.NavDrawer, reactProps.className].asClassString()}
 			style={{
 				...reactProps.style,
 				...useSpring({
-					right: shouldBeOpen
-						? styles.content_OpenRightValue
-						: styles.content_ClosedRightValue,
+					immediate: shouldBeOpenChanged === false,
+					right: shouldBeOpen ? menuWidth : 0,
 				}),
 			}}
 		>
@@ -58,27 +87,7 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
 				}}
 			/>
 			{ReactDOM.createPortal(
-				<animated.div
-					ref={menuViewRef}
-					className={styles.menuView}
-					style={{
-						...useSpring({
-							right: shouldBeOpen
-								? styles.menu_OpenRightValue
-								: styles.menu_ClosedRightValue,
-						}),
-					}}
-				>
-					<button
-						className={styles.xButton}
-						onClick={() => {
-							appContext?.setMenuDrawerOpened(false);
-						}}
-					>
-						<XIconSVG />
-					</button>
-					<NavBarVertical className={styles.NavBarVertical} />
-				</animated.div>,
+				<MenuView shouldBeOpen={shouldBeOpen} menuWidth={menuWidth} />,
 				document.body
 			)}
 		</animated.div>
@@ -86,3 +95,44 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
 };
 
 export default NavDrawer;
+
+interface MenuViewProps extends React.HTMLAttributes<HTMLDivElement> {
+	shouldBeOpen: boolean;
+	menuWidth: number;
+}
+
+const MenuView: React.FC<MenuViewProps> = ({
+	shouldBeOpen,
+	menuWidth,
+	...htmlAttributes
+}: MenuViewProps) => {
+	const appContext = useContext(AppContext);
+
+	const shouldBeOpenDidChange = useDidValueChange(shouldBeOpen);
+
+	return (
+		<animated.div
+			{...htmlAttributes}
+			className={styles.MenuView}
+			style={{
+				width: menuWidth,
+				...useSpring({
+					immediate: shouldBeOpenDidChange === false,
+					right: shouldBeOpen ? 0 : -menuWidth,
+				}),
+			}}
+		>
+			<div className={styles.content}>
+				<NavBarVertical className={styles.NavBarVertical} />
+			</div>
+			<button
+				className={[styles.xButton, "fade-on-hover"].asClassString()}
+				onClick={() => {
+					appContext?.setMenuDrawerOpened(false);
+				}}
+			>
+				<XIconSVG />
+			</button>
+		</animated.div>
+	);
+};

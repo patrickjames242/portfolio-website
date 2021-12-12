@@ -1,10 +1,17 @@
 @use "helpers/general" as *;
 @use "helpers/colors.module" as colors;
+@use "../NavViews/nav-constants.module" as nav-constants;
 
 .HomeScreen {
 	height: 100vh;
 	display: grid;
 	grid-template-rows: auto 1fr;
+	margin-bottom: 500px;
+
+	.NavBarHorizontal {
+		position: sticky;
+		top: 0;
+	}
 
 	.highlighted {
 		color: colors.$accent;
@@ -21,7 +28,7 @@
 
 		> .titleText,
 		.subtitleText {
-			font-size: 70px;
+			font-size: clamp(45px, 8vw, 70px);
 			font-weight: 600;
 			line-height: 1;
 		}
@@ -46,6 +53,7 @@
 
 		> .getInTouchButton {
 			margin-top: 30px;
+			font-size: 14px;
 		}
 	}
 }

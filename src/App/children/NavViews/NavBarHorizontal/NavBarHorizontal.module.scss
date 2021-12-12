@@ -9,6 +9,21 @@
 	grid-auto-flow: column;
 	padding-left: var(--screen-side-insets);
 	padding-right: var(--screen-side-insets);
+	transition-duration: 0.3s;
+	transition-property: height, box-shadow;
+	background-color: colors.$main-background;
+	z-index: 10;
+
+	@mixin box-shadow($color: rgba(black, 0.2)) {
+		box-shadow: 0 0 40px 20px $color;
+	}
+
+	@include box-shadow(rgba(black, 0));
+
+	&.contracted {
+		height: nav-constants.$compact-nav-bar-height;
+		@include box-shadow(rgba(black, 0.2));
+	}
 
 	> .nameBox {
 		display: grid;
@@ -16,11 +31,6 @@
 		align-items: center;
 		gap: 10px;
 		position: relative;
-		transition: 0.3s opacity;
-
-		&:hover {
-			opacity: 0.5;
-		}
 
 		> svg {
 			margin-top: -8px;
@@ -58,8 +68,8 @@
 
 		> .menuButton {
 			> svg {
-				height: 30px;
-				width: 30px;
+				height: 25px;
+				width: 25px;
 				fill: colors.$accent;
 			}
 		}
@@ -68,7 +78,7 @@
 			display: none;
 		}
 
-		@media (max-width: 850px) {
+		@media (max-width: nav-constants.$max-shortened-horizontal-nav-bar-width) {
 			> .menuButton {
 				display: unset;
 			}
