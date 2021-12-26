@@ -6,10 +6,9 @@ export interface BubbleEffectProps
 	bubbleColor?: string;
 }
 
-function BubbleEffect(props: BubbleEffectProps) {
+function BubbleEffect({ bubbleColor, ...reactProps }: BubbleEffectProps) {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const bubbleRef = useRef<HTMLDivElement>(null);
-
 	const animateBubble = useCallback(
 		(type: "expand" | "contract", mouseEvent: MouseEvent) => {
 			const bubbleView = bubbleRef.current!;
@@ -40,16 +39,16 @@ function BubbleEffect(props: BubbleEffectProps) {
 
 	return (
 		<div
-			{...props}
+			{...reactProps}
 			ref={rootRef}
-			className={[styles.BubbleEffect, props.className].asClassString()}
+			className={[styles.BubbleEffect, reactProps.className].asClassString()}
 			onMouseEnter={(event) => animateBubble("expand", event.nativeEvent)}
 			onMouseLeave={(event) => animateBubble("contract", event.nativeEvent)}
 		>
 			<div
 				ref={bubbleRef}
 				className={styles.bubbleView}
-				style={{ color: props.bubbleColor }}
+				style={{ backgroundColor: bubbleColor }}
 			></div>
 		</div>
 	);

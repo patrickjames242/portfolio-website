@@ -22,7 +22,7 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
 	useLayoutEffect(() => {
 		function updateMenuWidth() {
 			setMenuWidth(
-				clampNum(document.body.clientWidth - 50, {
+				clampNum(window.innerWidth - 50, {
 					min: 200,
 					max: 400,
 				})
@@ -107,7 +107,6 @@ const MenuView: React.FC<MenuViewProps> = ({
 	...htmlAttributes
 }: MenuViewProps) => {
 	const appContext = useContext(AppContext);
-
 	const shouldBeOpenDidChange = useDidValueChange(shouldBeOpen);
 
 	return (

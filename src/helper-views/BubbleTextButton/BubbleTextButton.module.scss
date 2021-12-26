@@ -10,6 +10,10 @@
 	border: 2px solid colors.$accent;
 	font-weight: 600;
 	color: colors.$accent;
+	box-shadow: colors.$accent 0px 0px 3px 0px;
+	transition-property: box-shadow;
+	transition-duration: 0.7s;
+	overflow: hidden;
 
 	> .BubbleEffect {
 		@include absolute-pin-all-sides;
@@ -24,5 +28,6 @@
 
 	&:hover {
 		color: colors.$main-background;
+		box-shadow: 0 0 1rem colors.$accent;
 	}
 }

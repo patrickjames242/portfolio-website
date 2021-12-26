@@ -3,7 +3,12 @@
 :root {
 	color: colors.$light-text;
 	font-family: Calibre;
+
 	--screen-side-insets: 40px;
+
+	@media (max-width: 500px) {
+		--screen-side-insets: 30px;
+	}
 }
 
 * {

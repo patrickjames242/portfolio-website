@@ -1,0 +1,12 @@
+.App {
+	.NavBarHorizontal {
+		position: sticky;
+		top: 0;
+	}
+
+	> .content {
+		max-width: 1200px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}

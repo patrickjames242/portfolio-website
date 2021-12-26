@@ -29,6 +29,7 @@ $purple-and-blue: (
 $theme: $orange-and-blue;
 
 $main-background: map-get($theme, "background");
+$lighter-background: rgb(1, 30, 82);
 $accent: map-get($theme, "accent");
 $light-text: map-get($theme, "light-text");
 $lighter-text: map-get($theme, "lighter-text");

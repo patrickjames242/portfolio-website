@@ -15,9 +15,7 @@
 	height: 100vh;
 	top: 0;
 	bottom: 0;
-	// right: -$drawer-width;
-	// width: $drawer-width;
-	background-color: rgb(1, 30, 82);
+	background-color: colors.$lighter-background;
 
 	> .xButton {
 		position: absolute;

@@ -2,28 +2,23 @@
 @use "helpers/colors.module" as colors;
 @use "../NavViews/nav-constants.module" as nav-constants;
 
-.HomeScreen {
-	height: 100vh;
+.HomeSection {
+	height: calc(100vh - #{nav-constants.$expanded-nav-bar-height});
 	display: grid;
-	grid-template-rows: auto 1fr;
-	margin-bottom: 500px;
-
-	.NavBarHorizontal {
-		position: sticky;
-		top: 0;
-	}
+	place-items: center;
+	box-sizing: border-box;
 
 	.highlighted {
 		color: colors.$accent;
 	}
 
 	> .centerView {
-		align-self: center;
-		justify-self: center;
+		margin-top: 30px;
+		margin-bottom: 30px;
 		max-width: 900px;
 		margin: {
-			left: 50px;
-			right: 50px;
+			left: var(--screen-side-insets);
+			right: var(--screen-side-insets);
 		}
 
 		> .titleText,
