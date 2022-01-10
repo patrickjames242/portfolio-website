@@ -2,7 +2,12 @@ import React from "react";
 
 function TriangleIconSVG() {
 	return (
-		<svg xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 100 125">
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			x="0"
+			y="0"
+			viewBox="20.0 23 60 54.2"
+		>
 			<path
 				style={
 					{

@@ -1,0 +1,176 @@
+@use "helpers/general" as *;
+@use "helpers/colors.module" as colors;
+
+$min-expanded-width: 650px;
+
+:export {
+	bubbleEffectColor: rgba(colors.$accent, 0.9);
+	minExpandedWidth: $min-expanded-width;
+}
+
+.ProjectsSection {
+	> .projectsBox {
+		display: grid;
+		margin-top: 50px;
+		row-gap: clamp(40px, 8.33vw, 100px);
+	}
+
+	.ProjectView {
+		display: grid;
+		grid-template-columns: 1.5fr 2fr;
+		gap: 40px;
+		align-items: center;
+		grid-template-areas: "detailsSection imageView";
+
+		.titleSection {
+			display: grid;
+			gap: 5px;
+
+			> .subtitle {
+				font-size: 16px;
+				color: colors.$accent;
+				font-weight: 500;
+			}
+			> .title {
+				font-size: 28px;
+				font-weight: 500;
+			}
+		}
+
+		> .imageView {
+			position: relative;
+			display: block;
+			box-shadow: 0 0 1rem rgba(colors.$accent, 0);
+			border-radius: 10px;
+			overflow: hidden;
+			grid-area: imageView;
+
+			> div {
+				padding-top: ((3/5) * 100) * 1%;
+				position: relative;
+
+				> img {
+					display: block;
+					position: absolute;
+					@include setprops(left top, 0);
+					width: 100%;
+					object-fit: contain;
+					filter: grayscale(70%);
+				}
+			}
+
+			> .imageCover {
+				position: absolute;
+				@include absolute-pin-all-sides;
+				background-color: rgba(colors.$accent, 0.6);
+			}
+
+			> .BubbleEffect {
+				position: absolute;
+				@include absolute-pin-all-sides;
+			}
+		}
+
+		> .detailsSection {
+			--overflow: -100px;
+			display: grid;
+			gap: 15px;
+			text-align: left;
+			margin-right: var(--overflow);
+			z-index: 5;
+			grid-area: detailsSection;
+
+			> .descriptionBox {
+				background-color: colors.$lighter-background;
+				padding: 25px;
+				border-radius: 20px;
+				color: colors.$lighter-text;
+				line-height: 1.3;
+				font-size: 18px;
+			}
+
+			> .technologiesBox {
+				font-size: 16px;
+				$inset: 0.5em;
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				margin-left: -($inset);
+
+				> .technology {
+					margin-left: $inset;
+					padding: 10px;
+					display: grid;
+					grid-auto-flow: column;
+					gap: 5px;
+
+					> svg {
+						height: 10px;
+						width: 10px;
+						fill: colors.$light-text;
+					}
+					> .text {
+						color: colors.$light-text;
+						line-height: 1;
+					}
+				}
+			}
+			> .linkButtons {
+				display: grid;
+				justify-content: start;
+				grid-auto-flow: column;
+				gap: 15px;
+				> a {
+					> svg {
+						height: 28px;
+						width: 28px;
+					}
+					&.externalLink > svg {
+						stroke: colors.$accent;
+					}
+					&.github > svg {
+						fill: colors.$accent;
+					}
+				}
+			}
+		}
+
+		&.right {
+			@media (min-width: $min-expanded-width) {
+				grid-template-columns: 2fr 1.5fr;
+				grid-template-areas: "imageView detailsSection";
+
+				> .detailsSection {
+					text-align: right;
+					margin-right: unset;
+					margin-left: var(--overflow);
+					> .technologiesBox {
+						justify-content: end;
+					}
+					> .linkButtons {
+						justify-content: end;
+					}
+				}
+			}
+		}
+
+		@media (max-width: ($min-expanded-width - 1)) {
+			grid-template-columns: unset;
+			gap: 20px;
+
+			grid-template-areas:
+				"titleSection"
+				"imageView"
+				"detailsSection";
+
+			> .titleSection {
+				grid-area: titleSection;
+			}
+
+			> .detailsSection {
+				margin-left: unset;
+				margin-right: unset;
+			}
+		}
+	}
+}

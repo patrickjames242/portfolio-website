@@ -4,9 +4,14 @@ import styles from "./BubbleEffect.module.scss";
 export interface BubbleEffectProps
 	extends React.HTMLAttributes<HTMLDivElement> {
 	bubbleColor?: string;
+	bubbleAnimationSeconds?: number;
 }
 
-function BubbleEffect({ bubbleColor, ...reactProps }: BubbleEffectProps) {
+function BubbleEffect({
+	bubbleColor,
+	bubbleAnimationSeconds,
+	...reactProps
+}: BubbleEffectProps) {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const bubbleRef = useRef<HTMLDivElement>(null);
 	const animateBubble = useCallback(
@@ -33,8 +38,12 @@ function BubbleEffect({ bubbleColor, ...reactProps }: BubbleEffectProps) {
 			bubbleView.style.top = mouseCoordinate.y - bubbleRadius + "px";
 			bubbleView.style.left = mouseCoordinate.x - bubbleRadius + "px";
 			bubbleView.classList.toggle(styles.expanded, type === "expand");
+			bubbleView.style.setProperty(
+				"--animation-duration",
+				(bubbleAnimationSeconds ?? 0.6) + "s"
+			);
 		},
-		[]
+		[bubbleAnimationSeconds]
 	);
 
 	return (

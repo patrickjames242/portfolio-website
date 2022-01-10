@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./NavLink.module.scss";
 import { Link } from "react-router-dom";
-import TriangleIconSVG from "../TriangleSVG";
+import TriangleIconSVG from "../../../../helper-views/svg/TriangleSVG";
 
 export interface NavLinkProps
 	extends React.AnchorHTMLAttributes<HTMLAnchorElement> {

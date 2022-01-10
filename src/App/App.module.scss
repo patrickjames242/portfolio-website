@@ -8,5 +8,12 @@
 		max-width: 1200px;
 		margin-left: auto;
 		margin-right: auto;
+
+		> * {
+			margin: {
+				left: var(--screen-side-insets);
+				right: var(--screen-side-insets);
+			}
+		}
 	}
 }

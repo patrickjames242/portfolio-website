@@ -1,0 +1,27 @@
+@use "helpers/general" as *;
+@use "helpers/colors.module" as colors;
+
+.SectionHeader {
+	display: grid;
+	grid-template-columns: auto auto 1fr;
+	align-items: center;
+	gap: 15px;
+	font-size: clamp(26px, 5vw, 33px);
+
+	> svg {
+		height: 0.75em;
+		width: 0.75em;
+		fill: colors.$accent;
+	}
+
+	> .titleText {
+		font-weight: 500;
+		height: 1em;
+	}
+
+	> .line {
+		height: 1px;
+		background-color: rgb(29, 48, 85);
+		margin-left: 15px;
+	}
+}
