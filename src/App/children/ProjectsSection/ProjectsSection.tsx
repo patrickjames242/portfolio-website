@@ -1,8 +1,8 @@
 import BubbleEffect from "helper-views/BubbleEffect/BubbleEffect";
 import SectionHeader from "helper-views/SectionHeader/SectionHeader";
-import { TriangleSVG } from "helper-views/SectionHeader/TriangleSVG";
 import ExternalLink from "helper-views/svg/ExternalLinkSVG";
 import GithubSVG from "helper-views/svg/GithubSVG";
+import TriangleIconSVG from "helper-views/svg/TriangleSVG";
 import React, { useLayoutEffect, useRef } from "react";
 import { allProjects, Project } from "./projectsData";
 import styles from "./ProjectsSection.module.scss";
@@ -92,16 +92,21 @@ const ProjectView: React.FC<ProjectViewProps> = ({
 				<div className={styles.descriptionBox}>{project.description}</div>
 				<div className={styles.technologiesBox}>
 					{project.technologies.map((x) => (
-						<div className={styles.technology}>
-							<TriangleSVG />
+						<a
+							className={styles.technology}
+							href={x.url}
+							target="_blank"
+							rel="noreferrer"
+						>
+							<TriangleIconSVG />
 							<div className={styles.text}>{x.name}</div>
-						</div>
+						</a>
 					))}
 				</div>
 				<div className={styles.linkButtons}>
 					{project.githubLink != null && (
 						<a
-							className={[styles.github, "fade-on-hover"].asClassString()}
+							className={styles.github}
 							href={project.githubLink}
 							target="_blank"
 							rel="noreferrer"
@@ -110,7 +115,7 @@ const ProjectView: React.FC<ProjectViewProps> = ({
 						</a>
 					)}
 					<a
-						className={[styles.externalLink, "fade-on-hover"].asClassString()}
+						className={styles.externalLink}
 						href={project.websiteLink}
 						target="_blank"
 						rel="noreferrer"
@@ -120,7 +125,12 @@ const ProjectView: React.FC<ProjectViewProps> = ({
 				</div>
 			</div>
 
-			<a className={styles.imageView} href="/">
+			<a
+				className={styles.imageView}
+				href={project.websiteLink}
+				target="_blank"
+				rel="noreferrer"
+			>
 				<div>
 					<img src={project.imageUrl} alt="" />
 				</div>

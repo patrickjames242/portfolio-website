@@ -1,13 +1,12 @@
+import { AppContext } from "App/helpers";
 import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { appRoutes } from "../helpers";
+import MenuSVG from "../MenuSVG";
+import NavLink from "../NavLink/NavLink";
 import BracketsSVG from "./brackets-icon";
 import styles from "./NavBarHorizontal.module.scss";
-import { Link } from "react-router-dom";
-import MenuSVG from "../MenuSVG";
-import { useContext, useEffect, useState } from "react";
-import { AppContext } from "App/helpers";
-import NavLink from "../NavLink/NavLink";
-import React from "react";
-import { appRoutes } from "../helpers";
 
 export interface NavBarHorizontalProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
@@ -36,10 +35,7 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 				shouldContractNavBar ? styles.contracted : undefined,
 			].asClassString()}
 		>
-			<Link
-				className={[styles.nameBox, "fade-on-hover"].asClassString()}
-				to="/"
-			>
+			<Link className={[styles.nameBox].asClassString()} to="/">
 				<BracketsSVG />
 				<div className={[styles.nameText].asClassString()}>
 					<span className={styles.firstName}>Patrick</span>{" "}
@@ -52,7 +48,7 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 				))}
 				<BubbleTextButton className={styles.resumeButton} title="Resume" />
 				<button
-					className={[styles.menuButton, "fade-on-hover"].asClassString()}
+					className={[styles.menuButton].asClassString()}
 					onClick={() =>
 						appContext.setMenuDrawerOpened(!appContext.menuDrawerIsOpened)
 					}

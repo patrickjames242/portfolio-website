@@ -32,6 +32,8 @@
 		gap: 10px;
 		position: relative;
 
+		@include fade-on-hover;
+
 		> svg {
 			margin-top: -8px;
 			width: 35px;
@@ -67,15 +69,13 @@
 		}
 
 		> .menuButton {
+			display: none;
+			@include fade-on-hover;
 			> svg {
 				height: 25px;
 				width: 25px;
 				fill: colors.$accent;
 			}
-		}
-
-		> .menuButton {
-			display: none;
 		}
 
 		@media (max-width: nav-constants.$max-shortened-horizontal-nav-bar-width) {

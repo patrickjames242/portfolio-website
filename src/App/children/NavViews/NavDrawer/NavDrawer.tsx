@@ -4,9 +4,9 @@ import { clampNum, useDidValueChange } from "helpers/hooks";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import NavBarVertical from "../NavBarVertical/NavBarVertical";
+import navConstants from "../_nav-constants.module.scss";
 import styles from "./NavDrawer.module.scss";
 import XIconSVG from "./XIconSVG";
-import navConstants from "../_nav-constants.module.scss";
 
 export interface NavDrawerProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -125,7 +125,7 @@ const MenuView: React.FC<MenuViewProps> = ({
 				<NavBarVertical className={styles.NavBarVertical} />
 			</div>
 			<button
-				className={[styles.xButton, "fade-on-hover"].asClassString()}
+				className={styles.xButton}
 				onClick={() => {
 					appContext?.setMenuDrawerOpened(false);
 				}}

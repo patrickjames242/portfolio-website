@@ -1,6 +1,6 @@
+import TriangleIconSVG from "helper-views/svg/TriangleSVG";
 import React from "react";
 import styles from "./SectionHeader.module.scss";
-import { TriangleSVG } from "./TriangleSVG";
 
 export interface SectionHeaderProps
 	extends React.HTMLAttributes<HTMLDivElement> {
@@ -19,7 +19,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
 				htmlAttributes.className,
 			].asClassString()}
 		>
-			<TriangleSVG />
+			<TriangleIconSVG />
 			<div className={styles.titleText}>{titleText}</div>
 			<div className={styles.line}></div>
 		</h2>
