@@ -27,6 +27,12 @@ function HomeSection(props: HomeSectionProps) {
 					className={styles.getInTouchButton}
 				/>
 			</div>
+			<div className={styles.footerView}>
+				<div className={styles.content}>
+					<div className={styles.contactLink}>contact@patrickhanna.dev</div>
+					{/* <div className={styles.contactLink}>github/patrickjames242</div> */}
+				</div>
+			</div>
 		</div>
 	);
 }

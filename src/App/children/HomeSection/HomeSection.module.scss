@@ -3,9 +3,9 @@
 @use "../NavViews/nav-constants.module" as nav-constants;
 
 .HomeSection {
-	height: calc(100vh - #{nav-constants.$expanded-nav-bar-height});
+	min-height: calc(100vh - #{nav-constants.$expanded-nav-bar-height});
 	display: grid;
-	place-items: center;
+	grid-template-rows: 1fr auto;
 	box-sizing: border-box;
 
 	.highlighted {
@@ -16,6 +16,7 @@
 		margin-top: 30px;
 		margin-bottom: 30px;
 		max-width: 900px;
+		place-self: center;
 
 		> .titleText,
 		.subtitleText {
@@ -45,6 +46,24 @@
 		> .getInTouchButton {
 			margin-top: 30px;
 			font-size: 14px;
+		}
+	}
+
+	> .footerView {
+		margin-bottom: var(--screen-side-insets);
+		position: relative;
+		> .content {
+			display: grid;
+			gap: 8px;
+			font-size: 19px;
+			color: colors.$accent;
+			background-color: black;
+			width: 100vw;
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			top: 0;
+			bottom: 0;
 		}
 	}
 }
