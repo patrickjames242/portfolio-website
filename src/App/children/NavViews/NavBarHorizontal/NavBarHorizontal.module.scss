@@ -10,9 +10,9 @@
 	padding-left: var(--screen-side-insets);
 	padding-right: var(--screen-side-insets);
 	transition-duration: 0.3s;
-	transition-property: height, box-shadow;
-	background-color: colors.$main-background;
+	transition-property: height, box-shadow, background-color;
 	z-index: 10;
+	pointer-events: none;
 
 	@mixin box-shadow($color: rgba(black, 0.2)) {
 		box-shadow: 0 0 40px 20px $color;
@@ -23,6 +23,7 @@
 	&.contracted {
 		height: nav-constants.$compact-nav-bar-height;
 		@include box-shadow(rgba(black, 0.2));
+		background-color: colors.$main-background;
 	}
 
 	> .nameBox {
@@ -31,6 +32,7 @@
 		align-items: center;
 		gap: 10px;
 		position: relative;
+		pointer-events: auto;
 
 		@include fade-on-hover;
 
@@ -71,6 +73,7 @@
 		> .menuButton {
 			display: none;
 			@include fade-on-hover;
+			pointer-events: auto;
 			> svg {
 				height: 25px;
 				width: 25px;

@@ -1,16 +1,24 @@
 import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
-import React from "react";
+import { addStarEffectToCanvas } from "helpers/starsBackgroundEffect";
+import React, { useLayoutEffect, useRef } from "react";
 import styles from "./HomeSection.module.scss";
-
 export interface HomeSectionProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
 
 function HomeSection(props: HomeSectionProps) {
+	const canvasRef = useRef<HTMLCanvasElement>(null);
+
+	useLayoutEffect(() => {
+		addStarEffectToCanvas(canvasRef.current!);
+	}, []);
+
 	return (
 		<div
 			{...props}
 			className={[styles.HomeSection, props.className].asClassString()}
 		>
+			<canvas ref={canvasRef} className={styles.starsCanvas}></canvas>
+
 			<div className={styles.centerView}>
 				<div className={styles.titleText}>
 					Hey, I'm <span className={styles.highlighted}>Patrick Hanna</span>.
@@ -23,15 +31,9 @@ function HomeSection(props: HomeSectionProps) {
 					neque excepturi amet facilis quis reiciendis consequatur itaque harum?
 				</div>
 				<BubbleTextButton
-					title="View my work"
+					title="Get in touch"
 					className={styles.getInTouchButton}
 				/>
-			</div>
-			<div className={styles.footerView}>
-				<div className={styles.content}>
-					<div className={styles.contactLink}>contact@patrickhanna.dev</div>
-					{/* <div className={styles.contactLink}>github/patrickjames242</div> */}
-				</div>
 			</div>
 		</div>
 	);

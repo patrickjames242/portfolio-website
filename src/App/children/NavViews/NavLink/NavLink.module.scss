@@ -10,6 +10,7 @@
 	gap: 0.4em;
 	align-items: center;
 	transition: color 0.3s;
+	pointer-events: auto;
 
 	> svg {
 		height: 0.6em;

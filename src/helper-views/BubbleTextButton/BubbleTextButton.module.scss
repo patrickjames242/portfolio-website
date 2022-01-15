@@ -14,6 +14,7 @@
 	transition-property: box-shadow;
 	transition-duration: 0.7s;
 	overflow: hidden;
+	pointer-events: auto;
 
 	> .BubbleEffect {
 		@include absolute-pin-all-sides;

@@ -5,11 +5,26 @@
 .HomeSection {
 	min-height: calc(100vh - #{nav-constants.$expanded-nav-bar-height});
 	display: grid;
-	grid-template-rows: 1fr auto;
 	box-sizing: border-box;
+	position: relative;
+	pointer-events: none;
 
 	.highlighted {
 		color: colors.$accent;
+	}
+
+	.starsCanvas {
+		position: absolute;
+		width: 100vw;
+		height: calc(100% + #{nav-constants.$expanded-nav-bar-height});
+		top: nav-constants.$expanded-nav-bar-height * -1;
+		left: 50%;
+		transform: translateX(-50%);
+		pointer-events: auto;
+	}
+
+	> * {
+		position: relative;
 	}
 
 	> .centerView {
@@ -17,6 +32,7 @@
 		margin-bottom: 30px;
 		max-width: 900px;
 		place-self: center;
+		pointer-events: none;
 
 		> .titleText,
 		.subtitleText {
@@ -46,24 +62,7 @@
 		> .getInTouchButton {
 			margin-top: 30px;
 			font-size: 14px;
-		}
-	}
-
-	> .footerView {
-		margin-bottom: var(--screen-side-insets);
-		position: relative;
-		> .content {
-			display: grid;
-			gap: 8px;
-			font-size: 19px;
-			color: colors.$accent;
-			background-color: black;
-			width: 100vw;
-			position: absolute;
-			left: 50%;
-			transform: translateX(-50%);
-			top: 0;
-			bottom: 0;
+			pointer-events: auto;
 		}
 	}
 }

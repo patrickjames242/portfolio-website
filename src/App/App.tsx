@@ -26,8 +26,8 @@ function App() {
 					<div className={styles.App}>
 						<NavBarHorizontal className={styles.NavBarHorizontal} />
 						<div className={styles.content}>
-							<HomeSection />
-							<ProjectsSection style={{ marginTop: 20, marginBottom: 200 }} />
+							<HomeSection className={styles.HomeScreen} />
+							<ProjectsSection style={{ marginTop: 50, marginBottom: 200 }} />
 						</div>
 					</div>
 				</NavDrawer>

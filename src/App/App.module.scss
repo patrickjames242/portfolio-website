@@ -1,4 +1,14 @@
+@use "helpers/general" as *;
+@use "helpers/colors.module" as colors;
+@use "./children/NavViews/nav-constants.module" as nav-constants;
+
+:export {
+	navBarExpandedHeight: nav-constants.$expanded-nav-bar-height;
+}
+
 .App {
+	pointer-events: none;
+	position: relative;
 	.NavBarHorizontal {
 		position: sticky;
 		top: 0;
@@ -14,6 +24,10 @@
 				left: var(--screen-side-insets);
 				right: var(--screen-side-insets);
 			}
+		}
+
+		> *:not(.HomeScreen) {
+			pointer-events: auto;
 		}
 	}
 }

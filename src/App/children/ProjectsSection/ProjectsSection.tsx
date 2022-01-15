@@ -91,12 +91,13 @@ const ProjectView: React.FC<ProjectViewProps> = ({
 			<div ref={detailsSectionRef} className={styles.detailsSection}>
 				<div className={styles.descriptionBox}>{project.description}</div>
 				<div className={styles.technologiesBox}>
-					{project.technologies.map((x) => (
+					{project.technologies.map((x, index) => (
 						<a
 							className={styles.technology}
 							href={x.url}
 							target="_blank"
 							rel="noreferrer"
+							key={index}
 						>
 							<TriangleIconSVG />
 							<div className={styles.text}>{x.name}</div>
