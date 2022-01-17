@@ -1,4 +1,3 @@
-import BubbleEffect from "helper-views/BubbleEffect/BubbleEffect";
 import SectionHeader from "helper-views/SectionHeader/SectionHeader";
 import ExternalLink from "helper-views/svg/ExternalLinkSVG";
 import GithubSVG from "helper-views/svg/GithubSVG";
@@ -136,11 +135,6 @@ const ProjectView: React.FC<ProjectViewProps> = ({
 					<img src={project.imageUrl} alt="" />
 				</div>
 				<div className={styles.imageCover}></div>
-				<BubbleEffect
-					className={styles.BubbleEffect}
-					bubbleColor={styles.bubbleEffectColor}
-					bubbleAnimationSeconds={1}
-				/>
 			</a>
 		</div>
 	);

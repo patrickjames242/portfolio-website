@@ -1,3 +1,5 @@
+// got this from https://codepen.io/hakimel/pen/bzrZGo
+
 /*          *     .        *  .    *    *   . 
  .  *  move your mouse to over the stars   .
  *  .  .   change these values:   .  *
@@ -12,7 +14,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
 	const STAR_SIZE = 3;
 	const STAR_MIN_SCALE = 0.2;
 	const OVERFLOW_THRESHOLD = 50;
-	const getStarCount = () => (canvas.clientWidth + canvas.clientHeight) / 8;
+	const getStarCount = () => (canvas.clientWidth + canvas.clientHeight) / 6;
 
 	let scale = 1, // device pixel ratio
 		width: number,
