@@ -2,6 +2,7 @@ import "helpers/prototypeExtensions";
 import { useMemo, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import styles from "./App.module.scss";
+import ContactMeSection from "./children/ContactMeSection/ContactMeSection";
 import HomeSection from "./children/HomeSection/HomeSection";
 import NavBarHorizontal from "./children/NavViews/NavBarHorizontal/NavBarHorizontal";
 import NavDrawer from "./children/NavViews/NavDrawer/NavDrawer";
@@ -27,7 +28,8 @@ function App() {
 						<NavBarHorizontal className={styles.NavBarHorizontal} />
 						<div className={styles.content}>
 							<HomeSection className={styles.HomeScreen} />
-							<ProjectsSection style={{ marginTop: 50, marginBottom: 200 }} />
+							<ProjectsSection style={{ marginTop: 125 }} />
+							<ContactMeSection style={{ marginTop: 200, marginBottom: 200 }} />
 						</div>
 					</div>
 				</NavDrawer>

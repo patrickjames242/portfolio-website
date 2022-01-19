@@ -11,7 +11,7 @@ $min-expanded-width: 650px;
 .ProjectsSection {
 	> .projectsBox {
 		display: grid;
-		margin-top: 50px;
+		margin-top: 75px;
 		row-gap: clamp(40px, 8.33vw, 100px);
 	}
 

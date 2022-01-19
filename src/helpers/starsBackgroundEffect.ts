@@ -11,7 +11,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
 	const context = canvas.getContext("2d")!;
 
 	const STAR_COLOR = "rgba(227, 99, 39, 0.9)";
-	const STAR_SIZE = 3;
+	const STAR_SIZE = 4;
 	const STAR_MIN_SCALE = 0.2;
 	const OVERFLOW_THRESHOLD = 50;
 	const getStarCount = () => (canvas.clientWidth + canvas.clientHeight) / 6;

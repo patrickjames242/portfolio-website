@@ -1,3 +1,4 @@
+import React from "react";
 import betterLivingApp from "./projectImages/better-living-app.png";
 import betterLivingImage from "./projectImages/better-living-site.png";
 import screwsWorldImage from "./projectImages/screws-world-site.png";
@@ -8,7 +9,7 @@ export interface Project {
 	subtitle: string;
 	title: string;
 	technologies: Technology[];
-	description: string;
+	description: React.ReactNode;
 	githubLink?: string;
 	websiteLink: string;
 }
@@ -18,8 +19,15 @@ export interface Technology {
 	url: string;
 }
 
-const placeholderDescription =
-	"Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam necessitatibus provident nesciunt harum blanditiis. Cum totam sed explicabo dolorum aspernatur, pariatur aut a voluptate maxime consequuntur eaque quidem autem ipsa assumenda quibusdam";
+const placeholderDescription = (
+	<>
+		Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam
+		necessitatibus provident nesciunt harum{" "}
+		<a className="underline-on-hover">blanditiis bldksl </a>. Cum totam sed
+		explicabo dolorum aspernatur, pariatur aut a voluptate maxime consequuntur
+		eaque quidem autem ipsa assumenda quibusdam
+	</>
+);
 
 const tech = {
 	typescript: { name: "TypeScript", url: "https://www.typescriptlang.org/" },

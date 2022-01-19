@@ -1,0 +1,114 @@
+@use "helpers/general" as *;
+@use "helpers/colors.module" as colors;
+
+.ContactMeSection {
+}
+
+.BubbleTextButton {
+	font-size: 14px;
+}
+
+.ContactSectionHeader {
+	text-align: center;
+	justify-items: center;
+	display: grid;
+	> .subtitle {
+		color: colors.$accent;
+		font-weight: 500;
+		font-size: 20px;
+		margin-bottom: 15px;
+	}
+
+	> .title {
+		font-weight: 600;
+		font-size: 55px;
+		line-height: 1;
+		margin-bottom: 10px;
+	}
+
+	> .description {
+		font-size: 20px;
+		color: colors.$lighter-text;
+		max-width: 500px;
+		line-height: 1.3;
+		// margin-bottom: 25px;
+	}
+}
+
+.ContactForm {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
+	display: grid;
+	gap: 40px;
+	> .formColumns {
+		$gap: 30px;
+		display: grid;
+		gap: $gap;
+		grid-template-columns: 1fr 1fr;
+
+		align-items: start;
+		> .col1 {
+			display: grid;
+			gap: $gap;
+		}
+		> .message {
+			height: 100%;
+		}
+	}
+
+	> .BubbleTextButton {
+		justify-self: center;
+	}
+}
+
+.FormField {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	gap: 15px;
+
+	@mixin transition-config($properties) {
+		transition-property: $properties;
+		transition-duration: 0.3s;
+	}
+
+	> .inputTitle {
+		margin-left: 16px;
+		font-size: 18px;
+		font-weight: 500;
+		@include transition-config(color);
+	}
+
+	> input,
+	textarea {
+		padding: 18px;
+		border: 2px solid transparent;
+		background-color: colors.$lighter-background;
+		color: colors.$light-text;
+		border-radius: 15px;
+		font-size: 18px;
+		@include transition-config(border-color);
+		&::placeholder {
+			color: colors.$lighter-text;
+		}
+		&:focus {
+			border-color: colors.$accent;
+		}
+	}
+
+	&.focused {
+		> .inputTitle {
+			color: colors.$accent;
+		}
+	}
+
+	> input {
+		line-height: 1;
+	}
+
+	> textarea {
+		display: grid;
+		resize: vertical;
+	}
+}

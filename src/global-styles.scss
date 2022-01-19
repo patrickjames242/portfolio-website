@@ -1,4 +1,5 @@
 @use "helpers/colors.module" as colors;
+@use "helpers/general" as *;
 
 :root {
 	color: colors.$light-text;
@@ -73,4 +74,32 @@ textarea,
 input {
 	min-width: 0;
 	-webkit-appearance: none;
+}
+
+.underline-on-hover,
+a.underline-on-hover {
+	position: relative;
+	color: colors.$accent;
+	pointer-events: auto;
+	display: inline-block;
+
+	&::before {
+		content: "";
+		height: 0.16em;
+		width: 100%;
+		position: absolute;
+		bottom: 0em;
+		@include setprops(left right, 0);
+		border-radius: 100000000000px;
+		background-color: colors.$accent;
+		transition-duration: 0.3s;
+		transform: translateY(0.3em);
+		opacity: 0;
+		transition-property: transform, opacity;
+	}
+
+	&:hover::before {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
