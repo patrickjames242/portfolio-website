@@ -1,5 +1,5 @@
 import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
-import React, { useState } from "react";
+import React, { ChangeEventHandler, useMemo, useRef, useState } from "react";
 import styles from "./ContactMeSection.module.scss";
 
 export interface ContactMeSectionProps
@@ -51,23 +51,75 @@ const ContactSectionHeader: React.FC<ContactSectionHeaderProps> = ({
 				. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum minus
 				dksl vitae velit consequatur sapiente saepe akdow.
 			</div>
-			{/* <BubbleTextButton
-				title="Send me an email"
-				className={styles.BubbleTextButton}
-			/> */}
 		</div>
 	);
 };
 
-interface ContactFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface ContactFormProps extends React.HTMLAttributes<HTMLFormElement> {}
 
 const ContactForm: React.FC<ContactFormProps> = ({
 	...htmlAttributes
 }: ContactFormProps) => {
+	type FormValues = {
+		fullName: string;
+		email: string;
+		description: string;
+	};
+
+	const formRef = useRef<HTMLFormElement>(null);
+	const [touched, setTouched] = useState(false);
+	const [formValue, setFormValue] = useState<FormValues>(
+		Object.freeze({
+			fullName: "",
+			email: "",
+			description: "",
+		})
+	);
+
+	const fieldInfo = useMemo(() => {
+		function getFieldInfo(fieldName: keyof FormValues) {
+			return {
+				value: formValue[fieldName],
+				errorMessage: (() => {
+					const value = formValue[fieldName];
+					if (typeof value !== "string" || value.length < 1)
+						return "This field is required";
+					else return;
+				})(),
+				onValueChange: (value: string) => {
+					setFormValue(
+						Object.freeze({
+							...formValue,
+							[fieldName]: value,
+						})
+					);
+				},
+			};
+		}
+		const result: Record<keyof FormValues, ReturnType<typeof getFieldInfo>> = {
+			fullName: getFieldInfo("fullName"),
+			email: getFieldInfo("email"),
+			description: getFieldInfo("description"),
+		};
+		return result;
+	}, [formValue]);
+
+	const isFormValid = useMemo(() => {
+		for (const key in fieldInfo) {
+			if (fieldInfo[key as keyof FormValues].errorMessage != null) return false;
+		}
+		return true;
+	}, [fieldInfo]);
+
 	return (
-		<div
+		<form
+			ref={formRef}
 			{...htmlAttributes}
 			className={[styles.ContactForm, htmlAttributes.className].asClassString()}
+			onSubmit={(event) => {
+				setTouched(true);
+				event.nativeEvent.preventDefault();
+			}}
 		>
 			<div className={styles.formColumns}>
 				<div className={styles.col1}>
@@ -75,26 +127,38 @@ const ContactForm: React.FC<ContactFormProps> = ({
 						fieldType="single-line"
 						fieldTitle="What's your full name?"
 						placeholder="Full Name"
+						errorMessage={fieldInfo.fullName.errorMessage}
+						value={fieldInfo.fullName.value}
+						onValueChanged={fieldInfo.fullName.onValueChange}
+						touched={touched}
 					/>
 					<FormField
 						fieldType="single-line"
 						fieldTitle="What's your email address?"
 						placeholder="Email"
+						errorMessage={fieldInfo.email.errorMessage}
+						value={fieldInfo.email.value}
+						onValueChanged={fieldInfo.email.onValueChange}
+						touched={touched}
 					/>
 				</div>
-
 				<FormField
 					fieldType="multi-line"
 					fieldTitle="What do you want to talk about?"
 					placeholder="Message"
 					className={styles.message}
+					errorMessage={fieldInfo.description.errorMessage}
+					value={fieldInfo.description.value}
+					onValueChanged={fieldInfo.description.onValueChange}
+					touched={touched}
 				/>
 			</div>
 			<BubbleTextButton
 				title="Send Message"
 				className={styles.BubbleTextButton}
+				onClick={() => formRef?.current?.requestSubmit()}
 			/>
-		</div>
+		</form>
 	);
 };
 
@@ -107,12 +171,20 @@ interface FormFieldProps<F extends FieldType>
 	fieldTitle: string;
 	placeholder: string;
 	fieldType?: F;
+	errorMessage?: string | null;
+	touched?: boolean;
+	value: string;
+	onValueChanged: (value: string) => void;
 }
 
 function FormField<F extends FieldType>({
 	fieldTitle,
 	placeholder,
 	fieldType,
+	errorMessage,
+	touched: propsTouched,
+	value,
+	onValueChanged,
 	...htmlAttributes
 }: FormFieldProps<F>): ReturnType<React.FC<FormFieldProps<F>>> {
 	const [focused, setFocused] = useState(false);
@@ -120,7 +192,16 @@ function FormField<F extends FieldType>({
 		placeholder,
 		onFocus: () => setFocused(true),
 		onBlur: () => setFocused(false),
+		value,
+		onChange: (
+			event: Parameters<
+				ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+			>[0]
+		) => {
+			onValueChanged(event.target.value);
+		},
 	};
+	const touched = propsTouched ?? true;
 	return (
 		<div
 			className={[
@@ -139,6 +220,11 @@ function FormField<F extends FieldType>({
 					default:
 						return null;
 				}
+			})()}
+			{(() => {
+				const message = errorMessage?.trim() ?? null;
+				if (!touched || message == null || message.length < 1) return null;
+				return <div className={styles.errorMessage}>{"*" + message}</div>;
 			})()}
 		</div>
 	);

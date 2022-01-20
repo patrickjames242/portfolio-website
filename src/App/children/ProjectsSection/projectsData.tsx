@@ -23,9 +23,11 @@ const placeholderDescription = (
 	<>
 		Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam
 		necessitatibus provident nesciunt harum{" "}
-		<a className="underline-on-hover">blanditiis bldksl </a>. Cum totam sed
-		explicabo dolorum aspernatur, pariatur aut a voluptate maxime consequuntur
-		eaque quidem autem ipsa assumenda quibusdam
+		<a className="underline-on-hover" href="/">
+			blanditiis bldksl{" "}
+		</a>
+		. Cum totam sed explicabo dolorum aspernatur, pariatur aut a voluptate
+		maxime consequuntur eaque quidem autem ipsa assumenda quibusdam
 	</>
 );
 
@@ -48,6 +50,7 @@ const tech = {
 	django: { name: "Django", url: "https://www.djangoproject.com/" },
 	nodeJS: { name: "NodeJS", url: "https://nodejs.org/en/" },
 };
+
 export const allProjects: Project[] = [
 	{
 		imageUrl: swapacropImage,

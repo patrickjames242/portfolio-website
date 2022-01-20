@@ -50,7 +50,7 @@ const ProjectView: React.FC<ProjectViewProps> = ({
 
 	useLayoutEffect(() => {
 		const matcher = window.matchMedia(
-			`(min-width: ${styles.minExpandedWidth})`
+			`(min-width: ${styles.maxNarrowScreenWidth})`
 		);
 		const listener = () => {
 			const areProjectsExpanded = matcher.matches;

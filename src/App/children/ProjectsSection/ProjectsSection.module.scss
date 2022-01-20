@@ -1,11 +1,9 @@
 @use "helpers/general" as *;
 @use "helpers/colors.module" as colors;
 
-$min-expanded-width: 650px;
-
 :export {
 	bubbleEffectColor: rgba(colors.$accent, 0.9);
-	minExpandedWidth: $min-expanded-width;
+	maxNarrowScreenWidth: $project-max-narrow-screen-width;
 }
 
 .ProjectsSection {
@@ -162,7 +160,7 @@ $min-expanded-width: 650px;
 		}
 
 		&.right {
-			@media (min-width: $min-expanded-width) {
+			@media (min-width: #{$project-max-narrow-screen-width + 1}) {
 				grid-template-columns: 2fr 1.5fr;
 				grid-template-areas: "imageView detailsSection";
 
@@ -182,7 +180,7 @@ $min-expanded-width: 650px;
 			}
 		}
 
-		@media (max-width: ($min-expanded-width - 1)) {
+		@media (max-width: $project-max-narrow-screen-width) {
 			grid-template-columns: unset;
 			gap: 20px;
 

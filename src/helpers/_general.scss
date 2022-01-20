@@ -1,5 +1,7 @@
 @use "./colors.module.scss" as colors;
 
+$project-max-narrow-screen-width: 650px;
+
 @mixin absolute-pin-all-sides() {
 	position: absolute;
 	left: 0;
