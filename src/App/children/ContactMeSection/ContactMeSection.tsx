@@ -1,5 +1,7 @@
+import emailValidator from "email-validator";
+import { Formik, FormikErrors, useField } from "formik";
 import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
-import React, { ChangeEventHandler, useMemo, useRef, useState } from "react";
+import React, { useState } from "react";
 import styles from "./ContactMeSection.module.scss";
 
 export interface ContactMeSectionProps
@@ -57,6 +59,30 @@ const ContactSectionHeader: React.FC<ContactSectionHeaderProps> = ({
 
 interface ContactFormProps extends React.HTMLAttributes<HTMLFormElement> {}
 
+type Validator = (value: string) => { errorMessage: string | null };
+
+const Validators = (() => {
+	const required: Validator = (value) => {
+		return {
+			errorMessage:
+				typeof value !== "string" || value.trim().length < 1
+					? "This field is required"
+					: null,
+		};
+	};
+	const email: Validator = (value) => {
+		return {
+			errorMessage:
+				typeof value === "string" &&
+				value.length >= 1 &&
+				emailValidator.validate(value) === false
+					? "This field must contain a valid email."
+					: null,
+		};
+	};
+	return { required, email };
+})();
+
 const ContactForm: React.FC<ContactFormProps> = ({
 	...htmlAttributes
 }: ContactFormProps) => {
@@ -66,112 +92,88 @@ const ContactForm: React.FC<ContactFormProps> = ({
 		description: string;
 	};
 
-	const formRef = useRef<HTMLFormElement>(null);
-	const [touched, setTouched] = useState(false);
-	const [formValue, setFormValue] = useState<FormValues>(
-		Object.freeze({
-			fullName: "",
-			email: "",
-			description: "",
-		})
-	);
-
-	const fieldInfo = useMemo(() => {
-		function getFieldInfo(fieldName: keyof FormValues) {
-			return {
-				value: formValue[fieldName],
-				errorMessage: (() => {
-					const value = formValue[fieldName];
-					if (typeof value !== "string" || value.length < 1)
-						return "This field is required";
-					else return;
-				})(),
-				onValueChange: (value: string) => {
-					setFormValue(
-						Object.freeze({
-							...formValue,
-							[fieldName]: value,
-						})
-					);
-				},
-			};
-		}
-		const result: Record<keyof FormValues, ReturnType<typeof getFieldInfo>> = {
-			fullName: getFieldInfo("fullName"),
-			email: getFieldInfo("email"),
-			description: getFieldInfo("description"),
-		};
-		return result;
-	}, [formValue]);
-
-	const isFormValid = useMemo(() => {
-		for (const key in fieldInfo) {
-			if (fieldInfo[key as keyof FormValues].errorMessage != null) return false;
-		}
-		return true;
-	}, [fieldInfo]);
+	const validatorsForFields: Record<keyof FormValues, Validator[]> = {
+		fullName: [Validators.required],
+		email: [Validators.required, Validators.email],
+		description: [Validators.required],
+	};
 
 	return (
-		<form
-			ref={formRef}
-			{...htmlAttributes}
-			className={[styles.ContactForm, htmlAttributes.className].asClassString()}
-			onSubmit={async (event) => {
-				setTouched(true);
-				event.nativeEvent.preventDefault();
-				if (isFormValid === false) return;
-				const result = await fetch(
-					"https://hopeful-bhaskara-e203f7.netlify.app/.netlify/functions/email",
+		<Formik<FormValues>
+			initialValues={{ description: "", fullName: "", email: "" }}
+			validate={(values) => {
+				const keys: (keyof FormValues)[] = ["fullName", "email", "description"];
+				return keys.reduce<FormikErrors<FormValues>>((previous, formKey) => {
+					const validators = validatorsForFields[formKey];
+					for (const validator of validators) {
+						const errorMessage = validator(values[formKey]).errorMessage;
+						if (errorMessage) previous[formKey] = errorMessage;
+					}
+					return previous;
+				}, {});
+			}}
+			onSubmit={async (values, { setValues, setTouched }) => {
+				await fetch(
+					// "https://hopeful-bhaskara-e203f7.netlify.app/.netlify/functions/email",
+					"http://localhost:8888/.netlify/functions/email",
 					{
 						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
 						body: JSON.stringify({
-							fullName: fieldInfo.fullName,
-							email: fieldInfo.email,
-							description: fieldInfo.description,
+							fullName: values.fullName.trim(),
+							email: values.email.trim(),
+							description: values.description.trim(),
 						}),
 					}
 				);
-				console.log(result.json());
+				setValues({ email: "", description: "", fullName: "" });
+				setTouched({ email: false, description: false, fullName: false });
 			}}
 		>
-			<div className={styles.formColumns}>
-				<div className={styles.col1}>
-					<FormField
-						fieldType="single-line"
-						fieldTitle="What's your full name?"
-						placeholder="Full Name"
-						errorMessage={fieldInfo.fullName.errorMessage}
-						value={fieldInfo.fullName.value}
-						onValueChanged={fieldInfo.fullName.onValueChange}
-						touched={touched}
-					/>
-					<FormField
-						fieldType="single-line"
-						fieldTitle="What's your email address?"
-						placeholder="Email"
-						errorMessage={fieldInfo.email.errorMessage}
-						value={fieldInfo.email.value}
-						onValueChanged={fieldInfo.email.onValueChange}
-						touched={touched}
-					/>
-				</div>
-				<FormField
-					fieldType="multi-line"
-					fieldTitle="What do you want to talk about?"
-					placeholder="Message"
-					className={styles.message}
-					errorMessage={fieldInfo.description.errorMessage}
-					value={fieldInfo.description.value}
-					onValueChanged={fieldInfo.description.onValueChange}
-					touched={touched}
-				/>
-			</div>
-			<BubbleTextButton
-				title="Send Message"
-				className={styles.BubbleTextButton}
-				onClick={() => formRef?.current?.requestSubmit()}
-			/>
-		</form>
+			{({ handleSubmit, isSubmitting }) => {
+				return (
+					<form
+						{...htmlAttributes}
+						className={[
+							styles.ContactForm,
+							htmlAttributes.className,
+						].asClassString()}
+						onSubmit={handleSubmit}
+					>
+						<div className={styles.formColumns}>
+							<div className={styles.col1}>
+								<FormField
+									fieldType="single-line"
+									fieldTitle="What's your full name?"
+									placeholder="Full Name"
+									fieldKey="fullName"
+								/>
+								<FormField
+									fieldType="single-line"
+									fieldTitle="What's your email address?"
+									placeholder="Email"
+									fieldKey="email"
+								/>
+							</div>
+							<FormField
+								fieldType="multi-line"
+								fieldTitle="What do you want to talk about?"
+								placeholder="Message"
+								className={styles.message}
+								fieldKey="description"
+							/>
+						</div>
+						<BubbleTextButton
+							title="Send Message"
+							className={styles.BubbleTextButton}
+							type="submit"
+						/>
+					</form>
+				);
+			}}
+		</Formik>
 	);
 };
 
@@ -184,37 +186,28 @@ interface FormFieldProps<F extends FieldType>
 	fieldTitle: string;
 	placeholder: string;
 	fieldType?: F;
-	errorMessage?: string | null;
-	touched?: boolean;
-	value: string;
-	onValueChanged: (value: string) => void;
+	fieldKey: string;
 }
 
 function FormField<F extends FieldType>({
 	fieldTitle,
 	placeholder,
 	fieldType,
-	errorMessage,
-	touched: propsTouched,
-	value,
-	onValueChanged,
+	fieldKey,
 	...htmlAttributes
 }: FormFieldProps<F>): ReturnType<React.FC<FormFieldProps<F>>> {
 	const [focused, setFocused] = useState(false);
+	const [field, meta, helpers] = useField(fieldKey);
+
 	const textInputProps = {
 		placeholder,
+		...field,
 		onFocus: () => setFocused(true),
-		onBlur: () => setFocused(false),
-		value,
-		onChange: (
-			event: Parameters<
-				ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
-			>[0]
-		) => {
-			onValueChanged(event.target.value);
+		onBlur: (event: any) => {
+			setFocused(false);
+			field.onBlur(event);
 		},
 	};
-	const touched = propsTouched ?? true;
 	return (
 		<div
 			className={[
@@ -235,8 +228,8 @@ function FormField<F extends FieldType>({
 				}
 			})()}
 			{(() => {
-				const message = errorMessage?.trim() ?? null;
-				if (!touched || message == null || message.length < 1) return null;
+				const message = meta.error?.trim() ?? null;
+				if (!meta.touched || message == null || message.length < 1) return null;
 				return <div className={styles.errorMessage}>{"*" + message}</div>;
 			})()}
 		</div>

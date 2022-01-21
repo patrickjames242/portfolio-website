@@ -17,13 +17,16 @@ app.post("/.netlify/functions/email", (request, response) => {
 	const params = (() => {
 		const parsedJson = request.body;
 		if (typeof parsedJson !== "object" || parsedJson == null) return null;
-		const { fullName, email, description } = parsedJson;
+		let { fullName, email, description } = parsedJson;
 		if (
 			[fullName, email, description].some(
-				(x) => typeof x !== "string" || x.length < 1
+				(x) => typeof x !== "string" || x.trim().length < 1
 			)
 		)
 			return null;
+		fullName = fullName.trim();
+		email = email.trim();
+		description = description.trim();
 		return { fullName, email, description };
 	})();
 
@@ -31,7 +34,7 @@ app.post("/.netlify/functions/email", (request, response) => {
 		response
 			.json({
 				errorMessage:
-					"non-empty values for fullName, email, and description must be provided in the json body of this request.",
+					"non-empty string values for fullName, email, and description must be provided in the json body of this request.",
 			})
 			.status(400);
 		return;
