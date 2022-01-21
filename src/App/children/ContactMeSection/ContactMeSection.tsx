@@ -116,9 +116,22 @@ const ContactForm: React.FC<ContactFormProps> = ({
 			ref={formRef}
 			{...htmlAttributes}
 			className={[styles.ContactForm, htmlAttributes.className].asClassString()}
-			onSubmit={(event) => {
+			onSubmit={async (event) => {
 				setTouched(true);
 				event.nativeEvent.preventDefault();
+				if (isFormValid === false) return;
+				const result = await fetch(
+					"https://hopeful-bhaskara-e203f7.netlify.app/.netlify/functions/email",
+					{
+						method: "POST",
+						body: JSON.stringify({
+							fullName: fieldInfo.fullName,
+							email: fieldInfo.email,
+							description: fieldInfo.description,
+						}),
+					}
+				);
+				console.log(result.json());
 			}}
 		>
 			<div className={styles.formColumns}>
