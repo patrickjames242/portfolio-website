@@ -1,6 +1,7 @@
 import emailValidator from "email-validator";
 import { Formik, FormikErrors, useField } from "formik";
 import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
+import LoadingSpinner from "helper-views/LoadingSpinner/LoadingSpinner";
 import React, { useState } from "react";
 import styles from "./ContactMeSection.module.scss";
 
@@ -114,8 +115,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 			}}
 			onSubmit={async (values, { setValues, setTouched }) => {
 				await fetch(
-					// "https://hopeful-bhaskara-e203f7.netlify.app/.netlify/functions/email",
-					"http://localhost:8888/.netlify/functions/email",
+					"https://hopeful-bhaskara-e203f7.netlify.app/.netlify/functions/email",
 					{
 						method: "POST",
 						headers: {
@@ -132,7 +132,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 				setTouched({ email: false, description: false, fullName: false });
 			}}
 		>
-			{({ handleSubmit, isSubmitting }) => {
+			{({ handleSubmit, isSubmitting, setTouched }) => {
 				return (
 					<form
 						{...htmlAttributes}
@@ -165,11 +165,26 @@ const ContactForm: React.FC<ContactFormProps> = ({
 								fieldKey="description"
 							/>
 						</div>
-						<BubbleTextButton
-							title="Send Message"
-							className={styles.BubbleTextButton}
-							type="submit"
-						/>
+						<div className={styles.buttonHolder}>
+							{isSubmitting && (
+								<LoadingSpinner className={styles.LoadingSpinner} />
+							)}
+							<BubbleTextButton
+								style={
+									isSubmitting ? { opacity: 0, pointerEvents: "none" } : {}
+								}
+								title="Send Message"
+								className={styles.BubbleTextButton}
+								type="submit"
+								onClick={() => {
+									setTouched({
+										fullName: true,
+										description: true,
+										email: true,
+									});
+								}}
+							/>
+						</div>
 					</form>
 				);
 			}}
@@ -203,10 +218,7 @@ function FormField<F extends FieldType>({
 		placeholder,
 		...field,
 		onFocus: () => setFocused(true),
-		onBlur: (event: any) => {
-			setFocused(false);
-			field.onBlur(event);
-		},
+		onBlur: () => setFocused(false),
 	};
 	return (
 		<div

@@ -59,8 +59,15 @@
 		}
 	}
 
-	> .BubbleTextButton {
+	> .buttonHolder {
+		position: relative;
 		justify-self: center;
+		> .LoadingSpinner {
+			position: absolute;
+			font-size: 4px;
+			@include setprops(left top, 50%);
+			transform: translate(-50%, -50%);
+		}
 	}
 
 	@media (max-width: $project-max-narrow-screen-width) {
