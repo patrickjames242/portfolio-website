@@ -1,6 +1,7 @@
 @use "helpers/general" as *;
 @use "helpers/colors.module" as colors;
 @use "../children/NavViews/nav-constants.module" as nav-constants;
+
 .MainScreen {
 	pointer-events: none;
 	position: relative;
@@ -23,6 +24,10 @@
 
 		> *:not(.HomeScreen) {
 			pointer-events: auto;
+		}
+
+		> * {
+			margin-bottom: clamp(100px, 16vw, 200px);
 		}
 	}
 }

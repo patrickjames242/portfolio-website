@@ -76,18 +76,9 @@ export default function MainScreen() {
 					<NavBarHorizontal className={styles.NavBarHorizontal} />
 					<div className={styles.content}>
 						<HomeSection className={styles.HomeScreen} />
-						<AboutMeSection
-							ref={sectionRefs.aboutMe}
-							style={{ marginTop: 200 }}
-						/>
-						<ProjectsSection
-							ref={sectionRefs.projects}
-							style={{ marginTop: 200 }}
-						/>
-						<ContactMeSection
-							ref={sectionRefs.contactMe}
-							style={{ marginTop: 200, marginBottom: 200 }}
-						/>
+						<AboutMeSection ref={sectionRefs.aboutMe} />
+						<ProjectsSection ref={sectionRefs.projects} />
+						<ContactMeSection ref={sectionRefs.contactMe} />
 					</div>
 				</div>
 			</NavDrawer>
