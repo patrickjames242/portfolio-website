@@ -1,5 +1,5 @@
 import { animated, useSpring } from "@react-spring/web";
-import { AppContext } from "App/helpers";
+import { MainScreenContext } from "App/helpers";
 import { clampNum, useDidValueChange } from "helpers/hooks";
 import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
 import ReactDOM from "react-dom";
@@ -13,7 +13,7 @@ export interface NavDrawerProps extends React.HTMLAttributes<HTMLDivElement> {}
 const NavDrawer: React.FC<NavDrawerProps> = ({
 	...reactProps
 }: NavDrawerProps) => {
-	const appContext = useContext(AppContext);
+	const appContext = useContext(MainScreenContext);
 	const [menuWidth, setMenuWidth] = useState(0);
 
 	const shouldBeOpen = appContext.menuDrawerIsOpened;
@@ -106,7 +106,7 @@ const MenuView: React.FC<MenuViewProps> = ({
 	menuWidth,
 	...htmlAttributes
 }: MenuViewProps) => {
-	const appContext = useContext(AppContext);
+	const appContext = useContext(MainScreenContext);
 	const shouldBeOpenDidChange = useDidValueChange(shouldBeOpen);
 
 	return (

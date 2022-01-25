@@ -18,12 +18,10 @@ const NavBarVertical: React.FC<NavBarVerticalProps> = ({
 				htmlAttributes.className,
 			].asClassString()}
 		>
-			{appRoutes.map(({ path, name }, i) => (
+			{appRoutes.map(({ routeType, name }, i) => (
 				<NavLink
 					key={name}
-					selected={i === 0}
-					to={path}
-					name={name}
+					routeType={routeType}
 					style={{ fontSize: 21, fontWeight: 400 }}
 				></NavLink>
 			))}

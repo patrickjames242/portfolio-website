@@ -1,3 +1,5 @@
+/*eslint-disable no-extend-native */
+
 export {};
 
 declare global {
@@ -9,8 +11,11 @@ declare global {
 		): Result[];
 		/// groups the items provided according to the key provided
 		groupBy<Key>(keyGetter: (item: T) => Key): Map<string, T[]>;
-
+		firstWhere(predicate: (item: T) => boolean): T | null;
 		asClassString(): string | undefined;
+
+		// /// return true from sorter if the first element should come before the second. otherwise return false
+		// sortSimple(sorter: (i1: T, i2: T) => boolean): T[];
 	}
 }
 
@@ -38,7 +43,14 @@ declare global {
 	return map;
 };
 
-(Array as any).prototype.asClassString = function (
+Array.prototype.firstWhere = function (this: Array<any>, predicate) {
+	for (const item of this) {
+		if (predicate(item)) return item;
+	}
+	return null;
+};
+
+Array.prototype.asClassString = function (
 	this: Array<any>
 ): string | undefined {
 	const validClassNames = this.flatMap((x) => {
@@ -57,3 +69,13 @@ declare global {
 	});
 	return validClassNames.join(" ");
 };
+
+// Array.prototype.sortSimple = function (this: Array<any>, sorter) {
+// 	return this.sort((i1, i2) => {
+// 		if (sorter(i1, i2)) {
+// 			return -1;
+// 		} else {
+// 			return 1;
+// 		}
+// 	});
+// }

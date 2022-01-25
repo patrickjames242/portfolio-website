@@ -8,12 +8,14 @@ import styles from "./ContactMeSection.module.scss";
 export interface ContactMeSectionProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
 
-const ContactMeSection: React.FC<ContactMeSectionProps> = ({
-	...htmlAttributes
-}: ContactMeSectionProps) => {
+const ContactMeSection: React.ForwardRefRenderFunction<
+	HTMLDivElement,
+	ContactMeSectionProps
+> = ({ ...htmlAttributes }, ref) => {
 	return (
 		<div
 			{...htmlAttributes}
+			ref={ref}
 			className={[
 				styles.ContactMeSection,
 				htmlAttributes.className,
@@ -25,7 +27,7 @@ const ContactMeSection: React.FC<ContactMeSectionProps> = ({
 	);
 };
 
-export default ContactMeSection;
+export default React.forwardRef(ContactMeSection);
 
 interface ContactSectionHeaderProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
@@ -212,7 +214,7 @@ function FormField<F extends FieldType>({
 	...htmlAttributes
 }: FormFieldProps<F>): ReturnType<React.FC<FormFieldProps<F>>> {
 	const [focused, setFocused] = useState(false);
-	const [field, meta, helpers] = useField(fieldKey);
+	const [field, meta] = useField(fieldKey);
 
 	const textInputProps = {
 		placeholder,

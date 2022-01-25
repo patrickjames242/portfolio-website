@@ -9,12 +9,14 @@ import styles from "./ProjectsSection.module.scss";
 export interface ProjectsSectionProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
 
-const ProjectsSection: React.FC<ProjectsSectionProps> = ({
-	...htmlAttributes
-}: ProjectsSectionProps) => {
+const ProjectsSection: React.ForwardRefRenderFunction<
+	HTMLDivElement,
+	ProjectsSectionProps
+> = ({ ...htmlAttributes }, ref) => {
 	return (
 		<div
 			{...htmlAttributes}
+			ref={ref}
 			className={[
 				styles.ProjectsSection,
 				htmlAttributes.className,
@@ -33,6 +35,8 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
 		</div>
 	);
 };
+
+export default React.forwardRef(ProjectsSection);
 
 interface ProjectViewProps extends React.HTMLAttributes<HTMLDivElement> {
 	alignment: "left" | "right";
@@ -139,5 +143,3 @@ const ProjectView: React.FC<ProjectViewProps> = ({
 		</div>
 	);
 };
-
-export default ProjectsSection;

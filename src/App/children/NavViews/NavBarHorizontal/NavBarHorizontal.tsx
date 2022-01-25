@@ -1,4 +1,4 @@
-import { AppContext } from "App/helpers";
+import { MainScreenContext } from "App/helpers";
 import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -11,15 +11,20 @@ import styles from "./NavBarHorizontal.module.scss";
 export interface NavBarHorizontalProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
 
-function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
-	const appContext = useContext(AppContext);
+const calculateShouldContractNavBar = () => window.scrollY > 5;
 
-	const [shouldContractNavBar, setShouldContractNavBar] = useState(false);
+function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
+	const appContext = useContext(MainScreenContext);
+
+	const [shouldContractNavBar, setShouldContractNavBar] = useState(
+		calculateShouldContractNavBar()
+	);
 
 	useEffect(() => {
 		const listener = () => {
-			setShouldContractNavBar(window.scrollY > 5);
+			setShouldContractNavBar(calculateShouldContractNavBar);
 		};
+		listener();
 		window.addEventListener("scroll", listener);
 		return () => {
 			window.removeEventListener("scroll", listener);
@@ -43,8 +48,8 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 				</div>
 			</Link>
 			<div className={styles.rightSide}>
-				{appRoutes.map(({ path, name }, i) => (
-					<NavLink key={name} selected={i === 0} to={path} name={name} />
+				{appRoutes.map(({ routeType, name }, i) => (
+					<NavLink key={name} routeType={routeType} />
 				))}
 				<BubbleTextButton className={styles.resumeButton} title="Resume" />
 				<button

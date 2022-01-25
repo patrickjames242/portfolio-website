@@ -1,23 +1,21 @@
 @use "helpers/general" as *;
 @use "helpers/colors.module" as colors;
-@use "./children/NavViews/nav-constants.module" as nav-constants;
-
-:export {
-	navBarExpandedHeight: nav-constants.$expanded-nav-bar-height;
-}
-
-.App {
+@use "../children/NavViews/nav-constants.module" as nav-constants;
+.MainScreen {
 	pointer-events: none;
 	position: relative;
 	.NavBarHorizontal {
-		position: sticky;
+		position: fixed;
 		top: 0;
+		left: 0;
+		right: 0;
 	}
 
 	> .content {
 		max-width: 1200px;
 		margin-left: auto;
 		margin-right: auto;
+		margin-top: nav-constants.$expanded-nav-bar-height;
 
 		> * {
 			margin: {
