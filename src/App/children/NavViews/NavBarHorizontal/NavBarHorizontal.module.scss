@@ -10,7 +10,7 @@
 	padding-left: var(--screen-side-insets);
 	padding-right: var(--screen-side-insets);
 	transition-duration: 0.3s;
-	transition-property: height, box-shadow, background-color;
+	transition-property: height, margin-bottom, box-shadow, background-color;
 	z-index: 10;
 	pointer-events: none;
 
@@ -22,8 +22,11 @@
 
 	&.contracted {
 		height: nav-constants.$compact-nav-bar-height;
+		margin-bottom: nav-constants.$expanded-nav-bar-height -
+			nav-constants.$compact-nav-bar-height;
 		@include box-shadow(rgba(black, 0.2));
 		background-color: colors.$main-background;
+		pointer-events: auto;
 	}
 
 	> .nameBox {
@@ -37,7 +40,7 @@
 		@include fade-on-hover;
 
 		> svg {
-			margin-top: -8px;
+			margin-top: -5px;
 			width: 35px;
 			fill: colors.$accent;
 		}
@@ -46,6 +49,8 @@
 			font-size: 22px;
 			font-weight: 500;
 			line-height: 1;
+			margin-top: 0.2em;
+
 			> .firstName {
 				color: colors.$lighter-text;
 			}

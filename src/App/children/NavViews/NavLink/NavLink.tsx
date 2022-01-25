@@ -33,7 +33,7 @@ const NavLink: React.FC<NavLinkProps> = ({
 			href={routeInfo.path}
 			onClick={(event) => {
 				event.preventDefault();
-				if (getInfoForRoutePath(location.pathname).routeType === routeType) {
+				if (getInfoForRoutePath(location.pathname)?.routeType === routeType) {
 					mainScreenContext.animateToRouteType(routeType);
 				} else {
 					navigate(routeInfo.path);

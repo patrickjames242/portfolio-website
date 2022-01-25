@@ -31,9 +31,9 @@ export default function MainScreen() {
 	const { scrollScreenToYValue } = useReactSpringWindowScroller();
 
 	const animateToRouteType = useCallback(
-		(routeType: RouteType) => {
+		(routeType: RouteType | null) => {
 			const yPositionToScrollTo = (() => {
-				function refForRouteType(routeType: RouteType) {
+				function refForRouteType(routeType: RouteType | null) {
 					switch (routeType) {
 						case RouteType.aboutMe:
 							return sectionRefs.aboutMe;

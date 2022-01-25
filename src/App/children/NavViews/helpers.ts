@@ -61,17 +61,22 @@ export function getInfoForRoutePath(path: string) {
 
 	for (const route of routesSorted) {
 		if (
-			matchPath({ path: route.path, caseSensitive: false, end: false }, path) !=
-			null
+			matchPath(
+				{
+					path: route.path,
+					caseSensitive: false,
+					end: route.routeType === RouteType.home,
+				},
+				path
+			) != null
 		) {
 			return route;
 		}
 	}
-
-	throw new Error("this point should not be reached");
+	return null;
 }
 
-export function useRouteTypeForCurrentRoute(): RouteType {
+export function useRouteTypeForCurrentRoute(): RouteType | null {
 	const location = useLocation();
-	return getInfoForRoutePath(location.pathname)!.routeType;
+	return getInfoForRoutePath(location.pathname)?.routeType ?? null;
 }

@@ -1,8 +1,8 @@
 import { MainScreenContext } from "App/helpers";
 import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { appRoutes } from "../helpers";
+import { useNavigate } from "react-router-dom";
+import { appRoutes, RouteType, useRouteTypeForCurrentRoute } from "../helpers";
 import MenuSVG from "../MenuSVG";
 import NavLink from "../NavLink/NavLink";
 import BracketsSVG from "./brackets-icon";
@@ -14,7 +14,9 @@ export interface NavBarHorizontalProps
 const calculateShouldContractNavBar = () => window.scrollY > 5;
 
 function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
-	const appContext = useContext(MainScreenContext);
+	const mainScreenContext = useContext(MainScreenContext);
+	const navigate = useNavigate();
+	const currentRouteType = useRouteTypeForCurrentRoute();
 
 	const [shouldContractNavBar, setShouldContractNavBar] = useState(
 		calculateShouldContractNavBar()
@@ -40,13 +42,24 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 				shouldContractNavBar ? styles.contracted : undefined,
 			].asClassString()}
 		>
-			<Link className={[styles.nameBox].asClassString()} to="/">
+			<a
+				className={[styles.nameBox].asClassString()}
+				href="/"
+				onClick={(event) => {
+					event.preventDefault();
+					if (currentRouteType === RouteType.home) {
+						mainScreenContext?.animateToRouteType(RouteType.home);
+					} else {
+						navigate("/");
+					}
+				}}
+			>
 				<BracketsSVG />
 				<div className={[styles.nameText].asClassString()}>
 					<span className={styles.firstName}>Patrick</span>{" "}
 					<span className={styles.lastName}>Hanna</span>
 				</div>
-			</Link>
+			</a>
 			<div className={styles.rightSide}>
 				{appRoutes.map(({ routeType, name }, i) => (
 					<NavLink key={name} routeType={routeType} />
@@ -55,7 +68,9 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 				<button
 					className={[styles.menuButton].asClassString()}
 					onClick={() =>
-						appContext.setMenuDrawerOpened(!appContext.menuDrawerIsOpened)
+						mainScreenContext.setMenuDrawerOpened(
+							!mainScreenContext.menuDrawerIsOpened
+						)
 					}
 				>
 					<MenuSVG />
