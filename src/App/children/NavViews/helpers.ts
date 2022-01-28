@@ -1,4 +1,6 @@
-import { matchPath, useLocation } from "react-router-dom";
+import { MainScreenContext } from "App/MainScreen/helpers";
+import { useContext } from "react";
+import { matchPath, useLocation, useNavigate } from "react-router-dom";
 
 export enum RouteType {
 	home,
@@ -79,4 +81,18 @@ export function getInfoForRoutePath(path: string) {
 export function useRouteTypeForCurrentRoute(): RouteType | null {
 	const location = useLocation();
 	return getInfoForRoutePath(location.pathname)?.routeType ?? null;
+}
+
+export function useRouteTypeNavigation() {
+	const location = useLocation();
+	const mainScreenContext = useContext(MainScreenContext);
+	const navigate = useNavigate();
+	return (routeType: RouteType) => {
+		const routeInfo = getInfoForRouteType(routeType);
+		if (getInfoForRoutePath(location.pathname)?.routeType === routeType) {
+			mainScreenContext.animateToRouteType(routeType);
+		} else {
+			navigate(routeInfo.path);
+		}
+	};
 }

@@ -7,7 +7,7 @@ export interface BubbleTextButtonProps
 	title: string;
 }
 
-function BubbleTextButton(props: BubbleTextButtonProps) {
+export function BubbleTextButton(props: BubbleTextButtonProps) {
 	return (
 		<button
 			{...props}
@@ -19,4 +19,19 @@ function BubbleTextButton(props: BubbleTextButtonProps) {
 	);
 }
 
-export default BubbleTextButton;
+export interface BubbleTextAnchorProps
+	extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+	title: string;
+}
+
+export function BubbleTextAnchor(props: BubbleTextAnchorProps) {
+	return (
+		<a
+			{...props}
+			className={[styles.BubbleTextButton, props.className].asClassString()}
+		>
+			<BubbleEffect className={styles.BubbleEffect} />
+			<div className={styles.title}>{props.title}</div>
+		</a>
+	);
+}

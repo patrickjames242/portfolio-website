@@ -1,4 +1,4 @@
-import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
+import { BubbleTextButton } from "helper-views/BubbleTextButton/BubbleTextButton";
 import React from "react";
 import { appRoutes } from "../helpers";
 import NavLink from "../NavLink/NavLink";

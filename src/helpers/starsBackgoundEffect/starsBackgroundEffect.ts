@@ -1,3 +1,5 @@
+import styles from "./starsBackgroundEffect.module.scss";
+
 // got this from https://codepen.io/hakimel/pen/bzrZGo
 
 /*          *     .        *  .    *    *   . 
@@ -10,7 +12,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
 
 	const context = canvas.getContext("2d")!;
 
-	const STAR_COLOR = "rgba(227, 99, 39, 0.9)";
+	const STAR_COLOR = styles.starColor;
 	const STAR_SIZE = 4;
 	const STAR_MIN_SCALE = 0.2;
 	const OVERFLOW_THRESHOLD = 50;

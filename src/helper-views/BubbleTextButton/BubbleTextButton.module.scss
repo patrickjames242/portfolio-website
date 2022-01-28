@@ -2,19 +2,22 @@
 @use "helpers/colors.module" as colors;
 
 .BubbleTextButton {
+	$font-weight: 600;
 	position: relative;
 	display: inline-grid;
 	place-items: center;
-	padding: 20px;
+	padding: 1.5em;
+	@include setprops(padding-top padding-bottom, 1em);
 	border-radius: 8px;
 	border: 2px solid colors.$accent;
-	font-weight: 600;
+	font-weight: $font-weight;
 	color: colors.$accent;
 	box-shadow: colors.$accent 0px 0px 3px 0px;
 	transition-property: box-shadow;
 	transition-duration: 0.7s;
 	overflow: hidden;
 	pointer-events: auto;
+	box-sizing: border-box;
 
 	> .BubbleEffect {
 		@include absolute-pin-all-sides;
@@ -25,10 +28,12 @@
 		transition-duration: 0.7s;
 		pointer-events: none;
 		position: relative;
+		margin-top: 0.3em;
 	}
 
 	&:hover {
 		color: colors.$main-background;
 		box-shadow: 0 0 1rem colors.$accent;
+		font-weight: $font-weight;
 	}
 }

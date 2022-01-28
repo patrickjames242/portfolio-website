@@ -8,12 +8,8 @@
 
 	> .resumeButton {
 		margin-top: 20px;
-		font-weight: 400;
-		padding: {
-			top: 18px;
-			bottom: 18px;
-			left: 40px;
-			right: 40px;
-		}
+		font-size: 17px;
+		padding: 1em;
+		@include setprops(padding-left padding-right, 2.5em);
 	}
 }

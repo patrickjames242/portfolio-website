@@ -1,0 +1,5 @@
+@use "../colors.module" as colors;
+
+:export {
+	starColor: rgba(colors.$accent, 0.9);
+}

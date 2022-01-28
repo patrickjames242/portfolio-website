@@ -1,11 +1,32 @@
-import { useRef } from "react";
+import { RouteType } from "App/children/NavViews/helpers";
+import React, { useRef } from "react";
 import { useSpring } from "react-spring";
 import navConstants from "../children/NavViews/_nav-constants.module.scss";
+
+export interface MainScreenContextValue {
+	menuDrawerIsOpened: boolean;
+	currentlyVisibleScreenSection: RouteType | null;
+	screenSectionCurrentlyBeingAnimatedTo: RouteType | null;
+	setMenuDrawerOpened(shouldBeOpened: boolean): void;
+	animateToRouteType(routeType: RouteType): void;
+}
+
+export const MainScreenContext = React.createContext<MainScreenContextValue>({
+	menuDrawerIsOpened: false,
+	currentlyVisibleScreenSection: null,
+	screenSectionCurrentlyBeingAnimatedTo: null,
+	setMenuDrawerOpened: () => {},
+	animateToRouteType: () => {},
+});
+
+export function getCompactNavBarHeight() {
+	return parseFloat(navConstants.compactNavBarHeight);
+}
 
 export function getWindowScrollValueForSection(
 	sectionRootElement: HTMLDivElement
 ) {
-	const navBarHeight = parseFloat(navConstants.compactNavBarHeight);
+	const navBarHeight = getCompactNavBarHeight();
 	const elementHeight = sectionRootElement.clientHeight ?? 0;
 	const elementDistanceFromTop =
 		window.scrollY + sectionRootElement.getBoundingClientRect().top;

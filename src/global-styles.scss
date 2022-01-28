@@ -19,6 +19,10 @@ body {
 * {
 	margin: 0;
 	padding: 0.02px;
+	&::selection {
+		background-color: rgb(192, 84, 33);
+		color: colors.$light-text;
+	}
 }
 
 body {
@@ -37,6 +41,7 @@ button {
 	border: none;
 	color: inherit;
 	font-size: inherit;
+	font-family: inherit;
 }
 
 button,

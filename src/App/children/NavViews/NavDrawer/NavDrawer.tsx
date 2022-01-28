@@ -1,7 +1,14 @@
 import { animated, useSpring } from "@react-spring/web";
-import { MainScreenContext } from "App/helpers";
-import { clampNum, useDidValueChange } from "helpers/hooks";
-import React, { useContext, useEffect, useLayoutEffect, useState } from "react";
+import { MainScreenContext } from "App/MainScreen/helpers";
+import { clampNum } from "helpers/hooks";
+import React, {
+	useContext,
+	useEffect,
+	useImperativeHandle,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import ReactDOM from "react-dom";
 import NavBarVertical from "../NavBarVertical/NavBarVertical";
 import navConstants from "../_nav-constants.module.scss";
@@ -17,16 +24,17 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
 	const [menuWidth, setMenuWidth] = useState(0);
 
 	const shouldBeOpen = appContext.menuDrawerIsOpened;
-	const shouldBeOpenChanged = useDidValueChange(shouldBeOpen);
+
+	const menuRef = useRef<MenuViewRef>(null);
 
 	useLayoutEffect(() => {
 		function updateMenuWidth() {
-			setMenuWidth(
-				clampNum(window.innerWidth - 50, {
-					min: 200,
-					max: 400,
-				})
-			);
+			const newMenuWidth = clampNum(window.innerWidth - 50, {
+				min: 200,
+				max: 400,
+			});
+			setMenuWidth(newMenuWidth);
+			menuRef.current?.setMenuWidth(newMenuWidth);
 		}
 		function closeMenuIfNeeded() {
 			if (
@@ -60,7 +68,6 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
 			style={{
 				...reactProps.style,
 				...useSpring({
-					immediate: shouldBeOpenChanged === false,
 					right: shouldBeOpen ? menuWidth : 0,
 				}),
 			}}
@@ -86,52 +93,79 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
 					}
 				}}
 			/>
-			{ReactDOM.createPortal(
-				<MenuView shouldBeOpen={shouldBeOpen} menuWidth={menuWidth} />,
-				document.body
-			)}
+			{ReactDOM.createPortal(<MenuView ref={menuRef} />, document.body)}
 		</animated.div>
 	);
 };
 
 export default NavDrawer;
 
-interface MenuViewProps extends React.HTMLAttributes<HTMLDivElement> {
-	shouldBeOpen: boolean;
-	menuWidth: number;
+interface MenuViewRef {
+	setMenuWidth(width: number): void;
 }
 
-const MenuView: React.FC<MenuViewProps> = ({
-	shouldBeOpen,
-	menuWidth,
-	...htmlAttributes
-}: MenuViewProps) => {
-	const appContext = useContext(MainScreenContext);
-	const shouldBeOpenDidChange = useDidValueChange(shouldBeOpen);
+interface MenuViewProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-	return (
-		<animated.div
-			{...htmlAttributes}
-			className={styles.MenuView}
-			style={{
+const MenuView = (() => {
+	const MenuView: React.ForwardRefRenderFunction<MenuViewRef, MenuViewProps> = (
+		{ ...htmlAttributes }: MenuViewProps,
+		ref
+	) => {
+		const appContext = useContext(MainScreenContext);
+		const shouldBeOpen = appContext.menuDrawerIsOpened;
+
+		const latestMenuWidth = useRef<number>(0);
+
+		const getRootStyleProps = useRef(
+			(shouldBeOpen: boolean, menuWidth: number) => ({
+				right: shouldBeOpen ? 0 : -menuWidth,
 				width: menuWidth,
-				...useSpring({
-					immediate: shouldBeOpenDidChange === false,
-					right: shouldBeOpen ? 0 : -menuWidth,
-				}),
-			}}
-		>
-			<div className={styles.content}>
-				<NavBarVertical className={styles.NavBarVertical} />
-			</div>
-			<button
-				className={styles.xButton}
-				onClick={() => {
-					appContext?.setMenuDrawerOpened(false);
-				}}
+			})
+		).current;
+
+		const [springStyles, api] = useSpring(() => getRootStyleProps);
+
+		useImperativeHandle(
+			ref,
+			() => ({
+				setMenuWidth(width) {
+					if (latestMenuWidth.current === width) return;
+					latestMenuWidth.current = width;
+					api.start({
+						...getRootStyleProps(shouldBeOpen, latestMenuWidth.current),
+						immediate: true,
+					});
+				},
+			}),
+			[api, getRootStyleProps, shouldBeOpen]
+		);
+
+		useLayoutEffect(() => {
+			api.start({
+				to: getRootStyleProps(shouldBeOpen, latestMenuWidth.current),
+			});
+		}, [api, getRootStyleProps, shouldBeOpen]);
+
+		return (
+			<animated.div
+				{...htmlAttributes}
+				className={styles.MenuView}
+				style={springStyles}
 			>
-				<XIconSVG />
-			</button>
-		</animated.div>
-	);
-};
+				<div className={styles.content}>
+					<NavBarVertical className={styles.NavBarVertical} />
+				</div>
+				<button
+					className={styles.xButton}
+					onClick={() => {
+						appContext?.setMenuDrawerOpened(false);
+					}}
+				>
+					<XIconSVG />
+				</button>
+			</animated.div>
+		);
+	};
+
+	return React.forwardRef(MenuView);
+})();

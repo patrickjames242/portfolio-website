@@ -1,6 +1,6 @@
 import emailValidator from "email-validator";
 import { Formik, FormikErrors, useField } from "formik";
-import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
+import { BubbleTextButton } from "helper-views/BubbleTextButton/BubbleTextButton";
 import LoadingSpinner from "helper-views/LoadingSpinner/LoadingSpinner";
 import React, { useState } from "react";
 import styles from "./ContactMeSection.module.scss";
@@ -176,7 +176,6 @@ const ContactForm: React.FC<ContactFormProps> = ({
 									isSubmitting ? { opacity: 0, pointerEvents: "none" } : {}
 								}
 								title="Send Message"
-								className={styles.BubbleTextButton}
 								type="submit"
 								onClick={() => {
 									setTouched({

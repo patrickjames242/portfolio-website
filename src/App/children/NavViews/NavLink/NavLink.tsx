@@ -1,11 +1,10 @@
-import { MainScreenContext } from "App/helpers";
-import React, { useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { MainScreenContext } from "App/MainScreen/helpers";
+import React, { useContext, useMemo } from "react";
 import TriangleIconSVG from "../../../../helper-views/svg/TriangleSVG";
 import {
-	getInfoForRoutePath,
 	getInfoForRouteType,
 	RouteType,
+	useRouteTypeNavigation,
 } from "../helpers";
 import styles from "./NavLink.module.scss";
 
@@ -18,27 +17,43 @@ const NavLink: React.FC<NavLinkProps> = ({
 	routeType,
 	...reactProps
 }: NavLinkProps) => {
-	const location = useLocation();
-	const navigate = useNavigate();
+	const navigateToRouteType = useRouteTypeNavigation();
 	const routeInfo = getInfoForRouteType(routeType);
 	const mainScreenContext = useContext(MainScreenContext);
+	const isSelected = useMemo(() => {
+		if (mainScreenContext.screenSectionCurrentlyBeingAnimatedTo != null) {
+			return (
+				mainScreenContext.screenSectionCurrentlyBeingAnimatedTo === routeType
+			);
+		} else {
+			return mainScreenContext.currentlyVisibleScreenSection === routeType;
+		}
+	}, [
+		mainScreenContext.currentlyVisibleScreenSection,
+		mainScreenContext.screenSectionCurrentlyBeingAnimatedTo,
+		routeType,
+	]);
 	return (
 		<a
 			{...reactProps}
 			className={[
 				styles.NavLink,
-				// selected ? styles.selected : undefined,
+				isSelected ? styles.selected : undefined,
 				reactProps.className,
 			].asClassString()}
 			href={routeInfo.path}
 			onClick={(event) => {
 				event.preventDefault();
-				if (getInfoForRoutePath(location.pathname)?.routeType === routeType) {
-					mainScreenContext.animateToRouteType(routeType);
-				} else {
-					navigate(routeInfo.path);
-				}
 				mainScreenContext.setMenuDrawerOpened(false);
+
+				/*
+					The disappearance and reappearance of the scroll bar (caused by the showing and 
+					hiding of the menu) messes with our calculation of the scroll position of screen 
+					sections. I'm using set timeout to give the scroll bar a chance to show up before we try scrolling to the appropriate section
+				*/
+				setTimeout(() => {
+					navigateToRouteType(routeType);
+				}, 0);
 			}}
 		>
 			<TriangleIconSVG />

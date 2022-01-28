@@ -1,5 +1,5 @@
-import { MainScreenContext } from "App/helpers";
-import BubbleTextButton from "helper-views/BubbleTextButton/BubbleTextButton";
+import { MainScreenContext } from "App/MainScreen/helpers";
+import { BubbleTextButton } from "helper-views/BubbleTextButton/BubbleTextButton";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { appRoutes, RouteType, useRouteTypeForCurrentRoute } from "../helpers";
