@@ -1,4 +1,4 @@
-import { BubbleTextButton } from "helper-views/BubbleTextButton/BubbleTextButton";
+import { BubbleTextAnchor } from "helper-views/BubbleTextButton/BubbleTextButton";
 import React from "react";
 import { appRoutes } from "../helpers";
 import NavLink from "../NavLink/NavLink";
@@ -25,10 +25,12 @@ const NavBarVertical: React.FC<NavBarVerticalProps> = ({
 					style={{ fontSize: 21, fontWeight: 400 }}
 				></NavLink>
 			))}
-			<BubbleTextButton
+			<BubbleTextAnchor
 				title="Resume"
 				className={styles.resumeButton}
-			></BubbleTextButton>
+				target="_blank"
+				href="resume.pdf"
+			></BubbleTextAnchor>
 		</div>
 	);
 };

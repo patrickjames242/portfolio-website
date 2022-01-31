@@ -1,5 +1,5 @@
 import { MainScreenContext } from "App/MainScreen/helpers";
-import { BubbleTextButton } from "helper-views/BubbleTextButton/BubbleTextButton";
+import { BubbleTextAnchor } from "helper-views/BubbleTextButton/BubbleTextButton";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { appRoutes, RouteType, useRouteTypeForCurrentRoute } from "../helpers";
@@ -64,7 +64,12 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 				{appRoutes.map(({ routeType, name }, i) => (
 					<NavLink key={name} routeType={routeType} />
 				))}
-				<BubbleTextButton className={styles.resumeButton} title="Resume" />
+				<BubbleTextAnchor
+					title="Resume"
+					className={styles.resumeButton}
+					target="_blank"
+					href="resume.pdf"
+				></BubbleTextAnchor>
 				<button
 					className={[styles.menuButton].asClassString()}
 					onClick={() =>
