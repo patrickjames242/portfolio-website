@@ -1,6 +1,6 @@
 import { MainScreenContext } from "App/MainScreen/helpers";
 import React, { useContext, useMemo } from "react";
-import TriangleIconSVG from "../../../../helper-views/svg/TriangleSVG";
+import TriangleIconSVG from "../../../../../helper-views/svg/TriangleSVG";
 import {
 	getInfoForRouteType,
 	RouteType,

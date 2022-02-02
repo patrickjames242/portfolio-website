@@ -1,7 +1,7 @@
-import { RouteType } from "App/children/NavViews/helpers";
+import { RouteType } from "App/MainScreen/children/NavViews/helpers";
 import React, { useRef } from "react";
 import { useSpring } from "react-spring";
-import navConstants from "../children/NavViews/_nav-constants.module.scss";
+import navConstants from "./children/NavViews/_nav-constants.module.scss";
 
 export interface MainScreenContextValue {
 	menuDrawerIsOpened: boolean;

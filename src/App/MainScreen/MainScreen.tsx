@@ -1,15 +1,15 @@
 import {
 	RouteType,
 	useRouteTypeForCurrentRoute,
-} from "App/children/NavViews/helpers";
+} from "App/MainScreen/children/NavViews/helpers";
 import "helpers/prototypeExtensions";
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
-import AboutMeSection from "../children/AboutMeSection/AboutMeSection";
-import ContactMeSection from "../children/ContactMeSection/ContactMeSection";
-import HomeSection from "../children/HomeSection/HomeSection";
-import NavBarHorizontal from "../children/NavViews/NavBarHorizontal/NavBarHorizontal";
-import NavDrawer from "../children/NavViews/NavDrawer/NavDrawer";
-import ProjectsSection from "../children/ProjectsSection/ProjectsSection";
+import AboutMeSection from "./children/AboutMeSection/AboutMeSection";
+import ContactMeSection from "./children/ContactMeSection/ContactMeSection";
+import HomeSection from "./children/HomeSection/HomeSection";
+import NavBarHorizontal from "./children/NavViews/NavBarHorizontal/NavBarHorizontal";
+import NavDrawer from "./children/NavViews/NavDrawer/NavDrawer";
+import ProjectsSection from "./children/ProjectsSection/ProjectsSection";
 import {
 	getCompactNavBarHeight,
 	getWindowScrollValueForSection,
