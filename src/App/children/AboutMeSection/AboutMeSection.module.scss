@@ -1,10 +1,115 @@
 @use "helpers/general" as *;
 @use "helpers/colors.module" as colors;
 
+$compactMaxWidth: 700px;
+$imageLinedUpWithDescriptionMaxWidth: 1000px;
+
+:export {
+	compactMaxWidth: $compactMaxWidth;
+	imageLinedUpWithDescriptionMaxWidth: $imageLinedUpWithDescriptionMaxWidth;
+}
+
 .AboutMeSection {
-	> .content {
-		height: 500px;
+	position: relative;
+	display: grid;
+	gap: 80px;
+	padding: {
+		top: 80px;
+		bottom: 80px;
+	}
+
+	> .backgroundView {
+		width: 100vw;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		top: 0;
+		bottom: 0;
 		background-color: colors.$lighter-background;
-		margin-top: 60px;
+	}
+
+	> *:not(.backgroundView) {
+		position: relative;
+	}
+
+	> .IntroductionSection {
+		.SectionHeader {
+			margin-bottom: 35px;
+		}
+		> .content {
+			display: grid;
+			grid-template-columns: 1.5fr 1fr;
+			gap: 50px;
+			align-items: center;
+
+			> .leftSide {
+				font-size: 20px;
+				line-height: 1.4;
+				> p {
+					color: colors.$lighter-text;
+				}
+
+				> p + p {
+					margin-top: 1em;
+				}
+			}
+
+			.imageHolder {
+				justify-self: center;
+				max-width: 300px;
+				position: relative;
+				--inset: 25px;
+				margin-top: var(--inset);
+				margin-right: var(--inset);
+
+				> img {
+					display: block;
+					width: 100%;
+					border-radius: 13px;
+					position: relative;
+					z-index: 2;
+				}
+
+				> .border {
+					content: "";
+					position: absolute;
+					top: calc(-1 * var(--inset));
+					left: var(--inset);
+					right: calc(-1 * var(--inset));
+					bottom: var(--inset);
+					border: 3px solid colors.$accent;
+					border-radius: 17px;
+				}
+			}
+
+			@media (max-width: $imageLinedUpWithDescriptionMaxWidth) {
+				align-items: start;
+			}
+
+			@media (max-width: $compactMaxWidth) {
+				grid-template-columns: unset;
+				gap: 30px;
+				.imageHolder {
+					grid-row: 1/2;
+				}
+			}
+		}
+	}
+
+	> .TechnologiesSection {
+		display: grid;
+		gap: 30px;
+		max-width: 900px;
+
+		> .technologiesGrid {
+			$img-size: 60px;
+			display: grid;
+			grid-template-columns: repeat(auto-fill, $img-size);
+			gap: 20px;
+			justify-content: space-around;
+			> img {
+				@include setprops(width height, $img-size);
+			}
+		}
 	}
 }

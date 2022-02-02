@@ -37,8 +37,6 @@
 
 		> .imageView {
 			position: relative;
-			display: block;
-			box-shadow: 0 0 1rem rgba(colors.$accent, 0);
 			border-radius: 10px;
 			overflow: hidden;
 			grid-area: imageView;

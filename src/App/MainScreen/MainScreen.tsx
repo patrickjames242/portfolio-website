@@ -18,7 +18,6 @@ import {
 	useReactSpringWindowScroller,
 } from "./helpers";
 import styles from "./MainScreen.module.scss";
-
 export default function MainScreen() {
 	const [shouldDrawerBeOpen, setShouldDrawerBeOpen] = useState(false);
 	const [currentlyVisibleScreenSection, setCurrentlyVisibleScreenSection] =

@@ -3,20 +3,24 @@
 
 .SectionHeader {
 	display: grid;
-	grid-template-columns: auto auto 1fr;
+	grid-template-columns: auto auto;
+	grid-auto-flow: column;
+	grid-auto-columns: 1fr;
 	align-items: center;
 	gap: 15px;
-	font-size: clamp(26px, 5vw, 33px);
+	justify-content: start;
+	font-size: clamp(28px, 5vw, 37px);
 
 	> svg {
 		height: 0.75em;
 		width: 0.75em;
 		fill: colors.$accent;
+		margin-top: -0.3em;
 	}
 
 	> .titleText {
 		font-weight: 500;
-		height: 1em;
+		line-height: 1;
 	}
 
 	> .line {

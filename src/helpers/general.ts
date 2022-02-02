@@ -24,3 +24,20 @@ export function numberSort<ItemT>(
 		else return 1;
 	};
 }
+export function clampNum(
+	value: number,
+	options: { min?: number; max?: number }
+) {
+	if (options?.min != null) {
+		value = Math.max(value, options.min);
+	}
+	if (options?.max != null) {
+		value = Math.min(value, options.max);
+	}
+	return value;
+}
+
+export function ifThen<T>(condition: boolean, value: T): T | null {
+	if (condition) return value;
+	return null;
+}

@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 
 export function consoleLogAndReturn<Value>(value: Value) {
 	console.log(value);
@@ -22,15 +23,55 @@ export function useDidValueChange<Value>(
 	return isEquals(previousValue, newValue) === false;
 }
 
-export function clampNum(
-	value: number,
-	options: { min?: number; max?: number }
+export function useMediaQuery(
+	query: string,
+	callback: (matches: boolean) => void,
+	dependencies: React.DependencyList = []
 ) {
-	if (options?.min != null) {
-		value = Math.max(value, options.min);
-	}
-	if (options?.max != null) {
-		value = Math.min(value, options.max);
-	}
-	return value;
+	useLayoutEffect(() => {
+		const media = window.matchMedia(query);
+		const listener = () => {
+			callback(media.matches);
+		};
+		listener();
+		media.addEventListener("change", listener);
+		return () => {
+			media.removeEventListener("change", listener);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, dependencies);
+}
+
+export interface CallbackRef<T> {
+	(node: T | null): void;
+	getLatest(): T | null;
+	latest$: Observable<T | null>;
+}
+
+export function useCallbackRef<T>(): CallbackRef<T> {
+	const latest$ = useRef(new BehaviorSubject<T | null>(null)).current;
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const callbackFn = useCallback(
+		Object.assign((node: T | null) => latest$.next(node), {
+			getLatest() {
+				return latest$.value;
+			},
+			latest$: latest$.asObservable(),
+		}),
+		[]
+	);
+	return callbackFn;
+}
+
+export function useUnmounted() {
+	const unmountedSubject = useRef(new Subject()).current;
+	const unmountedObservable = useRef(unmountedSubject.asObservable()).current;
+	useEffect(() => {
+		return () => {
+			unmountedSubject.next(null);
+			unmountedSubject.complete();
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+	return unmountedObservable;
 }
