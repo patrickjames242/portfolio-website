@@ -1,6 +1,6 @@
 import { MainScreenContext } from "App/MainScreen/helpers";
 import { BubbleTextAnchor } from "helper-views/BubbleTextButton/BubbleTextButton";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useLayoutEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { appRoutes, RouteType, useRouteTypeForCurrentRoute } from "../helpers";
 import MenuSVG from "../MenuSVG";
@@ -11,22 +11,25 @@ import styles from "./NavBarHorizontal.module.scss";
 export interface NavBarHorizontalProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
 
-const calculateShouldContractNavBar = () => window.scrollY > 5;
-
 function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 	const mainScreenContext = useContext(MainScreenContext);
 	const navigate = useNavigate();
 	const currentRouteType = useRouteTypeForCurrentRoute();
+	const navBarRef = useRef<HTMLDivElement>(null);
 
-	const [shouldContractNavBar, setShouldContractNavBar] = useState(
-		calculateShouldContractNavBar()
-	);
-
-	useEffect(() => {
+	useLayoutEffect(() => {
 		const listener = () => {
-			setShouldContractNavBar(calculateShouldContractNavBar);
+			const shouldNavBarBeContracted = window.scrollY > 5;
+			navBarRef.current?.classList.toggle(
+				styles.contracted,
+				shouldNavBarBeContracted
+			);
 		};
+		const navBar = navBarRef.current!;
+		navBar.style.transition = "none";
 		listener();
+		navBar.getClientRects();
+		navBar.style.removeProperty("transition");
 		window.addEventListener("scroll", listener);
 		return () => {
 			window.removeEventListener("scroll", listener);
@@ -36,11 +39,8 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 	return (
 		<div
 			{...reactProps}
-			className={[
-				styles.NavBar,
-				reactProps.className,
-				shouldContractNavBar ? styles.contracted : undefined,
-			].asClassString()}
+			className={[styles.NavBar, reactProps.className].asClassString()}
+			ref={navBarRef}
 		>
 			<a
 				className={[styles.nameBox].asClassString()}

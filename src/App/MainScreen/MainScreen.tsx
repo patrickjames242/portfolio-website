@@ -9,6 +9,7 @@ import ContactMeSection from "./children/ContactMeSection/ContactMeSection";
 import HomeSection from "./children/HomeSection/HomeSection";
 import NavBarHorizontal from "./children/NavViews/NavBarHorizontal/NavBarHorizontal";
 import NavDrawer from "./children/NavViews/NavDrawer/NavDrawer";
+import PageFooter from "./children/PageFooter/PageFooter";
 import ProjectsSection from "./children/ProjectsSection/ProjectsSection";
 import {
 	getCompactNavBarHeight,
@@ -18,6 +19,7 @@ import {
 	useReactSpringWindowScroller,
 } from "./helpers";
 import styles from "./MainScreen.module.scss";
+
 export default function MainScreen() {
 	const [shouldDrawerBeOpen, setShouldDrawerBeOpen] = useState(false);
 	const [currentlyVisibleScreenSection, setCurrentlyVisibleScreenSection] =
@@ -57,7 +59,8 @@ export default function MainScreen() {
 					);
 				} else return 0;
 			})();
-			if (window.scrollY === yPositionToScrollTo) return;
+			if (Math.round(window.scrollY) === Math.round(yPositionToScrollTo))
+				return;
 			setScreenSectionCurrentlyBeingAnimatedTo(routeType);
 			await scrollScreenToYValue(yPositionToScrollTo);
 			setScreenSectionCurrentlyBeingAnimatedTo(null);
@@ -66,7 +69,11 @@ export default function MainScreen() {
 	);
 
 	useLayoutEffect(() => {
-		animateToRouteType(currentRouteType);
+		window.history.scrollRestoration = "manual";
+		setTimeout(() => {
+			window.history.scrollRestoration = "auto";
+			animateToRouteType(currentRouteType);
+		}, 50);
 	}, [animateToRouteType, currentRouteType]);
 
 	useLayoutEffect(() => {
@@ -143,6 +150,7 @@ export default function MainScreen() {
 						<AboutMeSection ref={sectionRefs[RouteType.aboutMe]} />
 						<ProjectsSection ref={sectionRefs[RouteType.projects]} />
 						<ContactMeSection ref={sectionRefs[RouteType.contactMe]} />
+						<PageFooter className={styles.PageFooter} />
 					</div>
 				</div>
 			</NavDrawer>

@@ -51,9 +51,9 @@ export function useReactSpringWindowScroller() {
 	const scrollScreenToYValue = useRef(async (yValue: number) => {
 		await new Promise<undefined>((resolve) => {
 			springApi.start({
-				y: yValue,
 				reset: true,
 				from: { y: window.scrollY },
+				to: { y: yValue },
 				onRest: () => {
 					resolve(undefined);
 				},

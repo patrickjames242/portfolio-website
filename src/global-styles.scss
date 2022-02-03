@@ -20,7 +20,7 @@ body {
 	margin: 0;
 	padding: 0.02px;
 	&::selection {
-		background-color: rgb(192, 84, 33);
+		background-color: rgba(192, 84, 33, 0.8);
 		color: colors.$light-text;
 	}
 }

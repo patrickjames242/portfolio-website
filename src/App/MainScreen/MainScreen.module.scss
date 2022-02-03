@@ -26,7 +26,7 @@
 			pointer-events: auto;
 		}
 
-		> * {
+		> *:not(.PageFooter) {
 			margin-bottom: clamp(100px, 16vw, 200px);
 		}
 	}
