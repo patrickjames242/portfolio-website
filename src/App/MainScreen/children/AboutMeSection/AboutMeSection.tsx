@@ -74,7 +74,7 @@ const IntroductionSection: React.FC<IntroductionSectionProps> = ({
 
 	const sectionHeader = (
 		<SectionHeader
-			titleText="Let Me Introduce Myself"
+			titleText="A Little About Me"
 			includeLine={false}
 			className={styles.SectionHeader}
 		/>
@@ -91,48 +91,62 @@ const IntroductionSection: React.FC<IntroductionSectionProps> = ({
 			<div className={styles.content}>
 				<div className={styles.leftSide}>
 					{ifThen(showHeaderAboveColumns === false, sectionHeader)}
-
 					<p>
-						Ut, enim tempore quidem qui cupiditate optio ad a ducimus iusto
-						laborum tempora et{" "}
+						👋 Hi! I'm Patrick, a software developer currently living in{" "}
 						<a
 							className="underline-on-hover"
-							href="https://ub.edu.bs"
+							href="https://www.google.com/maps/place/Nassau/@25.0324949,-77.5471788,11z/data=!3m1!4b1!4m5!3m4!1s0x892f7c99b981dbc9:0x2aef01d3485e50d2!8m2!3d25.0443312!4d-77.3503609"
 							target="_blank"
 							rel="noreferrer"
 						>
-							The University of The Bahamas
+							Nassau, Bahamas.
 						</a>{" "}
-						eveniet minus vitae? Lorem ipsum dolor sit amet, consectetur
-						adipisicing elit. Ab, consequuntur.
+						I specialize in producing high quality apps and websites that look
+						great and are a joy to use.
 					</p>
 					<p>
-						Ut, enim tempore quidem qui cupiditate optio ad a ducimus iusto
-						laborum{" "}
+						👨‍💻 I started programming when I came across the{" "}
+						<a
+							className="underline-on-hover"
+							href="https://www.apple.com/swift/playgrounds/"
+							target="_blank"
+							rel="noreferrer"
+						>
+							Swift Playgrounds
+						</a>{" "}
+						iPad game, and immediately I was hooked! Soon after, I became quite
+						the avid iOS Developer, writing native iPhone and iPad apps using{" "}
 						<a
 							className="underline-on-hover"
 							target="_blank"
 							rel="noreferrer"
-							href="https://www.swift.org/"
+							href="https://www.apple.com/swift/"
 						>
 							Swift
 						</a>{" "}
-						tempora et{" "}
+						and{" "}
 						<a
 							className="underline-on-hover"
 							target="_blank"
 							rel="noreferrer"
-							href="https://www.swift.org/"
+							href="https://developer.apple.com/xcode/"
 						>
-							iOS Development
+							Xcode.
 						</a>{" "}
-						asperiores culpa aperiam eveniet minus vitae? Lorem ipsum dolor sit
-						amet consectetur adipisicing elit. A, vel?
+						From there, I transitioned into building full-stack web
+						applications.
 					</p>
 					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, enim
-						tempore quidem qui cupiditate optio ad a ducimus iusto laborum
-						tempora et asperiores culpa aperiam eveniet minus vitae?
+						👨‍🎓 Additionally, I'm a recent graduate of{" "}
+						<a
+							className="underline-on-hover"
+							target="_blank"
+							rel="noreferrer"
+							href="https://ub.edu.bs/"
+						>
+							The University of The Bahamas
+						</a>{" "}
+						where I earned a Bachelors degree in Computer Information Systems.
 					</p>
 				</div>
 				<div ref={imageHolderRef} className={styles.imageHolder}>

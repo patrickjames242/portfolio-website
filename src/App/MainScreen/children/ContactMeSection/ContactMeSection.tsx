@@ -46,15 +46,15 @@ const ContactSectionHeader: React.FC<ContactSectionHeaderProps> = ({
 			<div className={styles.subtitle}>Like what you see?</div>
 			<h2 className={styles.title}>Get In Touch</h2>
 			<div className={styles.description}>
-				You can reach me at{" "}
+				You can send me an email at{" "}
 				<a
 					href="mailto:contact@patrickhanna.dev"
 					className="underline-on-hover"
 				>
-					contact@patrickhanna.dev
-				</a>
-				. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum minus
-				dksl vitae velit consequatur sapiente saepe akdow.
+					contact@patrickhanna.dev.
+				</a>{" "}
+				Alternatively, you can shoot me a quick message using the form below.
+				I'm excited to hear from you! 😄
 			</div>
 		</div>
 	);
