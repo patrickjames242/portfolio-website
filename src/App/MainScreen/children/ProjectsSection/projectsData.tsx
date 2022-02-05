@@ -105,7 +105,7 @@ export const allProjects: Project[] = [
 				that allows the proprietor to update the product catalogue.
 			</>
 		),
-		githubLink: "/",
+		githubLink: "https://github.com/patrickjames242/screws-world-website",
 		websiteLink: "https://screwsworldbahamas.com/",
 	},
 ];
