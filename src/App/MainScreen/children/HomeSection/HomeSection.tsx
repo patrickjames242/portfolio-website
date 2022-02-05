@@ -30,17 +30,15 @@ const HomeSection: React.ForwardRefRenderFunction<
 			<canvas ref={canvasRef} className={styles.starsCanvas}></canvas>
 
 			<div className={styles.centerView}>
-				<div className={styles.titleText}>
+				<h1 className={styles.titleText}>
 					Hey, I'm <span className={styles.highlighted}>Patrick Hanna</span>.
-				</div>
-				<div className={styles.subtitleText}>
-					I Build Cool Apps and Websites.
-				</div>
-				<div className={styles.descriptionText}>
+				</h1>
+				<h2 className={styles.subtitleText}>I Build Cool Apps and Websites.</h2>
+				<p className={styles.descriptionText}>
 					I'm a software developer with a focus on front-end and back-end web
 					development, cross platform app development and native iOS
 					development.
-				</div>
+				</p>
 				<BubbleTextAnchor
 					title="Get in touch"
 					className={styles.getInTouchButton}

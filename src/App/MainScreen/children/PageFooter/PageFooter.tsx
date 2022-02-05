@@ -10,7 +10,7 @@ const PageFooter: React.FC<PageFooterProps> = ({
 	...htmlAttributes
 }: PageFooterProps) => {
 	return (
-		<div
+		<footer
 			{...htmlAttributes}
 			className={[styles.PageFooter, htmlAttributes.className].asClassString()}
 		>
@@ -58,7 +58,7 @@ const PageFooter: React.FC<PageFooterProps> = ({
 					</a>
 				</div>
 			</div>
-		</div>
+		</footer>
 	);
 };
 

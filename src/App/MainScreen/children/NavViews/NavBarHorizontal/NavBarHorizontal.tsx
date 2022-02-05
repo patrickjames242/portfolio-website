@@ -37,7 +37,7 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 	}, []);
 
 	return (
-		<div
+		<nav
 			{...reactProps}
 			className={[styles.NavBar, reactProps.className].asClassString()}
 			ref={navBarRef}
@@ -81,7 +81,7 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 					<MenuSVG />
 				</button>
 			</div>
-		</div>
+		</nav>
 	);
 }
 

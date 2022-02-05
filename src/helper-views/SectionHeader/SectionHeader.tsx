@@ -13,7 +13,7 @@ const SectionHeader: React.ForwardRefRenderFunction<
 	SectionHeaderProps
 > = ({ titleText, includeLine, ...htmlAttributes }, ref) => {
 	return (
-		<h2
+		<h3
 			{...htmlAttributes}
 			className={[
 				styles.SectionHeader,
@@ -24,7 +24,7 @@ const SectionHeader: React.ForwardRefRenderFunction<
 			<TriangleIconSVG />
 			<div className={styles.titleText}>{titleText}</div>
 			{(includeLine ?? true) && <div className={styles.line}></div>}
-		</h2>
+		</h3>
 	);
 };
 
