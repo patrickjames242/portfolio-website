@@ -1,11 +1,11 @@
 import SectionHeader from "helper-views/SectionHeader/SectionHeader";
 import { clampNum, ifThen } from "helpers/general";
 import { useCallbackRef, useMediaQuery } from "helpers/hooks";
+import { technologiesList } from "helpers/technologies/technologies";
 import React, { useLayoutEffect, useState } from "react";
 import { filter } from "rxjs";
 import styles from "./AboutMeSection.module.scss";
 import patrickImage from "./patrick-image.jpg";
-import technologies from "./technologies";
 
 export interface AboutMeSectionProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
@@ -174,7 +174,7 @@ const TechnologiesSection: React.FC<TechnologiesSectionProps> = ({
 		>
 			<SectionHeader titleText="Technologies I've Used" includeLine={false} />
 			<div className={styles.technologiesGrid}>
-				{technologies.map((x) => (
+				{technologiesList.map((x) => (
 					<img src={x.iconSrc} alt={x.name} key={x.name} />
 				))}
 			</div>

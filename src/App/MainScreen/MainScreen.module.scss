@@ -24,10 +24,11 @@
 
 		> *:not(.HomeScreen) {
 			pointer-events: auto;
-		}
+			margin-top: clamp(100px, 16vw, 200px);
 
-		> *:not(.PageFooter) {
-			margin-bottom: clamp(100px, 16vw, 200px);
+			&.PageFooter {
+				margin-top: clamp(100px, 9vw, 130px);
+			}
 		}
 	}
 }

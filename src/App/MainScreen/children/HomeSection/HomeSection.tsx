@@ -37,8 +37,9 @@ const HomeSection: React.ForwardRefRenderFunction<
 					I Build Cool Apps and Websites.
 				</div>
 				<div className={styles.descriptionText}>
-					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis ut sed
-					neque excepturi amet facilis quis reiciendis consequatur itaque harum?
+					I'm a software developer with a focus on front-end and back-end web
+					development, cross platform app development and native iOS
+					development.
 				</div>
 				<BubbleTextAnchor
 					title="Get in touch"

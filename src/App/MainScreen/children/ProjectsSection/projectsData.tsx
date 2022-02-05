@@ -1,3 +1,4 @@
+import { technologies, Technology } from "helpers/technologies/technologies";
 import React from "react";
 import betterLivingApp from "./projectImages/better-living-app.png";
 import betterLivingImage from "./projectImages/better-living-site.png";
@@ -14,50 +15,22 @@ export interface Project {
 	websiteLink: string;
 }
 
-export interface Technology {
-	name: string;
-	url: string;
-}
-
-const placeholderDescription = (
-	<>
-		Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam
-		necessitatibus provident nesciunt harum{" "}
-		<a className="underline-on-hover" href="/">
-			blanditiis bldksl{" "}
-		</a>
-		. Cum totam sed explicabo dolorum aspernatur, pariatur aut a voluptate
-		maxime consequuntur eaque quidem autem ipsa assumenda quibusdam
-	</>
-);
-
-const tech = {
-	typescript: { name: "TypeScript", url: "https://www.typescriptlang.org/" },
-	scss: { name: "SCSS", url: "https://sass-lang.com/" },
-	react: { name: "React", url: "https://reactjs.org/" },
-	angular: { name: "Angular", url: "https://angular.io/" },
-	express: { name: "Express", url: "https://expressjs.com/" },
-	websockets: {
-		name: "WebSockets",
-		url: "https://en.wikipedia.org/wiki/WebSocket",
-	},
-	rxjs: { name: "RxJS", url: "https://rxjs.dev/" },
-	reactNative: { name: "React Native", url: "https://reactnative.dev/" },
-	expo: { name: "Expo", url: "https://expo.dev/" },
-	redux: { name: "Redux", url: "https://redux.js.org/" },
-	postgres: { name: "PostgreSQL", url: "https://www.postgresql.org/" },
-	python: { name: "Python", url: "https://www.python.org/" },
-	django: { name: "Django", url: "https://www.djangoproject.com/" },
-	nodeJS: { name: "NodeJS", url: "https://nodejs.org/en/" },
-};
-
+const tech = technologies;
 export const allProjects: Project[] = [
 	{
 		imageUrl: swapacropImage,
 		title: "Swapacrop",
 		subtitle: "Web Application",
 		technologies: [tech.angular, tech.typescript, tech.scss, tech.rxjs],
-		description: placeholderDescription,
+		description: (
+			<>
+				This web app is an online marketplace that allows users to buy and sell
+				locally grown and made products, inclusive mainly of fruits, vegetables,
+				livestock etc. It's mission is to "improve the overall health and
+				wellbeing of communities one crop at a time."
+				<br />I served as the main front-end developer on this project.
+			</>
+		),
 		websiteLink: "https://swapacrop.com/",
 	},
 	{
@@ -65,8 +38,14 @@ export const allProjects: Project[] = [
 		title: "Better Living Website",
 		subtitle: "Website Landing Page",
 		technologies: [tech.react, tech.typescript, tech.scss],
-		description: placeholderDescription,
-		githubLink: "/",
+		description: (
+			<>
+				This is the official website for Better Living Health Center & Deli. It
+				was built for the purpose of promoting and marketing the health center
+				as well as providing useful information about it.
+			</>
+		),
+		githubLink: "https://github.com/patrickjames242/better-living-website",
 		websiteLink: "https://betterlivingnassau.com/",
 	},
 	{
@@ -80,8 +59,23 @@ export const allProjects: Project[] = [
 			tech.django,
 			tech.postgres,
 		],
-		description: placeholderDescription,
-		githubLink: "/",
+		description: (
+			<>
+				This app allows users to place food orders at Better Living Health
+				Center and browse a collection of health tip videos prepared by the
+				proprietor. The app also features a{" "}
+				<a
+					className="underline-on-hover"
+					href="https://en.wikipedia.org/wiki/Content_management_system"
+					target="_blank"
+					rel="noreferrer"
+				>
+					CMS
+				</a>{" "}
+				that allows staff to update information in the app in realtime.
+			</>
+		),
+		githubLink: "https://github.com/patrickjames242/better-living-app",
 		websiteLink: "https://app.betterlivingnassau.com/",
 	},
 	{
@@ -95,7 +89,22 @@ export const allProjects: Project[] = [
 			tech.nodeJS,
 			tech.express,
 		],
-		description: placeholderDescription,
+		description: (
+			<>
+				This serves as the official website of Screws and Fastener's world. It's
+				purpose is to market the business and provide customers with a catalog
+				of available products. It also features a{" "}
+				<a
+					className="underline-on-hover"
+					href="https://en.wikipedia.org/wiki/Content_management_system"
+					target="_blank"
+					rel="noreferrer"
+				>
+					CMS
+				</a>{" "}
+				that allows the proprietor to update the product catalogue.
+			</>
+		),
 		githubLink: "/",
 		websiteLink: "https://screwsworldbahamas.com/",
 	},
