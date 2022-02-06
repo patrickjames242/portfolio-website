@@ -60,7 +60,11 @@ app.post("/.netlify/functions/email", (request, response) => {
 
 	mg.messages().send(data, function (error, body) {
 		if (error) {
-			response.json({ errorMessage: body.message }).status(500);
+			response
+				.json({
+					errorMessage: "An error occurred when trying to send the email.",
+				})
+				.status(500);
 		} else {
 			response.end();
 		}
