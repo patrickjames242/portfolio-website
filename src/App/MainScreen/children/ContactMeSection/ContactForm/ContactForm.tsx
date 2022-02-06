@@ -2,13 +2,12 @@ import emailValidator from "email-validator";
 import { Formik, FormikErrors } from "formik";
 import { BubbleTextButton } from "helper-views/BubbleTextButton/BubbleTextButton";
 import LoadingSpinner from "helper-views/LoadingSpinner/LoadingSpinner";
-import React, { useImperativeHandle, useRef, useState } from "react";
-import ReactDOM from "react-dom";
-import { animated, useTransition } from "react-spring";
+import React, { useRef } from "react";
 import FormField from "../FormField/FormField";
-import CheckmarkIcon from "./CheckmarkIcon";
 import styles from "./ContactForm.module.scss";
-import XIcon from "./XIcon";
+import SuccessOrFailureToast, {
+	SuccessOrFailureToastRef,
+} from "./SuccessOrFailureToast/SuccessOrFailureToast";
 
 interface ContactFormProps extends React.HTMLAttributes<HTMLFormElement> {}
 
@@ -51,11 +50,11 @@ const ContactForm: React.FC<ContactFormProps> = ({
 		description: [Validators.required],
 	};
 
-	const toastRef = useRef<ToastRef>(null);
+	const toastRef = useRef<SuccessOrFailureToastRef>(null);
 
 	return (
 		<>
-			<Toast ref={toastRef} />
+			<SuccessOrFailureToast ref={toastRef} />
 			<Formik<FormValues>
 				initialValues={{ description: "", fullName: "", email: "" }}
 				validate={(values) => {
@@ -167,80 +166,3 @@ const ContactForm: React.FC<ContactFormProps> = ({
 	);
 };
 export default ContactForm;
-
-interface ToastRef {
-	showToast(config: { successful: boolean; message: string }): void;
-}
-
-interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const Toast = (() => {
-	const Toast: React.ForwardRefRenderFunction<ToastRef, ToastProps> = (
-		{ ...htmlAttributes },
-		ref
-	) => {
-		const [messageInfo, setMessageInfo] = useState<{
-			successful: boolean;
-			message: string;
-		}>({ successful: true, message: "" });
-		const [show, setShow] = useState(false);
-
-		const transitions = useTransition(
-			show,
-			(() => {
-				const from = { transform: "translateY(20px)", opacity: 0 };
-				return {
-					from,
-					enter: { transform: "translateY(0px)", opacity: 1 },
-					leave: from,
-				};
-			})()
-		);
-
-		const timerRef = useRef<number | null>(null);
-
-		useImperativeHandle(
-			ref,
-			() => ({
-				showToast(config) {
-					timerRef.current && clearTimeout(timerRef.current);
-					ReactDOM.unstable_batchedUpdates(() => {
-						setMessageInfo(config);
-						setShow(true);
-					});
-					timerRef.current = setTimeout(() => {
-						setShow(false);
-					}, 4000) as any;
-				},
-			}),
-			[]
-		);
-
-		return transitions(
-			(transitionStyles, item) =>
-				item &&
-				ReactDOM.createPortal(
-					<animated.div
-						className={styles.errorMessageToastHolder}
-						style={transitionStyles}
-					>
-						<div
-							{...htmlAttributes}
-							className={[
-								styles.ErrorMessageToast,
-								htmlAttributes.className,
-								messageInfo.successful ? undefined : styles.error,
-							].asClassString()}
-						>
-							<div className={styles.topLine} />
-							{messageInfo.successful ? <CheckmarkIcon /> : <XIcon />}
-							<div className={styles.text}>{messageInfo.message}</div>
-						</div>
-					</animated.div>,
-					window.document.body,
-					"ErrorMessageToast"
-				)
-		);
-	};
-	return React.memo(React.forwardRef(Toast));
-})();
