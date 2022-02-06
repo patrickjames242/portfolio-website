@@ -19,6 +19,7 @@
 	pointer-events: auto;
 	box-sizing: border-box;
 	box-shadow: colors.$accent 0px 0px 3px 0px;
+	z-index: 1;
 	> .BubbleEffect {
 		@include absolute-pin-all-sides;
 	}
