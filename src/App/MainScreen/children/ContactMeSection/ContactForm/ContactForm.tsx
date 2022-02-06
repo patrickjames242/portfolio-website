@@ -147,7 +147,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 									style={
 										isSubmitting ? { opacity: 0, pointerEvents: "none" } : {}
 									}
-									title="Send Message"
+									titleText="Send Message"
 									type="submit"
 									onClick={() => {
 										setTouched({

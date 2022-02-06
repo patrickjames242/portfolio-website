@@ -1,5 +1,10 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useImperativeHandle, useRef } from "react";
+import { BehaviorSubject, Observable } from "rxjs";
 import styles from "./BubbleEffect.module.scss";
+
+export interface BubbleEffectRef {
+	isBubbled$: Observable<boolean>;
+}
 
 export interface BubbleEffectProps
 	extends React.HTMLAttributes<HTMLDivElement> {
@@ -7,13 +12,22 @@ export interface BubbleEffectProps
 	bubbleAnimationSeconds?: number;
 }
 
-function BubbleEffect({
-	bubbleColor,
-	bubbleAnimationSeconds,
-	...reactProps
-}: BubbleEffectProps) {
+const BubbleEffect: React.ForwardRefRenderFunction<
+	BubbleEffectRef,
+	BubbleEffectProps
+> = ({ bubbleColor, bubbleAnimationSeconds, ...reactProps }, ref) => {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const bubbleRef = useRef<HTMLDivElement>(null);
+	const isBubbled$ = useRef(new BehaviorSubject(false)).current;
+
+	useImperativeHandle(
+		ref,
+		() => ({
+			isBubbled$: isBubbled$.asObservable(),
+		}),
+		[isBubbled$]
+	);
+
 	const animateBubble = useCallback(
 		(type: "expand" | "contract", mouseEvent: MouseEvent) => {
 			const bubbleView = bubbleRef.current!;
@@ -42,8 +56,9 @@ function BubbleEffect({
 				"--animation-duration",
 				(bubbleAnimationSeconds ?? 0.6) + "s"
 			);
+			isBubbled$.next(type === "expand");
 		},
-		[bubbleAnimationSeconds]
+		[bubbleAnimationSeconds, isBubbled$]
 	);
 
 	return (
@@ -61,7 +76,7 @@ function BubbleEffect({
 			></div>
 		</div>
 	);
-}
+};
 
 type Coordinate = { x: number; y: number };
 
@@ -80,4 +95,4 @@ function mouseCoordinateWithinElement(
 	};
 }
 
-export default BubbleEffect;
+export default React.forwardRef(BubbleEffect);

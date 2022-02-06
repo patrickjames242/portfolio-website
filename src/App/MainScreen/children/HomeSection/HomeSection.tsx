@@ -7,6 +7,7 @@ import {
 	useRouteTypeNavigation,
 } from "../NavViews/helpers";
 import styles from "./HomeSection.module.scss";
+
 export interface HomeSectionProps
 	extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -36,11 +37,11 @@ const HomeSection: React.ForwardRefRenderFunction<
 				<h2 className={styles.subtitleText}>I Build Cool Apps and Websites.</h2>
 				<p className={styles.descriptionText}>
 					I'm a software developer with a focus on front-end and back-end web
-					development, cross platform app development and native iOS
+					development, cross platform app development, and native iOS
 					development.
 				</p>
 				<BubbleTextAnchor
-					title="Get in touch"
+					titleText="Get in touch"
 					className={styles.getInTouchButton}
 					href={getInfoForRouteType(RouteType.contactMe).path}
 					onClick={(event) => {
