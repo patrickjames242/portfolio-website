@@ -65,7 +65,7 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
 					<NavLink key={name} routeType={routeType} />
 				))}
 				<BubbleTextAnchor
-					titleText="Resume"
+					titleText="Résumé"
 					className={styles.resumeButton}
 					target="_blank"
 					href="resume.pdf"

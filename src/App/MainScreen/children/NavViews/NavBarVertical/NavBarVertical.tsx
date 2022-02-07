@@ -26,7 +26,7 @@ const NavBarVertical: React.FC<NavBarVerticalProps> = ({
 				></NavLink>
 			))}
 			<BubbleTextAnchor
-				titleText="Resume"
+				titleText="Résumé"
 				className={styles.resumeButton}
 				target="_blank"
 				href="resume.pdf"
