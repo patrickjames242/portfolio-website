@@ -17,9 +17,13 @@
 			display: grid;
 			grid-auto-flow: column;
 			gap: 15px;
+			align-items: start;
+			margin-bottom: 5px;
 
 			> a {
+				display: block;
 				> svg {
+					display: block;
 					transition-property: fill;
 					transition-duration: 0.3s;
 					@include setprops(height width, 26px);
