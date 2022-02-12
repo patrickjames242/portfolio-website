@@ -30,7 +30,7 @@
 	> .centerView {
 		margin-top: 30px;
 		margin-bottom: 30px;
-		max-width: 900px;
+		max-width: 1000px;
 		place-self: center;
 		pointer-events: none;
 
@@ -59,7 +59,7 @@
 			font-weight: 300;
 		}
 
-		> .getInTouchButton {
+		> .getInTouchButtonHolder {
 			margin-top: 30px;
 		}
 	}

@@ -1,0 +1,53 @@
+@use "helpers/general" as *;
+@use "helpers/colors.module" as colors;
+@use "sass:math";
+
+$transitionDuration: 0.8s;
+
+:export {
+	transitionDurationInSeconds: math.div($transitionDuration, 1s);
+}
+
+.SlideUpSentence {
+	&.centerAligned {
+		text-align: center;
+		> .Word {
+			padding-left: 0.125em;
+			padding-right: 0.125em;
+		}
+	}
+	&.leftAligned {
+		text-align: left;
+	}
+	&.rightAligned {
+		text-align: right;
+	}
+
+	.Word {
+		overflow: hidden;
+		display: inline-block;
+		margin-bottom: -0.25em;
+
+		> .innerBox {
+			display: inline-block;
+			transform: translateY(100%);
+			opacity: 0;
+			transition-duration: $transitionDuration;
+			transition-property: transform;
+			transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+		}
+	}
+
+	&.centerAligned > .Word {
+		padding-left: 0.125em;
+		padding-right: 0.125em;
+	}
+
+	&.leftAligned > .Word {
+		padding-right: 0.25em;
+	}
+
+	&.rightAligned > .Word {
+		padding-left: 0.25em;
+	}
+}

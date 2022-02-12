@@ -1,0 +1,25 @@
+$slide-up-animation-timing-fn: cubic-bezier(0.19, 1, 0.22, 1);
+$slide-up-animation-duration: 0.8s;
+
+:export {
+	slideUpAnimationTimingFn: $slide-up-animation-timing-fn;
+	slideUpAnimationDuration: $slide-up-animation-duration;
+}
+
+:global(.slide-up-element) {
+	opacity: 0;
+	animation-duration: 0.8s;
+	animation-timing-function: $slide-up-animation-timing-fn;
+	animation-fill-mode: forwards;
+}
+
+@keyframes slideUpElement {
+	0% {
+		opacity: 0;
+		transform: translateY(clamp(20px, 50%, 100px));
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}

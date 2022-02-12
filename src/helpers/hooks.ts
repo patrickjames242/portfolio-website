@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
+import React, {
+	ForwardedRef,
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+} from "react";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 
 export function consoleLogAndReturn<Value>(value: Value) {
@@ -48,16 +54,29 @@ export interface CallbackRef<T> {
 	latest$: Observable<T | null>;
 }
 
-export function useCallbackRef<T>(): CallbackRef<T> {
+export function useCallbackRef<T>(
+	forwardedRef?: ForwardedRef<T>
+): CallbackRef<T> {
 	const latest$ = useRef(new BehaviorSubject<T | null>(null)).current;
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const callbackFn = useCallback(
-		Object.assign((node: T | null) => latest$.next(node), {
-			getLatest() {
-				return latest$.value;
+		Object.assign(
+			(node: T | null) => {
+				latest$.next(node);
+				if (forwardedRef == null) return;
+				else if (typeof forwardedRef === "function") {
+					forwardedRef(node);
+				} else {
+					forwardedRef.current = node;
+				}
 			},
-			latest$: latest$.asObservable(),
-		}),
+			{
+				getLatest() {
+					return latest$.value;
+				},
+				latest$: latest$.asObservable(),
+			}
+		),
 		[]
 	);
 	return callbackFn;

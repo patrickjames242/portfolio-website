@@ -1,3 +1,7 @@
+export type ArrayElement<A extends any[]> = A extends Array<infer E>
+	? E
+	: unknown;
+
 export function getNumberList(startNumber: number, endNumber: number) {
 	if (endNumber < startNumber)
 		throw new Error("end number cannot be less than start number");
@@ -40,4 +44,34 @@ export function clampNum(
 export function ifThen<T>(condition: boolean, value: T): T | null {
 	if (condition) return value;
 	return null;
+}
+
+export function wait(numberOfMilliseconds: number) {
+	return new Promise((resolve) => {
+		setTimeout(() => resolve(null), numberOfMilliseconds);
+	});
+}
+
+type Animation = () =>
+	| { animationLengthSeconds: number }
+	| null
+	| undefined
+	| void;
+
+export function getAnimationStack(timeInterval: number = 300) {
+	let elementAnimationStack: Animation[] = [];
+	let animationIsRunning = false;
+
+	async function addElementsToAnimationStack(animations: Animation[]) {
+		elementAnimationStack.push(...animations);
+		if (animationIsRunning) return;
+		animationIsRunning = true;
+		while (elementAnimationStack.length >= 1) {
+			const next = elementAnimationStack.shift();
+			const delayTillNext = next?.()?.animationLengthSeconds;
+			await wait(delayTillNext ?? timeInterval);
+		}
+		animationIsRunning = false;
+	}
+	return { addElementsToAnimationStack };
 }
