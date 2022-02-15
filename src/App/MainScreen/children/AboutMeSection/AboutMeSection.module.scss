@@ -33,8 +33,10 @@ $imageLinedUpWithDescriptionMaxWidth: 1000px;
 	}
 
 	> .IntroductionSection {
-		.SectionHeader {
+		.sectionHeaderHolder {
 			margin-bottom: 35px;
+			.SectionHeader {
+			}
 		}
 		> .content {
 			display: grid;

@@ -7,7 +7,7 @@ declare global {
 		/** transforms all items in original array but leaves out transformed values that are either null or undefined */
 		compactMap<Result>(
 			this: Array<T>,
-			transform: (initial: T) => Result | null | undefined
+			transform: (initial: T, index: number) => Result | null | undefined
 		): Result[];
 		/// groups the items provided according to the key provided
 		groupBy<Key>(keyGetter: (item: T) => Key): Map<string, T[]>;
@@ -19,15 +19,15 @@ declare global {
 	}
 }
 
-(Array as any).prototype.compactMap = function transform<Result>(
+Array.prototype.compactMap = function transform<Result>(
 	this: Array<any>,
-	transform: (initial: any) => Result | null | undefined
+	transform: (initial: any, index: number) => Result | null | undefined
 ): Result[] {
 	const result: Result[] = [];
-	for (const item of this) {
-		const transformed = transform(item);
+	this.forEach((item, index) => {
+		const transformed = transform(item, index);
 		if (transformed != null) result.push(transformed);
-	}
+	});
 	return result;
 };
 

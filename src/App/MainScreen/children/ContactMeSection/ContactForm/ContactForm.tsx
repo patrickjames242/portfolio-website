@@ -2,14 +2,20 @@ import emailValidator from "email-validator";
 import { Formik, FormikErrors } from "formik";
 import { BubbleTextButton } from "helper-views/BubbleTextButton/BubbleTextButton";
 import LoadingSpinner from "helper-views/LoadingSpinner/LoadingSpinner";
-import React, { useRef } from "react";
+import { PresentationItem } from "helpers/AnimationController";
+import React, { useImperativeHandle, useRef } from "react";
 import FormField from "../FormField/FormField";
 import styles from "./ContactForm.module.scss";
 import SuccessOrFailureToast, {
 	SuccessOrFailureToastRef,
 } from "./SuccessOrFailureToast/SuccessOrFailureToast";
 
-interface ContactFormProps extends React.HTMLAttributes<HTMLFormElement> {}
+export interface ContactFormRef {
+	getPresentationItems(): PresentationItem[];
+}
+
+export interface ContactFormProps
+	extends React.HTMLAttributes<HTMLFormElement> {}
 
 type Validator = (value: string) => { errorMessage: string | null };
 
@@ -35,9 +41,10 @@ const Validators = (() => {
 	return { required, email };
 })();
 
-const ContactForm: React.FC<ContactFormProps> = ({
-	...htmlAttributes
-}: ContactFormProps) => {
+const ContactForm: React.ForwardRefRenderFunction<
+	ContactFormRef,
+	ContactFormProps
+> = ({ ...htmlAttributes }, ref) => {
 	type FormValues = {
 		fullName: string;
 		email: string;
@@ -51,6 +58,32 @@ const ContactForm: React.FC<ContactFormProps> = ({
 	};
 
 	const toastRef = useRef<SuccessOrFailureToastRef>(null);
+	const nameFieldRef = useRef<HTMLDivElement>(null);
+	const emailFieldRef = useRef<HTMLDivElement>(null);
+	const descriptionFieldRef = useRef<HTMLDivElement>(null);
+	const submitButtonRef = useRef<HTMLButtonElement>(null);
+
+	useImperativeHandle(
+		ref,
+		() => ({
+			getPresentationItems() {
+				const fieldTimeInterval = 0.2;
+				return [
+					{
+						slideUpElement: nameFieldRef.current!,
+						secondsTillNextAnimation: fieldTimeInterval,
+					},
+					{
+						slideUpElement: emailFieldRef.current!,
+						secondsTillNextAnimation: fieldTimeInterval,
+					},
+					{ slideUpElement: descriptionFieldRef.current! },
+					{ slideUpElement: submitButtonRef.current! },
+				];
+			},
+		}),
+		[]
+	);
 
 	return (
 		<>
@@ -119,12 +152,14 @@ const ContactForm: React.FC<ContactFormProps> = ({
 							<div className={styles.formColumns}>
 								<div className={styles.col1}>
 									<FormField
+										ref={nameFieldRef}
 										fieldType="single-line"
 										fieldTitle="What's your full name?"
 										placeholder="Full Name"
 										fieldKey="fullName"
 									/>
 									<FormField
+										ref={emailFieldRef}
 										fieldType="single-line"
 										fieldTitle="What's your email address?"
 										placeholder="Email"
@@ -132,6 +167,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 									/>
 								</div>
 								<FormField
+									ref={descriptionFieldRef}
 									fieldType="multi-line"
 									fieldTitle="What do you want to talk about?"
 									placeholder="Message"
@@ -144,6 +180,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
 									<LoadingSpinner className={styles.LoadingSpinner} />
 								)}
 								<BubbleTextButton
+									ref={submitButtonRef}
 									style={
 										isSubmitting ? { opacity: 0, pointerEvents: "none" } : {}
 									}
@@ -165,4 +202,5 @@ const ContactForm: React.FC<ContactFormProps> = ({
 		</>
 	);
 };
-export default ContactForm;
+
+export default React.forwardRef(ContactForm);

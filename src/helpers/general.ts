@@ -52,13 +52,27 @@ export function wait(numberOfMilliseconds: number) {
 	});
 }
 
+// executes closure if value is not null or undefined and returns its result, otherwise returns null.
+export function mapOptional<Unwrapped, ReturnVal>(
+	optional: Unwrapped | undefined | null,
+	action: (unwrapped: Unwrapped) => ReturnVal
+): ReturnVal | null {
+	if (optional == null) {
+		return null;
+	} else {
+		return action(optional);
+	}
+}
+
 type Animation = () =>
-	| { animationLengthSeconds: number }
+	| { secondsTillNextAnimation: number }
 	| null
 	| undefined
 	| void;
-
-export function getAnimationStack(timeInterval: number = 300) {
+export interface AnimationStack {
+	addElementsToAnimationStack(animations: Animation[]): Promise<void>;
+}
+export function getAnimationStack(timeInterval: number = 300): AnimationStack {
 	let elementAnimationStack: Animation[] = [];
 	let animationIsRunning = false;
 
@@ -68,8 +82,10 @@ export function getAnimationStack(timeInterval: number = 300) {
 		animationIsRunning = true;
 		while (elementAnimationStack.length >= 1) {
 			const next = elementAnimationStack.shift();
-			const delayTillNext = next?.()?.animationLengthSeconds;
-			await wait(delayTillNext ?? timeInterval);
+			const delayTillNext =
+				mapOptional(next?.()?.secondsTillNextAnimation, (x) => x * 1000) ??
+				timeInterval;
+			await wait(delayTillNext);
 		}
 		animationIsRunning = false;
 	}

@@ -8,15 +8,19 @@ $slide-up-animation-duration: 0.8s;
 
 :global(.slide-up-element) {
 	opacity: 0;
-	animation-duration: 0.8s;
+	animation-duration: $slide-up-animation-duration;
 	animation-timing-function: $slide-up-animation-timing-fn;
 	animation-fill-mode: forwards;
+	&.done {
+		opacity: 1;
+		transform: translateY(0px);
+	}
 }
 
 @keyframes slideUpElement {
 	0% {
 		opacity: 0;
-		transform: translateY(clamp(20px, 50%, 100px));
+		transform: translateY(clamp(50px, 70%, 100000px));
 	}
 	100% {
 		opacity: 1;

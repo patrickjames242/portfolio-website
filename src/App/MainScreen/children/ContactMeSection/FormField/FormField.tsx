@@ -14,13 +14,16 @@ interface FormFieldProps<F extends FieldType>
 	fieldKey: string;
 }
 
-function FormField<F extends FieldType>({
-	fieldTitle,
-	placeholder,
-	fieldType,
-	fieldKey,
-	...htmlAttributes
-}: FormFieldProps<F>): ReturnType<React.FC<FormFieldProps<F>>> {
+function FormField<F extends FieldType>(
+	{
+		fieldTitle,
+		placeholder,
+		fieldType,
+		fieldKey,
+		...htmlAttributes
+	}: FormFieldProps<F>,
+	ref: React.ForwardedRef<HTMLDivElement>
+): ReturnType<React.FC<FormFieldProps<F>>> {
 	const [focused, setFocused] = useState(false);
 	const [field, meta] = useField(fieldKey);
 
@@ -32,6 +35,7 @@ function FormField<F extends FieldType>({
 	};
 	return (
 		<div
+			ref={ref}
 			className={[
 				styles.FormField,
 				htmlAttributes.className,
@@ -58,4 +62,4 @@ function FormField<F extends FieldType>({
 	);
 }
 
-export default FormField;
+export default React.forwardRef(FormField);

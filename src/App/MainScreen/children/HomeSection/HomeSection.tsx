@@ -3,10 +3,10 @@ import SlideUpSentence, {
 	Alignment,
 	SlideUpSentenceRef,
 } from "helper-views/SlideUpSentence/SlideUpSentence";
+import { usePresentationController } from "helpers/AnimationController";
 import { useCallbackRef } from "helpers/hooks";
-import { animateSlideUpElement } from "helpers/slide-up-animation/slide-up-animation";
 import { addStarEffectToCanvas } from "helpers/starsBackgoundEffect/starsBackgroundEffect";
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef } from "react";
 import {
 	getInfoForRouteType,
 	RouteType,
@@ -31,22 +31,25 @@ const HomeSection: React.ForwardRefRenderFunction<
 	const descriptionRef = useRef<HTMLParagraphElement>(null);
 	const getInTouchButtonHolderRef = useRef<HTMLDivElement>(null);
 
-	useLayoutEffect(() => {
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				if (entry.isIntersecting === false) return;
-				setTimeout(() => {
+	const presentationController = usePresentationController();
+
+	useEffect(() => {
+		presentationController.addSection({
+			sectionRoot: rootRef.getLatest()!,
+			presentationItems: [
+				() => {
 					titleSentenceRef.current?.animate();
-					subtitleSentenceRef.current?.animate(0.4);
-					animateSlideUpElement(descriptionRef.current!, 1.1);
-					animateSlideUpElement(getInTouchButtonHolderRef.current!, 1.3);
-				}, 100);
-			},
-			{ threshold: 0.2 }
-		);
-		observer.observe(rootRef.getLatest()!);
-		return () => observer.disconnect();
-	}, [rootRef]);
+					return { secondsTillNextAnimation: 0.44 };
+				},
+				() => {
+					subtitleSentenceRef.current?.animate();
+					return { secondsTillNextAnimation: 0.68 };
+				},
+				{ slideUpElement: descriptionRef.current! },
+				{ slideUpElement: getInTouchButtonHolderRef.current! },
+			],
+		});
+	}, [presentationController, rootRef]);
 
 	useLayoutEffect(() => {
 		addStarEffectToCanvas(canvasRef.current!);
@@ -59,7 +62,6 @@ const HomeSection: React.ForwardRefRenderFunction<
 			className={[styles.HomeSection, props.className].asClassString()}
 		>
 			<canvas ref={canvasRef} className={styles.starsCanvas}></canvas>
-
 			<div className={styles.centerView}>
 				<h1 className={styles.titleText}>
 					<SlideUpSentence
@@ -88,23 +90,14 @@ const HomeSection: React.ForwardRefRenderFunction<
 						I Build Cool Apps and Websites.
 					</SlideUpSentence>
 				</h2>
-				<p
-					ref={descriptionRef}
-					className={[
-						styles.descriptionText,
-						"slide-up-element",
-					].asClassString()}
-				>
+				<p ref={descriptionRef} className={styles.descriptionText}>
 					I'm a software developer with a focus on front-end and back-end web
 					development, cross platform app development, and native iOS
 					development.
 				</p>
 				<div
 					ref={getInTouchButtonHolderRef}
-					className={[
-						styles.getInTouchButtonHolder,
-						"slide-up-element",
-					].asClassString()}
+					className={styles.getInTouchButtonHolder}
 				>
 					<BubbleTextAnchor
 						titleText="Get in touch"

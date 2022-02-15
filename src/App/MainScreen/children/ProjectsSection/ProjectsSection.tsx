@@ -2,9 +2,8 @@ import SectionHeader from "helper-views/SectionHeader/SectionHeader";
 import ExternalLink from "helper-views/svg/ExternalLinkSVG";
 import GithubSVG from "helper-views/svg/GithubSVG";
 import TriangleIconSVG from "helper-views/svg/TriangleSVG";
-import { getAnimationStack } from "helpers/general";
+import { usePresentationController } from "helpers/AnimationController";
 import { useCallbackRef } from "helpers/hooks";
-import { animateSlideUpElement } from "helpers/slide-up-animation/slide-up-animation";
 import React, { useEffect, useLayoutEffect, useRef } from "react";
 import { allProjects, Project } from "./projectsData";
 import styles from "./ProjectsSection.module.scss";
@@ -22,31 +21,23 @@ const ProjectsSection: React.ForwardRefRenderFunction<
 		allProjects.map(() => React.createRef<HTMLDivElement>())
 	).current;
 
+	const presentationController = usePresentationController();
+
 	useEffect(() => {
-		const { addElementsToAnimationStack } = getAnimationStack();
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				addElementsToAnimationStack(
-					entries.compactMap((x) => {
-						if (x.isIntersecting === false) return null;
-						return () => {
-							animateSlideUpElement(
-								x.target === rootRef.getLatest()
-									? sectionHeaderRef.current!
-									: (x.target as HTMLElement)
-							);
-						};
-					})
-				);
-			},
-			{ threshold: 0.2 }
-		);
-		observer.observe(rootRef.getLatest()!);
-		projectRefs.forEach((x) => observer.observe(x.current!));
-
-		return () => observer.disconnect();
-	}, [projectRefs, rootRef]);
+		presentationController.addSection({
+			sectionRoot: rootRef.getLatest()!,
+			presentationItems: [
+				{ slideUpElement: sectionHeaderRef.current! },
+				...projectRefs.map((x) => ({
+					subsection: {
+						sectionRoot: x.current!,
+						presentationItems: [{ slideUpElement: x.current! }],
+						threshold: 0.4,
+					},
+				})),
+			],
+		});
+	}, [presentationController, projectRefs, rootRef]);
 
 	return (
 		<div
@@ -59,13 +50,11 @@ const ProjectsSection: React.ForwardRefRenderFunction<
 		>
 			<SectionHeader
 				ref={sectionHeaderRef}
-				className="slide-up-element"
 				titleText="Some Things I've Built"
 			/>
 			<div className={styles.projectsBox}>
 				{allProjects.map((project, index) => (
 					<ProjectView
-						className="slide-up-element"
 						ref={projectRefs[index]}
 						project={project}
 						alignment={index % 2 === 0 ? "right" : "left"}
