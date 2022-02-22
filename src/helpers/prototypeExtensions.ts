@@ -69,13 +69,3 @@ Array.prototype.asClassString = function (
 	});
 	return validClassNames.join(" ");
 };
-
-// Array.prototype.sortSimple = function (this: Array<any>, sorter) {
-// 	return this.sort((i1, i2) => {
-// 		if (sorter(i1, i2)) {
-// 			return -1;
-// 		} else {
-// 			return 1;
-// 		}
-// 	});
-// }
