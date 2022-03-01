@@ -50,7 +50,7 @@ const ProjectsSection: React.ForwardRefRenderFunction<
 		>
 			<SectionHeader
 				ref={sectionHeaderRef}
-				titleText="Some Things I've Built"
+				titleText="Examples of My Work"
 			/>
 			<div className={styles.projectsBox}>
 				{allProjects.map((project, index) => (

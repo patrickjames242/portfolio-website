@@ -109,8 +109,15 @@ $imageLinedUpWithDescriptionMaxWidth: 1000px;
 			grid-template-columns: repeat(auto-fill, $img-size);
 			gap: 25px;
 			justify-content: space-around;
-			> img {
-				@include setprops(width height, $img-size);
+			> a {
+				transition: transform 0.3s;
+				> img {
+					@include setprops(width height, $img-size);
+				}
+
+				&:hover {
+					transform: scale(1.2);
+				}
 			}
 		}
 	}

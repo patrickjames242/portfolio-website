@@ -301,7 +301,15 @@ const TechnologiesSection = (() => {
 					className={[styles.technologiesGrid].asClassString()}
 				>
 					{technologiesList.map((x) => (
-						<img src={x.iconSrc} alt={x.name} key={x.name} />
+						<a
+							key={x.name}
+							href={x.url}
+							title={x.name}
+							target="_blank"
+							rel="noreferrer"
+						>
+							<img src={x.iconSrc} alt={x.name} />
+						</a>
 					))}
 				</div>
 			</div>
