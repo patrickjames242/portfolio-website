@@ -13,6 +13,8 @@ export interface Project {
 	description: React.ReactNode;
 	githubLink?: string;
 	websiteLink: string;
+	appStoreLink?: string;
+	playStoreLink?: string;
 }
 
 const tech = technologies;
@@ -77,6 +79,10 @@ export const allProjects: Project[] = [
 		),
 		githubLink: "https://github.com/patrickjames242/better-living-app",
 		websiteLink: "https://app.betterlivingnassau.com/",
+		playStoreLink:
+			"https://play.google.com/store/apps/details?id=com.patrickhanna.betterliving",
+		appStoreLink:
+			"https://apps.apple.com/lr/app/better-living-health-center/id1541047557",
 	},
 	{
 		imageUrl: screwsWorldImage,

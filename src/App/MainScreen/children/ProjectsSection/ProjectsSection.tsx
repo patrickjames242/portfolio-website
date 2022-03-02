@@ -1,4 +1,6 @@
 import SectionHeader from "helper-views/SectionHeader/SectionHeader";
+import AndroidIconSVG from "helper-views/svg/AndroidIconSVG";
+import AppleIconSVG from "helper-views/svg/AppleIconSVG";
 import ExternalLink from "helper-views/svg/ExternalLinkSVG";
 import GithubSVG from "helper-views/svg/GithubSVG";
 import TriangleIconSVG from "helper-views/svg/TriangleSVG";
@@ -48,10 +50,7 @@ const ProjectsSection: React.ForwardRefRenderFunction<
 				htmlAttributes.className,
 			].asClassString()}
 		>
-			<SectionHeader
-				ref={sectionHeaderRef}
-				titleText="Examples of My Work"
-			/>
+			<SectionHeader ref={sectionHeaderRef} titleText="Examples of My Work" />
 			<div className={styles.projectsBox}>
 				{allProjects.map((project, index) => (
 					<ProjectView
@@ -140,24 +139,37 @@ const ProjectView = (() => {
 						))}
 					</div>
 					<div className={styles.linkButtons}>
-						{project.githubLink != null && (
-							<a
-								className={styles.github}
-								href={project.githubLink}
-								target="_blank"
-								rel="noreferrer"
-							>
-								<GithubSVG />
-							</a>
+						{[
+							{
+								href: project.githubLink,
+								svg: <GithubSVG />,
+							},
+							{
+								href: project.playStoreLink,
+								svg: <AndroidIconSVG />,
+							},
+							{
+								href: project.appStoreLink,
+								svg: <AppleIconSVG />,
+							},
+							{
+								className: styles.externalLink,
+								href: project.websiteLink,
+								svg: <ExternalLink />,
+							},
+						].compactMap((x) =>
+							x.href == null ? null : (
+								<a
+									className={x.className}
+									href={x.href}
+									target="_blank"
+									rel="noreferrer"
+									key={x.href}
+								>
+									{x.svg}
+								</a>
+							)
 						)}
-						<a
-							className={styles.externalLink}
-							href={project.websiteLink}
-							target="_blank"
-							rel="noreferrer"
-						>
-							<ExternalLink />
-						</a>
 					</div>
 				</div>
 

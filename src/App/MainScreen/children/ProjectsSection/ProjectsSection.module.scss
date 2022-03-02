@@ -150,7 +150,7 @@
 					&.externalLink > svg {
 						stroke: colors.$accent;
 					}
-					&.github > svg {
+					&:not(.externalLink) > svg {
 						fill: colors.$accent;
 					}
 				}
