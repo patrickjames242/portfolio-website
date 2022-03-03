@@ -107,7 +107,7 @@ export const technologies = (() => {
 			iconSrc: swift,
 		},
 		xcode: {
-			name: "XCode",
+			name: "Xcode",
 			iconSrc: xcode,
 			url: "https://developer.apple.com/xcode/",
 		},

@@ -2,6 +2,7 @@ import { technologies, Technology } from "helpers/technologies/technologies";
 import React from "react";
 import betterLivingApp from "./projectImages/better-living-app.png";
 import betterLivingImage from "./projectImages/better-living-site.png";
+import chatCam from "./projectImages/chat-cam-image.png";
 import screwsWorldImage from "./projectImages/screws-world-site.png";
 import swapacropImage from "./projectImages/swapacrop.png";
 
@@ -113,5 +114,21 @@ export const allProjects: Project[] = [
 		),
 		githubLink: "https://github.com/patrickjames242/screws-world-website",
 		websiteLink: "https://screwsworldbahamas.com/",
+	},
+	{
+		imageUrl: chatCam,
+		title: "ChatCam",
+		subtitle: "Native iOS App",
+		technologies: [tech.swift, tech.xcode, tech.firebase],
+		description: (
+			<>
+				ChatCam is a dumbed-down SnapChat clone that allows users to chat with
+				each other and take photos and videos, which they can then store in
+				their memories or send to other users.
+			</>
+		),
+		githubLink: "https://github.com/patrickjames242/ChatCam",
+		websiteLink: "https://apps.apple.com/us/app/chatcam/id1611648925",
+		appStoreLink: "https://apps.apple.com/us/app/chatcam/id1611648925",
 	},
 ];
