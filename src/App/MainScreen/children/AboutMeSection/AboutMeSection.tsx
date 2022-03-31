@@ -220,7 +220,7 @@ const IntroductionSection = (() => {
 								applications.
 							</p>
 							<p ref={paragraphRefs[2]}>
-								👨‍🎓 Additionally, I'm a recent graduate of{" "}
+								👨‍🎓 Additionally, I'm a graduate of{" "}
 								<a
 									className="underline-on-hover"
 									target="_blank"
