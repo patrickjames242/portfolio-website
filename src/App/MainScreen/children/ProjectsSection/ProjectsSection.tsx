@@ -1,3 +1,4 @@
+import OrangeImageView from "helper-views/OrangeImageView/OrangeImageView";
 import SectionHeader from "helper-views/SectionHeader/SectionHeader";
 import AndroidIconSVG from "helper-views/svg/AndroidIconSVG";
 import AppleIconSVG from "helper-views/svg/AppleIconSVG";
@@ -157,14 +158,14 @@ const ProjectView = (() => {
 								href: project.websiteLink,
 								svg: <ExternalLink />,
 							},
-						].compactMap((x) =>
+						].compactMap((x, i) =>
 							x.href == null ? null : (
 								<a
 									className={x.className}
 									href={x.href}
 									target="_blank"
 									rel="noreferrer"
-									key={x.href}
+									key={i}
 								>
 									{x.svg}
 								</a>
@@ -172,18 +173,11 @@ const ProjectView = (() => {
 						)}
 					</div>
 				</div>
-
-				<a
+				<OrangeImageView
 					className={styles.imageView}
+					imageUrl={project.imageUrl}
 					href={project.websiteLink}
-					target="_blank"
-					rel="noreferrer"
-				>
-					<div>
-						<img src={project.imageUrl} alt="" />
-					</div>
-					<div className={styles.imageCover}></div>
-				</a>
+				/>
 			</div>
 		);
 	};
