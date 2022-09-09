@@ -238,10 +238,8 @@ const IntroductionSection = (() => {
 							className={[styles.imageHolder].asClassString()}
 						>
 							<div className={styles.border} />
-							<div className={styles.imageWithHolderCover}>
-								<img ref={imageRef} src={patrickImage} alt="Patrick" />
-								<div className={styles.imageCover} />
-							</div>
+
+							<img ref={imageRef} src={patrickImage} alt="Patrick" />
 						</div>
 					</div>
 				</div>

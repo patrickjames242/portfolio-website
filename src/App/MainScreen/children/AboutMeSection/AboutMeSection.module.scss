@@ -69,32 +69,11 @@ $imageLinedUpWithDescriptionMaxWidth: 1000px;
 				margin-top: var(--inset);
 				margin-right: var(--inset);
 
-				> .imageWithHolderCover {
-					$border-radius: 13px;
-
-					> img {
-						display: block;
-						width: 100%;
-						position: relative;
-						border-radius: $border-radius;
-					}
-
-					> .imageCover {
-						position: absolute;
-						@include absolute-pin-all-sides;
-						background-color: rgba(colors.$accent, 0.4);
-						@include transition-config($properties: opacity);
-						border-radius: $border-radius;
-					}
-
-					&:hover {
-						> div > img {
-							filter: grayscale(0%);
-						}
-						> .imageCover {
-							opacity: 0;
-						}
-					}
+				> img {
+					display: block;
+					width: 100%;
+					position: relative;
+					border-radius: 13px;
 				}
 
 				> .border {
