@@ -5,8 +5,8 @@ import mailgun from "mailgun-js";
 import serverless from "serverless-http";
 
 const mg = mailgun({
-	apiKey: process.env.MAILGUN_API_KEY,
-	domain: process.env.MAILGUN_DOMAIN,
+	apiKey: process.env.MAILGUN_API_KEY!,
+	domain: process.env.MAILGUN_DOMAIN!,
 });
 
 const app = express();

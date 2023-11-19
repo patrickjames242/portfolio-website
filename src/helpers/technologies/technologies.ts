@@ -6,7 +6,9 @@ import git from "./technologyIcons/git.svg";
 import heroku from "./technologyIcons/heroku.svg";
 import html from "./technologyIcons/html.svg";
 import javascript from "./technologyIcons/javascript.svg";
+import laravel from "./technologyIcons/laravel.svg";
 import nodeJs from "./technologyIcons/nodejs.svg";
+import php from "./technologyIcons/php.svg";
 import postgres from "./technologyIcons/postgresql.svg";
 import python from "./technologyIcons/python.svg";
 import reactNative from "./technologyIcons/react-native.svg";
@@ -17,7 +19,6 @@ import sass from "./technologyIcons/sass.svg";
 import swift from "./technologyIcons/swift.svg";
 import typescript from "./technologyIcons/typescript.svg";
 import xcode from "./technologyIcons/xcode.png";
-
 export interface Technology {
 	name: string;
 	url: string;
@@ -135,6 +136,16 @@ export const technologies = (() => {
 			name: "JavaScript",
 			iconSrc: javascript,
 			url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+		},
+		php: {
+			name: "PHP",
+			iconSrc: php,
+			url: "https://www.php.net/",
+		},
+		laravel: {
+			name: "Laravel",
+			iconSrc: laravel,
+			url: "https://laravel.com/",
 		},
 	};
 	const technologies: Record<keyof typeof x, Technology> = x;

@@ -5,6 +5,7 @@ import betterLivingImage from "./projectImages/better-living-site.png";
 import chatCam from "./projectImages/chat-cam-image.png";
 import screwsWorldImage from "./projectImages/screws-world-site.png";
 import swapacropImage from "./projectImages/swapacrop.png";
+import teleconnect from "./projectImages/teleconnect.jpg";
 
 export interface Project {
 	imageUrl: string;
@@ -20,6 +21,20 @@ export interface Project {
 
 const tech = technologies;
 export const allProjects: Project[] = [
+	{
+		imageUrl: teleconnect,
+		title: "TeleConnect",
+		subtitle: "Web & Mobile Application",
+		technologies: [tech.react, tech.reactNative, tech.php, tech.laravel],
+		description: (
+			<>
+				This is a web and mobile application that allows Patients to request
+				medical services from Doctor's Hospital and pay for them online.
+				<br />I served as the main front-end developer on this project.
+			</>
+		),
+		websiteLink: "https://dhconnect.doctorshosp.com",
+	},
 	{
 		imageUrl: swapacropImage,
 		title: "Swapacrop",
