@@ -65,7 +65,7 @@ export default defineConfig(() => ({
       enableBuild: true,
       overlay: { position: 'tl' },
       eslint: {
-        lintCommand: 'eslint . --ext .js,.jsx,.ts,.tsx',
+        lintCommand: 'eslint ./src --ext .js,.jsx,.ts,.tsx',
       },
     }),
     EnvironmentPlugin([
