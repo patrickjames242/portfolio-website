@@ -1,98 +1,98 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
-@use "../nav-constants.module" as nav-constants;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
+@use '../nav-constants.module' as nav-constants;
 
 .NavBar {
-	height: nav-constants.$expanded-nav-bar-height;
-	display: grid;
-	justify-content: space-between;
-	grid-auto-flow: column;
-	padding-left: var(--screen-side-insets);
-	padding-right: var(--screen-side-insets);
-	transition-duration: 0.3s;
-	transition-property: height, margin-bottom, box-shadow, background-color;
-	z-index: 10;
-	pointer-events: none;
+  height: nav-constants.$expanded-nav-bar-height;
+  display: grid;
+  justify-content: space-between;
+  grid-auto-flow: column;
+  padding-left: var(--screen-side-insets);
+  padding-right: var(--screen-side-insets);
+  transition-duration: 0.3s;
+  transition-property: height, margin-bottom, box-shadow, background-color;
+  z-index: 10;
+  pointer-events: none;
 
-	@mixin box-shadow($color: rgba(black, 0.2)) {
-		box-shadow: 0 0 40px 20px $color;
-	}
+  @mixin box-shadow($color: rgba(black, 0.2)) {
+    box-shadow: 0 0 40px 20px $color;
+  }
 
-	@include box-shadow(rgba(black, 0));
+  @include box-shadow(rgba(black, 0));
 
-	&.contracted {
-		height: nav-constants.$compact-nav-bar-height;
-		margin-bottom: nav-constants.$expanded-nav-bar-height -
-			nav-constants.$compact-nav-bar-height;
-		@include box-shadow(rgba(black, 0.2));
-		background-color: colors.$main-background;
-		pointer-events: auto;
-	}
+  &.contracted {
+    height: nav-constants.$compact-nav-bar-height;
+    margin-bottom: nav-constants.$expanded-nav-bar-height -
+      nav-constants.$compact-nav-bar-height;
+    @include box-shadow(rgba(black, 0.2));
+    background-color: colors.$main-background;
+    pointer-events: auto;
+  }
 
-	> .nameBox {
-		display: grid;
-		grid-auto-flow: column;
-		align-items: center;
-		gap: 10px;
-		position: relative;
-		pointer-events: auto;
+  > .nameBox {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    pointer-events: auto;
 
-		@include fade-on-hover;
+    @include fade-on-hover;
 
-		> svg {
-			margin-top: -5px;
-			width: 35px;
-			fill: colors.$accent;
-		}
+    > svg {
+      margin-top: -5px;
+      width: 35px;
+      fill: colors.$accent;
+    }
 
-		> .nameText {
-			font-size: 22px;
-			font-weight: 500;
-			line-height: 1;
-			margin-top: 0.2em;
+    > .nameText {
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1;
+      margin-top: 0.2em;
 
-			> .firstName {
-				color: colors.$lighter-text;
-			}
+      > .firstName {
+        color: colors.$lighter-text;
+      }
 
-			> .lastName {
-				color: colors.$light-text;
-			}
-		}
-	}
+      > .lastName {
+        color: colors.$light-text;
+      }
+    }
+  }
 
-	> .rightSide {
-		display: grid;
-		grid-auto-flow: column;
-		gap: 30px;
-		align-items: center;
+  > .rightSide {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 30px;
+    align-items: center;
 
-		> .resumeButton {
-			font-size: 16px;
-			font-weight: 400;
-			padding: 10px;
-			padding-left: 23px;
-			padding-right: 23px;
-		}
+    > .resumeButton {
+      font-size: 16px;
+      font-weight: 400;
+      padding: 10px;
+      padding-left: 23px;
+      padding-right: 23px;
+    }
 
-		> .menuButton {
-			display: none;
-			@include fade-on-hover;
-			pointer-events: auto;
-			> svg {
-				height: 25px;
-				width: 25px;
-				fill: colors.$accent;
-			}
-		}
+    > .menuButton {
+      display: none;
+      @include fade-on-hover;
+      pointer-events: auto;
+      > svg {
+        height: 25px;
+        width: 25px;
+        fill: colors.$accent;
+      }
+    }
 
-		@media (max-width: nav-constants.$max-shortened-horizontal-nav-bar-width) {
-			> .menuButton {
-				display: unset;
-			}
-			> :not(.menuButton) {
-				display: none;
-			}
-		}
-	}
+    @media (max-width: nav-constants.$max-shortened-horizontal-nav-bar-width) {
+      > .menuButton {
+        display: unset;
+      }
+      > :not(.menuButton) {
+        display: none;
+      }
+    }
+  }
 }
