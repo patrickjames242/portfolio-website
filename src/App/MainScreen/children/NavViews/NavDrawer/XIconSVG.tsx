@@ -1,6 +1,6 @@
 import React from 'react';
 
-function XIconSVG(props: React.SVGProps<SVGSVGElement>) {
+function XIconSVG(props: React.SVGProps<SVGSVGElement>): JSX.Element {
   return (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700">
       <path

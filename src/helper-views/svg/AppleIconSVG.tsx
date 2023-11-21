@@ -1,8 +1,6 @@
 import React from 'react';
 
-interface Props {}
-
-const AppleIconSVG = (props: Props) => {
+const AppleIconSVG = (): JSX.Element => {
   return (
     <svg
       height="2500"

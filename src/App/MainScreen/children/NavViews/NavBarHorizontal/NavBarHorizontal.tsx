@@ -11,14 +11,16 @@ import styles from './NavBarHorizontal.module.scss';
 export interface NavBarHorizontalProps
   extends React.HTMLAttributes<HTMLDivElement> {}
 
-function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
+function NavBarHorizontal({
+  ...reactProps
+}: NavBarHorizontalProps): JSX.Element {
   const mainScreenContext = useContext(MainScreenContext);
   const navigate = useNavigate();
   const currentRouteType = useRouteTypeForCurrentRoute();
   const navBarRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const listener = () => {
+    const listener = (): void => {
       const shouldNavBarBeContracted = window.scrollY > 5;
       navBarRef.current?.classList.toggle(
         styles.contracted,
@@ -61,7 +63,7 @@ function NavBarHorizontal({ ...reactProps }: NavBarHorizontalProps) {
         </div>
       </a>
       <div className={styles.rightSide}>
-        {appRoutes.map(({ routeType, name }, i) => (
+        {appRoutes.map(({ routeType, name }) => (
           <NavLink key={name} routeType={routeType} />
         ))}
         <BubbleTextAnchor

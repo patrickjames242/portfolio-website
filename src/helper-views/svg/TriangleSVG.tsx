@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TriangleIconSVG() {
+function TriangleIconSVG(): JSX.Element {
   return (
     <svg
       viewBox="0 0 258 292"

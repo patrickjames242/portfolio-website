@@ -2,7 +2,10 @@ export type ArrayElement<A extends any[]> = A extends Array<infer E>
   ? E
   : unknown;
 
-export function getNumberList(startNumber: number, endNumber: number) {
+export function getNumberList(
+  startNumber: number,
+  endNumber: number,
+): number[] {
   if (endNumber < startNumber)
     throw new Error('end number cannot be less than start number');
   const x = startNumber;
@@ -31,7 +34,7 @@ export function numberSort<ItemT>(
 export function clampNum(
   value: number,
   options: { min?: number; max?: number },
-) {
+): number {
   if (options?.min != null) {
     value = Math.max(value, options.min);
   }
@@ -46,7 +49,7 @@ export function ifThen<T>(condition: boolean, value: T): T | null {
   return null;
 }
 
-export function wait(numberOfMilliseconds: number) {
+export function wait(numberOfMilliseconds: number): Promise<unknown> {
   return new Promise((resolve) => {
     setTimeout(() => resolve(null), numberOfMilliseconds);
   });
@@ -76,7 +79,9 @@ export function getAnimationStack(timeInterval: number = 300): AnimationStack {
   const elementAnimationStack: Animation[] = [];
   let animationIsRunning = false;
 
-  async function addElementsToAnimationStack(animations: Animation[]) {
+  async function addElementsToAnimationStack(
+    animations: Animation[],
+  ): Promise<void> {
     elementAnimationStack.push(...animations);
     if (animationIsRunning) return;
     animationIsRunning = true;

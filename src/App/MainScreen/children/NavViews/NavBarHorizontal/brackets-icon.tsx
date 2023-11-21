@@ -1,6 +1,6 @@
 import React from 'react';
 
-function BracketsIcon() {
+function BracketsIcon(): JSX.Element {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 100 100">
       <path

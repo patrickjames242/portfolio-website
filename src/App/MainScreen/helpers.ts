@@ -15,17 +15,21 @@ export const MainScreenContext = React.createContext<MainScreenContextValue>({
   menuDrawerIsOpened: false,
   currentlyVisibleScreenSection: null,
   screenSectionCurrentlyBeingAnimatedTo: null,
-  setMenuDrawerOpened: () => {},
-  animateToRouteType: () => {},
+  setMenuDrawerOpened: () => {
+    //
+  },
+  animateToRouteType: () => {
+    //
+  },
 });
 
-export function getCompactNavBarHeight() {
+export function getCompactNavBarHeight(): number {
   return parseFloat(navConstants.compactNavBarHeight);
 }
 
 export function getWindowScrollValueForSection(
   sectionRootElement: HTMLDivElement,
-) {
+): number {
   const navBarHeight = getCompactNavBarHeight();
   const elementHeight = sectionRootElement.clientHeight ?? 0;
   const elementDistanceFromTop =
@@ -46,7 +50,9 @@ export function getWindowScrollValueForSection(
   return Math.min(result, document.body.clientHeight - window.innerHeight);
 }
 
-export function useReactSpringWindowScroller() {
+export function useReactSpringWindowScroller(): {
+  scrollScreenToYValue: (yValue: number) => Promise<void>;
+} {
   const [, springApi] = useSpring(() => ({ y: 0 }));
   const scrollScreenToYValue = useRef(async (yValue: number) => {
     await new Promise<undefined>((resolve) => {

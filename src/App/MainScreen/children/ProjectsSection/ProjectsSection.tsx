@@ -86,7 +86,7 @@ const ProjectView = (() => {
       const matcher = window.matchMedia(
         `(min-width: ${styles.maxNarrowScreenWidth})`,
       );
-      const listener = () => {
+      const listener = (): void => {
         const areProjectsExpanded = matcher.matches;
         if (areProjectsExpanded) {
           detailsSectionRef.current?.insertBefore(

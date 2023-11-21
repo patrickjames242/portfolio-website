@@ -28,7 +28,7 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
   const menuRef = useRef<MenuViewRef>(null);
 
   useLayoutEffect(() => {
-    function updateMenuWidth() {
+    function updateMenuWidth(): void {
       const newMenuWidth = clampNum(window.innerWidth - 50, {
         min: 200,
         max: 400,
@@ -36,7 +36,7 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
       setMenuWidth(newMenuWidth);
       menuRef.current?.setMenuWidth(newMenuWidth);
     }
-    function closeMenuIfNeeded() {
+    function closeMenuIfNeeded(): void {
       if (
         document.body.offsetWidth >
           Number(navConstants.maxShortenedHorizontalNavBarWidth) &&
@@ -45,7 +45,7 @@ const NavDrawer: React.FC<NavDrawerProps> = ({
         appContext?.setMenuDrawerOpened(false);
       }
     }
-    const listener = () => {
+    const listener = (): void => {
       updateMenuWidth();
       closeMenuIfNeeded();
     };

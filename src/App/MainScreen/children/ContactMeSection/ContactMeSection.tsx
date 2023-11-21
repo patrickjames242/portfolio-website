@@ -107,8 +107,9 @@ const ContactSectionHeader = (() => {
           >
             contact@patrickhanna.dev.
           </a>{' '}
-          Alternatively, you can shoot me a quick message using the form below.
-          I'm excited to hear from you! 😄
+          {
+            "Alternatively, you can shoot me a quick message using the form below. I'm excited to hear from you! 😄"
+          }
         </p>
       </div>
     );

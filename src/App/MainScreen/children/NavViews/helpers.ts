@@ -47,11 +47,11 @@ export const appRoutes: readonly AppRoute[] = Object.freeze(
   ].map((x) => appRoutesObj[x]),
 );
 
-export function getInfoForRouteType(routeType: RouteType) {
+export function getInfoForRouteType(routeType: RouteType): AppRoute {
   return appRoutesObj[routeType];
 }
 
-export function getInfoForRoutePath(path: string) {
+export function getInfoForRoutePath(path: string): AppRoute | null {
   // sorts the routes so that home is last
   const routesSorted = [...appRoutes].sort((i1, i2) => {
     if (i2.routeType === RouteType.home) {
@@ -83,7 +83,7 @@ export function useRouteTypeForCurrentRoute(): RouteType | null {
   return getInfoForRoutePath(location.pathname)?.routeType ?? null;
 }
 
-export function useRouteTypeNavigation() {
+export function useRouteTypeNavigation(): (routeType: RouteType) => void {
   const location = useLocation();
   const mainScreenContext = useContext(MainScreenContext);
   const navigate = useNavigate();

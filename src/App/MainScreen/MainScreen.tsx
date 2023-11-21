@@ -20,7 +20,7 @@ import {
 } from './helpers';
 import styles from './MainScreen.module.scss';
 
-export default function MainScreen() {
+export default function MainScreen(): JSX.Element {
   const [shouldDrawerBeOpen, setShouldDrawerBeOpen] = useState(false);
   const [currentlyVisibleScreenSection, setCurrentlyVisibleScreenSection] =
     useState<RouteType | null>(null);
@@ -84,9 +84,9 @@ export default function MainScreen() {
       RouteType.contactMe,
     ]);
 
-    function updateVisibleScreenSection() {
+    function updateVisibleScreenSection(): void {
       const targetRouteType = (() => {
-        const getElementTop = (el: HTMLElement) =>
+        const getElementTop = (el: HTMLElement): number =>
           el.getBoundingClientRect().top + window.scrollY;
 
         const navBarHeight = getCompactNavBarHeight();

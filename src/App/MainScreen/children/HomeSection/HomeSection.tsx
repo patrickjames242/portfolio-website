@@ -91,9 +91,9 @@ const HomeSection: React.ForwardRefRenderFunction<
           </SlideUpSentence>
         </h2>
         <p ref={descriptionRef} className={styles.descriptionText}>
-          I'm a software developer with a focus on front-end and back-end web
-          development, cross platform app development, and native iOS
-          development.
+          {
+            "I'm a software developer with a focus on front-end and back-end web development, cross platform app development, and native iOS development."
+          }
         </p>
         <div
           ref={getInTouchButtonHolderRef}

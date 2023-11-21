@@ -7,7 +7,7 @@ import styles from './starsBackgroundEffect.module.scss';
  *  .  .   change these values:   .  *
    .      * .        .          * .       */
 
-export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
+export function addStarEffectToCanvas(canvas: HTMLCanvasElement): void {
   type Star = { x: number; y: number; z: number };
 
   const context = canvas.getContext('2d')!;
@@ -16,7 +16,8 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
   const STAR_SIZE = 4;
   const STAR_MIN_SCALE = 0.2;
   const OVERFLOW_THRESHOLD = 50;
-  const getStarCount = () => (canvas.clientWidth + canvas.clientHeight) / 6;
+  const getStarCount = (): number =>
+    (canvas.clientWidth + canvas.clientHeight) / 6;
 
   let scale = 1, // device pixel ratio
     width: number,
@@ -30,7 +31,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
 
   let touchInput = false;
 
-  function generateStarsIfNeeded() {
+  function generateStarsIfNeeded(): void {
     const desiredStarCount = getStarCount();
     const difference = Math.abs(stars.length - desiredStarCount);
     if (difference < 30) return;
@@ -44,12 +45,12 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
     }
   }
 
-  function placeStar(star: Star) {
+  function placeStar(star: Star): void {
     if (star.x === 0) star.x = Math.random() * width;
     if (star.y === 0) star.y = Math.random() * height;
   }
 
-  function recycleStar(star: Star) {
+  function recycleStar(star: Star): void {
     let direction = 'z';
 
     const vx = Math.abs(velocity.x),
@@ -93,8 +94,8 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
   }
 
   let resizeTimeout: number | null = null;
-  function resize(immediate: boolean = false) {
-    const action = () => {
+  function resize(immediate: boolean = false): void {
+    const action = (): void => {
       scale = window.devicePixelRatio || 1;
 
       width = canvas.clientWidth * scale;
@@ -115,7 +116,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
     }
   }
 
-  function step() {
+  function step(): void {
     context.clearRect(0, 0, width, height);
 
     update();
@@ -124,7 +125,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
     requestAnimationFrame(step);
   }
 
-  function update() {
+  function update(): void {
     velocity.tx *= 0.96;
     velocity.ty *= 0.96;
 
@@ -151,7 +152,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
     });
   }
 
-  function render() {
+  function render(): void {
     stars.forEach((star) => {
       context.beginPath();
       context.lineCap = 'round';
@@ -175,7 +176,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
     });
   }
 
-  function movePointer(x: number, y: number) {
+  function movePointer(x: number, y: number): void {
     if (typeof pointerX === 'number' && typeof pointerY === 'number') {
       const ox = x - pointerX,
         oy = y - pointerY;
@@ -188,18 +189,18 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
     pointerY = y;
   }
 
-  function onMouseMove(event: MouseEvent) {
+  function onMouseMove(event: MouseEvent): void {
     touchInput = false;
 
     movePointer(event.clientX, event.clientY);
   }
 
-  function onTouchMove(event: TouchEvent) {
+  function onTouchMove(event: TouchEvent): void {
     touchInput = true;
     movePointer(event.touches[0].clientX, event.touches[0].clientY);
   }
 
-  function onMouseLeave() {
+  function onMouseLeave(): void {
     pointerX = null;
     pointerY = null;
   }

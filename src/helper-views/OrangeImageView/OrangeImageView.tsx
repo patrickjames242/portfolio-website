@@ -5,7 +5,9 @@ export default function OrangeImageView({
   imageUrl,
   className,
   ...props
-}: AnchorHTMLAttributes<HTMLAnchorElement> & { imageUrl: string }) {
+}: AnchorHTMLAttributes<HTMLAnchorElement> & {
+  imageUrl: string;
+}): JSX.Element {
   return (
     <a
       target="_blank"

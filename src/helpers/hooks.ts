@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
-export function consoleLogAndReturn<Value>(value: Value) {
+export function consoleLogAndReturn<Value>(value: Value): Value {
   console.log(value);
   return value;
 }
@@ -33,10 +33,10 @@ export function useMediaQuery(
   query: string,
   callback: (matches: boolean) => void,
   dependencies: React.DependencyList = [],
-) {
+): void {
   useLayoutEffect(() => {
     const media = window.matchMedia(query);
-    const listener = () => {
+    const listener = (): void => {
       callback(media.matches);
     };
     listener();
@@ -82,8 +82,8 @@ export function useCallbackRef<T>(
   return callbackFn;
 }
 
-export function useUnmounted() {
-  const unmountedSubject = useRef(new Subject()).current;
+export function useUnmounted(): Observable<null> {
+  const unmountedSubject = useRef(new Subject<null>()).current;
   const unmountedObservable = useRef(unmountedSubject.asObservable()).current;
   useEffect(() => {
     return () => {

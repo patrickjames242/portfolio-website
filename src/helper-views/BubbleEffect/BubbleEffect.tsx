@@ -80,7 +80,7 @@ const BubbleEffect: React.ForwardRefRenderFunction<
 
 type Coordinate = { x: number; y: number };
 
-function distanceBetweenTwoPoints(p1: Coordinate, p2: Coordinate) {
+function distanceBetweenTwoPoints(p1: Coordinate, p2: Coordinate): number {
   return Math.hypot(p2.x - p1.x, p2.y - p1.y);
 }
 

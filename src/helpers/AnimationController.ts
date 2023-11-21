@@ -34,7 +34,7 @@ export function usePresentationController(): PresentationController {
     }[] = [];
     let timeout: number | null = null;
 
-    function emptySectionBuffer() {
+    function emptySectionBuffer(): void {
       sectionBuffer
         .sort(numberSort((x) => observerOrder.get(x.observer)!))
         .forEach(({ section }) => {
@@ -75,7 +75,7 @@ export function usePresentationController(): PresentationController {
 
 function preparePresentationItemSlideUpElements(
   presentationItem: PresentationItem,
-) {
+): void {
   if ('slideUpElement' in presentationItem) {
     presentationItem.slideUpElement.classList.toggle('slide-up-element', true);
   } else if ('animateAtOnce' in presentationItem) {
@@ -111,12 +111,13 @@ function animatePresentationItem(
       secondsTillNextAnimation: x,
     }));
   }
+  return undefined;
 }
 
 function animateSection(
   section: PresentationSection,
   animationStack: AnimationStack,
-) {
+): void {
   animationStack.addElementsToAnimationStack(
     section.presentationItems.compactMap((presentationItem) => {
       if ('subsection' in presentationItem) return null;

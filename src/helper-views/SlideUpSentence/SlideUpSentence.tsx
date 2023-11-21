@@ -111,7 +111,7 @@ const Word = (() => {
       ref,
       () => ({
         animateUp(delayInSeconds) {
-          return new Promise((resolve, reject) => {
+          return new Promise((resolve) => {
             const innerBox = innerWordBoxRef.current;
             if (innerBox == null) {
               resolve();

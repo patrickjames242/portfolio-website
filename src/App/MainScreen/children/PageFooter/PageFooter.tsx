@@ -54,7 +54,7 @@ const PageFooter: React.FC<PageFooterProps> = ({
             target="_blank"
             rel="noreferrer"
           >
-            Brittany Chiang's site
+            {"Brittany Chiang's site"}
           </a>
         </div>
       </div>

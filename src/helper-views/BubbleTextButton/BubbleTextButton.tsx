@@ -27,7 +27,7 @@ const _BubbleTextButton = (() => {
   function _BubbleTextButton<ElementType extends _BubbleTextButtonElementType>(
     { titleText, buttonType, htmlProps }: _BubbleTextButtonProps<ElementType>,
     forwardedRef: React.ForwardedRef<GetHTMLElement<ElementType>>,
-  ) {
+  ): JSX.Element {
     const bubbleEffectRef = useRef<BubbleEffectRef>(null);
     const rootRef = useCallbackRef<GetHTMLElement<ElementType>>(forwardedRef);
 
@@ -70,7 +70,7 @@ export const BubbleTextButton = (() => {
   function BubbleTextButton(
     { titleText, ...htmlProps }: BubbleTextButtonProps,
     ref: React.ForwardedRef<HTMLButtonElement>,
-  ) {
+  ): JSX.Element {
     return (
       // eslint-disable-next-line react/jsx-pascal-case
       <_BubbleTextButton
@@ -93,7 +93,7 @@ export const BubbleTextAnchor = (() => {
   function BubbleTextAnchor(
     { titleText, ...htmlProps }: BubbleTextAnchorProps,
     ref: ForwardedRef<HTMLAnchorElement>,
-  ) {
+  ): JSX.Element {
     return (
       // eslint-disable-next-line react/jsx-pascal-case
       <_BubbleTextButton

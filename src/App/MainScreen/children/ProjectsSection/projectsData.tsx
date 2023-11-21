@@ -28,8 +28,9 @@ export const allProjects: Project[] = [
     technologies: [tech.react, tech.reactNative, tech.php, tech.laravel],
     description: (
       <>
-        This is a web and mobile application that allows Patients to request
-        medical services from Doctor's Hospital and pay for them online.
+        {
+          "This is a web and mobile application that allows Patients to request medical services from Doctor's Hospital and pay for them online."
+        }
         <br />I served as the main front-end developer on this project.
       </>
     ),
@@ -42,10 +43,9 @@ export const allProjects: Project[] = [
     technologies: [tech.angular, tech.typescript, tech.scss, tech.rxjs],
     description: (
       <>
-        This web app is an online marketplace that allows users to buy and sell
-        locally grown and made products, inclusive mainly of fruits, vegetables,
-        livestock etc. It's mission is to "improve the overall health and
-        wellbeing of communities one crop at a time."
+        {
+          'This web app is an online marketplace that allows users to buy and sell locally grown and made products, inclusive mainly of fruits, vegetables, livestock etc. It\'s mission is to "improve the overall health and wellbeing of communities one crop at a time."'
+        }
         <br />I served as the main front-end developer on this project.
       </>
     ),
@@ -113,9 +113,9 @@ export const allProjects: Project[] = [
     ],
     description: (
       <>
-        This serves as the official website of Screws and Fastener's world. It's
-        purpose is to market the business and provide customers with a catalog
-        of available products. It also features a{' '}
+        {
+          "This serves as the official website of Screws and Fastener's world. It's purpose is to market the business and provide customers with a catalog of available products. It also features a "
+        }
         <a
           className="underline-on-hover"
           href="https://en.wikipedia.org/wiki/Content_management_system"
