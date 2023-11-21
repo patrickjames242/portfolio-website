@@ -1,37 +1,37 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .LoadingSpinner {
-	.loadingIndicator {
-		@function border-config($color) {
-			@return 1.5em solid $color;
-		}
-		$dim-border: border-config(rgba(colors.$accent, 0.2));
-		border-radius: 50%;
-		width: 10em;
-		height: 10em;
-		position: relative;
-		text-indent: -9999em;
-		border-top: $dim-border;
-		border-right: $dim-border;
-		border-bottom: $dim-border;
-		border-left: border-config(colors.$accent);
-		-webkit-transform: translateZ(0);
-		-ms-transform: translateZ(0);
-		transform: translateZ(0);
-		-webkit-animation: load8 1.1s infinite linear;
-		animation: load8 1.1s infinite linear;
-	}
+  .loadingIndicator {
+    @function border-config($color) {
+      @return 1.5em solid $color;
+    }
+    $dim-border: border-config(rgba(colors.$accent, 0.2));
+    border-radius: 50%;
+    width: 10em;
+    height: 10em;
+    position: relative;
+    text-indent: -9999em;
+    border-top: $dim-border;
+    border-right: $dim-border;
+    border-bottom: $dim-border;
+    border-left: border-config(colors.$accent);
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load8 1.1s infinite linear;
+    animation: load8 1.1s infinite linear;
+  }
 
-	@keyframes load8 {
-		0% {
-			-webkit-transform: rotate(0deg);
-			transform: rotate(0deg);
-		}
+  @keyframes load8 {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
 
-		100% {
-			-webkit-transform: rotate(360deg);
-			transform: rotate(360deg);
-		}
-	}
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
 }

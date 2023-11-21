@@ -1,31 +1,31 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .SectionHeader {
-	display: grid;
-	grid-template-columns: auto auto;
-	grid-auto-flow: column;
-	grid-auto-columns: 1fr;
-	align-items: center;
-	gap: 15px;
-	justify-content: start;
-	font-size: clamp(28px, 5vw, 37px);
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  align-items: center;
+  gap: 15px;
+  justify-content: start;
+  font-size: clamp(28px, 5vw, 37px);
 
-	> svg {
-		height: 0.75em;
-		width: 0.75em;
-		fill: colors.$accent;
-		margin-top: -0.3em;
-	}
+  > svg {
+    height: 0.75em;
+    width: 0.75em;
+    fill: colors.$accent;
+    margin-top: -0.3em;
+  }
 
-	> .titleText {
-		font-weight: 500;
-		line-height: 1;
-	}
+  > .titleText {
+    font-weight: 500;
+    line-height: 1;
+  }
 
-	> .line {
-		height: 1px;
-		background-color: rgb(29, 48, 85);
-		margin-left: 15px;
-	}
+  > .line {
+    height: 1px;
+    background-color: rgb(29, 48, 85);
+    margin-left: 15px;
+  }
 }

@@ -1,31 +1,31 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .NavLink {
-	font-size: 18px;
-	color: colors.$lighter-text;
-	font-weight: 500;
-	display: grid;
-	grid-auto-flow: column;
-	gap: 0.4em;
-	align-items: center;
-	transition: color 0.3s;
-	pointer-events: auto;
+  font-size: 18px;
+  color: colors.$lighter-text;
+  font-weight: 500;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 0.4em;
+  align-items: center;
+  transition: color 0.3s;
+  pointer-events: auto;
 
-	> svg {
-		height: 0.6em;
-		width: 0.6em;
-		fill: colors.$accent;
-		margin-top: -0.27em;
-	}
+  > svg {
+    height: 0.6em;
+    width: 0.6em;
+    fill: colors.$accent;
+    margin-top: -0.27em;
+  }
 
-	&.selected,
-	&:hover {
-		color: colors.$accent;
-		font-weight: 500;
-	}
+  &.selected,
+  &:hover {
+    color: colors.$accent;
+    font-weight: 500;
+  }
 
-	> .text {
-		line-height: 1;
-	}
+  > .text {
+    line-height: 1;
+  }
 }

@@ -11,13 +11,10 @@
     "skipLibCheck": true, // Skip type checking of declaration files
     "noImplicitAny": true, // Bypass raising errors on `any` type
     "allowSyntheticDefaultImports": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules"
-    ],
+    "typeRoots": ["./node_modules/@types", "./node_modules"],
     "types": ["vite/client", "node"],
     "paths": { "@/*": ["./*"] },
     "downlevelIteration": true,
     "resolveJsonModule": true
-  },
+  }
 }

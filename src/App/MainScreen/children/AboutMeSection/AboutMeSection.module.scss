@@ -1,128 +1,128 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 $compactMaxWidth: 700px;
 $imageLinedUpWithDescriptionMaxWidth: 1000px;
 
 :export {
-	compactMaxWidth: $compactMaxWidth;
-	imageLinedUpWithDescriptionMaxWidth: $imageLinedUpWithDescriptionMaxWidth;
+  compactMaxWidth: $compactMaxWidth;
+  imageLinedUpWithDescriptionMaxWidth: $imageLinedUpWithDescriptionMaxWidth;
 }
 
 @mixin transition-config($properties) {
-	transition-property: $properties;
-	transition-duration: 0.4s;
+  transition-property: $properties;
+  transition-duration: 0.4s;
 }
 
 .AboutMeSection {
-	position: relative;
-	display: grid;
-	gap: 80px;
-	padding: {
-		top: 80px;
-		bottom: 80px;
-	}
+  position: relative;
+  display: grid;
+  gap: 80px;
+  padding: {
+    top: 80px;
+    bottom: 80px;
+  }
 
-	> .backgroundView {
-		width: 100vw;
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-		top: 0;
-		bottom: 0;
-		background-color: colors.$lighter-background;
-	}
+  > .backgroundView {
+    width: 100vw;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
+    background-color: colors.$lighter-background;
+  }
 
-	> *:not(.backgroundView) {
-		position: relative;
-	}
+  > *:not(.backgroundView) {
+    position: relative;
+  }
 
-	> .IntroductionSection {
-		.sectionHeaderHolder {
-			margin-bottom: 35px;
-			.SectionHeader {
-			}
-		}
-		> .content {
-			display: grid;
-			grid-template-columns: 1.5fr 1fr;
-			gap: 50px;
-			align-items: center;
+  > .IntroductionSection {
+    .sectionHeaderHolder {
+      margin-bottom: 35px;
+      .SectionHeader {
+      }
+    }
+    > .content {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 50px;
+      align-items: center;
 
-			> .leftSide {
-				font-size: 20px;
-				line-height: 1.4;
-				> p {
-					color: colors.$lighter-text;
-				}
+      > .leftSide {
+        font-size: 20px;
+        line-height: 1.4;
+        > p {
+          color: colors.$lighter-text;
+        }
 
-				> p + p {
-					margin-top: 1em;
-				}
-			}
+        > p + p {
+          margin-top: 1em;
+        }
+      }
 
-			.imageHolder {
-				justify-self: center;
-				max-width: 300px;
-				position: relative;
-				--inset: 25px;
-				margin-top: var(--inset);
-				margin-right: var(--inset);
+      .imageHolder {
+        justify-self: center;
+        max-width: 300px;
+        position: relative;
+        --inset: 25px;
+        margin-top: var(--inset);
+        margin-right: var(--inset);
 
-				> img {
-					display: block;
-					width: 100%;
-					position: relative;
-					border-radius: 13px;
-				}
+        > img {
+          display: block;
+          width: 100%;
+          position: relative;
+          border-radius: 13px;
+        }
 
-				> .border {
-					content: "";
-					position: absolute;
-					top: calc(-1 * var(--inset));
-					left: var(--inset);
-					right: calc(-1 * var(--inset));
-					bottom: var(--inset);
-					border: 3px solid colors.$accent;
-					border-radius: 17px;
-				}
-			}
+        > .border {
+          content: '';
+          position: absolute;
+          top: calc(-1 * var(--inset));
+          left: var(--inset);
+          right: calc(-1 * var(--inset));
+          bottom: var(--inset);
+          border: 3px solid colors.$accent;
+          border-radius: 17px;
+        }
+      }
 
-			@media (max-width: $imageLinedUpWithDescriptionMaxWidth) {
-				align-items: start;
-			}
+      @media (max-width: $imageLinedUpWithDescriptionMaxWidth) {
+        align-items: start;
+      }
 
-			@media (max-width: $compactMaxWidth) {
-				grid-template-columns: unset;
-				gap: 30px;
-				.imageHolder {
-					grid-row: 1/2;
-				}
-			}
-		}
-	}
+      @media (max-width: $compactMaxWidth) {
+        grid-template-columns: unset;
+        gap: 30px;
+        .imageHolder {
+          grid-row: 1/2;
+        }
+      }
+    }
+  }
 
-	> .TechnologiesSection {
-		display: grid;
-		gap: 30px;
-		max-width: 900px;
+  > .TechnologiesSection {
+    display: grid;
+    gap: 30px;
+    max-width: 900px;
 
-		> .technologiesGrid {
-			$img-size: 55px;
-			display: grid;
-			grid-template-columns: repeat(auto-fill, $img-size);
-			gap: 25px;
-			justify-content: space-around;
-			> a {
-				transition: transform 0.3s;
-				> img {
-					@include setprops(width height, $img-size);
-				}
+    > .technologiesGrid {
+      $img-size: 55px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, $img-size);
+      gap: 25px;
+      justify-content: space-around;
+      > a {
+        transition: transform 0.3s;
+        > img {
+          @include setprops(width height, $img-size);
+        }
 
-				&:hover {
-					transform: scale(1.2);
-				}
-			}
-		}
-	}
+        &:hover {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
 }

@@ -1,161 +1,161 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 :export {
-	bubbleEffectColor: rgba(colors.$accent, 0.9);
-	maxNarrowScreenWidth: $project-max-narrow-screen-width;
+  bubbleEffectColor: rgba(colors.$accent, 0.9);
+  maxNarrowScreenWidth: $project-max-narrow-screen-width;
 }
 
 .ProjectsSection {
-	> .projectsBox {
-		display: grid;
-		margin-top: 75px;
-		row-gap: clamp(40px, 8.33vw, 100px);
-	}
+  > .projectsBox {
+    display: grid;
+    margin-top: 75px;
+    row-gap: clamp(40px, 8.33vw, 100px);
+  }
 
-	.ProjectView {
-		display: grid;
-		grid-template-columns: 1.5fr 2fr;
-		gap: 20px;
-		align-items: center;
-		grid-template-areas: "detailsSection imageView";
+  .ProjectView {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    gap: 20px;
+    align-items: center;
+    grid-template-areas: 'detailsSection imageView';
 
-		.titleSection {
-			display: grid;
-			gap: 5px;
+    .titleSection {
+      display: grid;
+      gap: 5px;
 
-			> .subtitle {
-				font-size: 16px;
-				color: colors.$accent;
-				font-weight: 500;
-			}
-			> .title {
-				font-size: 28px;
-				font-weight: 500;
-			}
-		}
+      > .subtitle {
+        font-size: 16px;
+        color: colors.$accent;
+        font-weight: 500;
+      }
+      > .title {
+        font-size: 28px;
+        font-weight: 500;
+      }
+    }
 
-		> .imageView {
-			grid-area: imageView;
-		}
+    > .imageView {
+      grid-area: imageView;
+    }
 
-		> .detailsSection {
-			display: grid;
-			gap: 15px;
-			text-align: left;
-			z-index: 5;
-			grid-area: detailsSection;
+    > .detailsSection {
+      display: grid;
+      gap: 15px;
+      text-align: left;
+      z-index: 5;
+      grid-area: detailsSection;
 
-			> .descriptionBox {
-				background-color: colors.$lighter-background;
-				padding: 25px;
-				border-radius: 20px;
-				color: colors.$lighter-text;
-				line-height: 1.3;
-				font-size: 18px;
-				--overflow: -80px;
-				margin-right: var(--overflow);
-			}
+      > .descriptionBox {
+        background-color: colors.$lighter-background;
+        padding: 25px;
+        border-radius: 20px;
+        color: colors.$lighter-text;
+        line-height: 1.3;
+        font-size: 18px;
+        --overflow: -80px;
+        margin-right: var(--overflow);
+      }
 
-			> .technologiesBox {
-				font-size: 16px;
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-				$inset: 1.1em;
-				margin-left: -($inset);
-				margin-top: calc(-#{$inset} + 10px);
-				margin-bottom: 7px;
+      > .technologiesBox {
+        font-size: 16px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        $inset: 1.1em;
+        margin-left: -($inset);
+        margin-top: calc(-#{$inset} + 10px);
+        margin-bottom: 7px;
 
-				> .technology {
-					display: grid;
-					grid-auto-flow: column;
-					gap: 5px;
-					margin-left: $inset;
-					margin-top: $inset;
+        > .technology {
+          display: grid;
+          grid-auto-flow: column;
+          gap: 5px;
+          margin-left: $inset;
+          margin-top: $inset;
 
-					> svg {
-						height: 10px;
-						width: 10px;
-						fill: colors.$light-text;
-						transition: 0.2s fill;
-					}
-					> .text {
-						color: colors.$light-text;
-						line-height: 1;
-						transition: 0.2s color;
-					}
+          > svg {
+            height: 10px;
+            width: 10px;
+            fill: colors.$light-text;
+            transition: 0.2s fill;
+          }
+          > .text {
+            color: colors.$light-text;
+            line-height: 1;
+            transition: 0.2s color;
+          }
 
-					&:hover {
-						> svg {
-							fill: colors.$accent;
-						}
-						> .text {
-							color: colors.$accent;
-						}
-					}
-				}
-			}
-			> .linkButtons {
-				display: grid;
-				justify-content: start;
-				grid-auto-flow: column;
-				gap: 15px;
+          &:hover {
+            > svg {
+              fill: colors.$accent;
+            }
+            > .text {
+              color: colors.$accent;
+            }
+          }
+        }
+      }
+      > .linkButtons {
+        display: grid;
+        justify-content: start;
+        grid-auto-flow: column;
+        gap: 15px;
 
-				> a {
-					@include fade-on-hover;
-					> svg {
-						height: 28px;
-						width: 28px;
-					}
-					&.externalLink > svg {
-						stroke: colors.$accent;
-					}
-					&:not(.externalLink) > svg {
-						fill: colors.$accent;
-					}
-				}
-			}
-		}
+        > a {
+          @include fade-on-hover;
+          > svg {
+            height: 28px;
+            width: 28px;
+          }
+          &.externalLink > svg {
+            stroke: colors.$accent;
+          }
+          &:not(.externalLink) > svg {
+            fill: colors.$accent;
+          }
+        }
+      }
+    }
 
-		&.right {
-			@media (min-width: #{$project-max-narrow-screen-width + 1}) {
-				grid-template-columns: 2fr 1.5fr;
-				grid-template-areas: "imageView detailsSection";
+    &.right {
+      @media (min-width: #{$project-max-narrow-screen-width + 1}) {
+        grid-template-columns: 2fr 1.5fr;
+        grid-template-areas: 'imageView detailsSection';
 
-				> .detailsSection {
-					text-align: right;
-					> .descriptionBox {
-						margin-right: unset;
-						margin-left: var(--overflow);
-					}
-					> .technologiesBox {
-						justify-content: end;
-					}
-					> .linkButtons {
-						justify-content: end;
-					}
-				}
-			}
-		}
+        > .detailsSection {
+          text-align: right;
+          > .descriptionBox {
+            margin-right: unset;
+            margin-left: var(--overflow);
+          }
+          > .technologiesBox {
+            justify-content: end;
+          }
+          > .linkButtons {
+            justify-content: end;
+          }
+        }
+      }
+    }
 
-		@media (max-width: $project-max-narrow-screen-width) {
-			grid-template-columns: unset;
-			gap: 20px;
+    @media (max-width: $project-max-narrow-screen-width) {
+      grid-template-columns: unset;
+      gap: 20px;
 
-			grid-template-areas:
-				"titleSection"
-				"imageView"
-				"detailsSection";
+      grid-template-areas:
+        'titleSection'
+        'imageView'
+        'detailsSection';
 
-			> .titleSection {
-				grid-area: titleSection;
-			}
+      > .titleSection {
+        grid-area: titleSection;
+      }
 
-			> .detailsSection > .descriptionBox {
-				margin-left: unset;
-				margin-right: unset;
-			}
-		}
-	}
+      > .detailsSection > .descriptionBox {
+        margin-left: unset;
+        margin-right: unset;
+      }
+    }
+  }
 }

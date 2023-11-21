@@ -1,60 +1,60 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .FormField {
-	display: grid;
-	grid-template-rows: auto 1fr;
-	gap: 15px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 15px;
 
-	@mixin transition-config($properties) {
-		transition-property: $properties;
-		transition-duration: 0.3s;
-	}
+  @mixin transition-config($properties) {
+    transition-property: $properties;
+    transition-duration: 0.3s;
+  }
 
-	> .inputTitle {
-		margin-left: 16px;
-		font-size: 18px;
-		font-weight: 500;
-		@include transition-config(color);
-	}
+  > .inputTitle {
+    margin-left: 16px;
+    font-size: 18px;
+    font-weight: 500;
+    @include transition-config(color);
+  }
 
-	> input,
-	textarea {
-		padding: 18px;
-		border: 2px solid transparent;
-		background-color: colors.$lighter-background;
-		color: colors.$light-text;
-		border-radius: 15px;
-		font-size: 18px;
-		@include transition-config("border-color, background-color");
-		&::placeholder {
-			color: colors.$lighter-text;
-		}
-		&:focus {
-			border-color: colors.$accent;
-			background-color: rgba(colors.$lighter-background, 0);
-		}
-	}
+  > input,
+  textarea {
+    padding: 18px;
+    border: 2px solid transparent;
+    background-color: colors.$lighter-background;
+    color: colors.$light-text;
+    border-radius: 15px;
+    font-size: 18px;
+    @include transition-config('border-color, background-color');
+    &::placeholder {
+      color: colors.$lighter-text;
+    }
+    &:focus {
+      border-color: colors.$accent;
+      background-color: rgba(colors.$lighter-background, 0);
+    }
+  }
 
-	&.focused {
-		> .inputTitle {
-			color: colors.$accent;
-		}
-	}
+  &.focused {
+    > .inputTitle {
+      color: colors.$accent;
+    }
+  }
 
-	> input {
-		line-height: 1;
-	}
+  > input {
+    line-height: 1;
+  }
 
-	> textarea {
-		display: grid;
-		resize: vertical;
-	}
+  > textarea {
+    display: grid;
+    resize: vertical;
+  }
 
-	> .errorMessage {
-		color: rgb(197, 52, 52);
-		font-weight: 500;
-		font-size: 18px;
-		margin-left: 10px;
-	}
+  > .errorMessage {
+    color: rgb(197, 52, 52);
+    font-weight: 500;
+    font-size: 18px;
+    margin-left: 10px;
+  }
 }

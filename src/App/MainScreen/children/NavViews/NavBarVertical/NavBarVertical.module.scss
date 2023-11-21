@@ -1,15 +1,15 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .NavBarVertical {
-	display: grid;
-	justify-items: center;
-	gap: 40px;
+  display: grid;
+  justify-items: center;
+  gap: 40px;
 
-	> .resumeButton {
-		margin-top: 20px;
-		font-size: 17px;
-		padding: 1em;
-		@include setprops(padding-left padding-right, 2.5em);
-	}
+  > .resumeButton {
+    margin-top: 20px;
+    font-size: 17px;
+    padding: 1em;
+    @include setprops(padding-left padding-right, 2.5em);
+  }
 }

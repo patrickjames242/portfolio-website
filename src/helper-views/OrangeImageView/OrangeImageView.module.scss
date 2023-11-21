@@ -1,44 +1,44 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .OrangeImageView {
-	position: relative;
-	border-radius: 10px;
-	overflow: hidden;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
 
-	@mixin transition-config($properties) {
-		transition-property: $properties;
-		transition-duration: 0.4s;
-	}
+  @mixin transition-config($properties) {
+    transition-property: $properties;
+    transition-duration: 0.4s;
+  }
 
-	> div {
-		padding-top: ((3/5) * 100) * 1%;
-		position: relative;
+  > div {
+    padding-top: ((3/5) * 100) * 1%;
+    position: relative;
 
-		> img {
-			display: block;
-			position: absolute;
-			@include setprops(left top, 0);
-			width: 100%;
-			object-fit: contain;
-			filter: grayscale(70%);
-			@include transition-config($properties: filter);
-		}
-	}
+    > img {
+      display: block;
+      position: absolute;
+      @include setprops(left top, 0);
+      width: 100%;
+      object-fit: contain;
+      filter: grayscale(70%);
+      @include transition-config($properties: filter);
+    }
+  }
 
-	> .imageCover {
-		position: absolute;
-		@include absolute-pin-all-sides;
-		background-color: rgba(colors.$accent, 0.6);
-		@include transition-config($properties: opacity);
-	}
+  > .imageCover {
+    position: absolute;
+    @include absolute-pin-all-sides;
+    background-color: rgba(colors.$accent, 0.6);
+    @include transition-config($properties: opacity);
+  }
 
-	&:hover {
-		> div > img {
-			filter: grayscale(0%);
-		}
-		> .imageCover {
-			opacity: 0;
-		}
-	}
+  &:hover {
+    > div > img {
+      filter: grayscale(0%);
+    }
+    > .imageCover {
+      opacity: 0;
+    }
+  }
 }

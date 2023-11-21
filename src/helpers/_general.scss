@@ -1,31 +1,31 @@
-@use "./colors.module.scss" as colors;
+@use './colors.module.scss' as colors;
 
 $project-max-narrow-screen-width: 650px;
 
 @mixin absolute-pin-all-sides() {
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
 
 @mixin setprops($props, $value) {
-	@each $prop in $props {
-		#{$prop}: $value;
-	}
+  @each $prop in $props {
+    #{$prop}: $value;
+  }
 }
 
 @mixin fade-on-hover {
-	transition: 0.2s opacity;
-	&:hover {
-		opacity: 0.5;
-	}
+  transition: 0.2s opacity;
+  &:hover {
+    opacity: 0.5;
+  }
 }
 
 @mixin fade-to-accent-on-hover {
-	transition: 0.2s color;
-	&:hover {
-		color: colors.$accent;
-	}
+  transition: 0.2s color;
+  &:hover {
+    color: colors.$accent;
+  }
 }

@@ -1,51 +1,51 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .errorMessageToastHolder {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	pointer-events: none;
-	display: grid;
-	justify-items: center;
-	z-index: 30;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  display: grid;
+  justify-items: center;
+  z-index: 30;
 
-	> .ErrorMessageToast {
-		--tint-color: #{colors.$accent};
-		margin-bottom: 50px;
-		margin-left: 20px;
-		margin-right: 20px;
-		background-color: rgb(0, 37, 107);
-		border-radius: 10px;
-		box-shadow: 0 0 50px 30px rgba(0, 11, 31, 0.2);
-		max-width: 400px;
-		display: grid;
-		grid-template-columns: 60px 1fr;
-		grid-template-rows: 6px 1fr;
-		overflow: hidden;
+  > .ErrorMessageToast {
+    --tint-color: #{colors.$accent};
+    margin-bottom: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: rgb(0, 37, 107);
+    border-radius: 10px;
+    box-shadow: 0 0 50px 30px rgba(0, 11, 31, 0.2);
+    max-width: 400px;
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: 6px 1fr;
+    overflow: hidden;
 
-		> .topLine {
-			background-color: var(--tint-color);
-			grid-column: 1/3;
-		}
+    > .topLine {
+      background-color: var(--tint-color);
+      grid-column: 1/3;
+    }
 
-		> svg {
-			place-self: center;
-			@include setprops(width height, 20px);
-			fill: var(--tint-color);
-		}
+    > svg {
+      place-self: center;
+      @include setprops(width height, 20px);
+      fill: var(--tint-color);
+    }
 
-		> .text {
-			padding-top: 20px;
-			padding-right: 26px;
-			padding-bottom: 15px;
-			font-size: 19px;
-			line-height: 1.3;
-		}
+    > .text {
+      padding-top: 20px;
+      padding-right: 26px;
+      padding-bottom: 15px;
+      font-size: 19px;
+      line-height: 1.3;
+    }
 
-		&.error {
-			--tint-color: #c53434;
-		}
-	}
+    &.error {
+      --tint-color: #c53434;
+    }
+  }
 }
