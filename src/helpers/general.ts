@@ -5,7 +5,7 @@ export type ArrayElement<A extends any[]> = A extends Array<infer E>
 export function getNumberList(startNumber: number, endNumber: number) {
   if (endNumber < startNumber)
     throw new Error('end number cannot be less than start number');
-  let x = startNumber;
+  const x = startNumber;
   const numbers: number[] = [];
   while (x <= endNumber) {
     numbers.push(x);
@@ -73,7 +73,7 @@ export interface AnimationStack {
   addElementsToAnimationStack(animations: Animation[]): Promise<void>;
 }
 export function getAnimationStack(timeInterval: number = 300): AnimationStack {
-  let elementAnimationStack: Animation[] = [];
+  const elementAnimationStack: Animation[] = [];
   let animationIsRunning = false;
 
   async function addElementsToAnimationStack(animations: Animation[]) {

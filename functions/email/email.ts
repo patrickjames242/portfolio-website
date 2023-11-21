@@ -58,7 +58,7 @@ app.post('/.netlify/functions/email', (request, response) => {
 			`,
   };
 
-  mg.messages().send(data, function (error, body) {
+  mg.messages().send(data, (error, body) => {
     if (error) {
       response
         .json({

@@ -26,7 +26,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
 
   let pointerX: number | null, pointerY: number | null;
 
-  let velocity = { x: 0, y: 0, tx: 0, ty: 0, z: 0.0005 };
+  const velocity = { x: 0, y: 0, tx: 0, ty: 0, z: 0.0005 };
 
   let touchInput = false;
 
@@ -52,7 +52,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
   function recycleStar(star: Star) {
     let direction = 'z';
 
-    let vx = Math.abs(velocity.x),
+    const vx = Math.abs(velocity.x),
       vy = Math.abs(velocity.y);
 
     if (vx > 1 || vy > 1) {
@@ -177,7 +177,7 @@ export function addStarEffectToCanvas(canvas: HTMLCanvasElement) {
 
   function movePointer(x: number, y: number) {
     if (typeof pointerX === 'number' && typeof pointerY === 'number') {
-      let ox = x - pointerX,
+      const ox = x - pointerX,
         oy = y - pointerY;
 
       velocity.tx = velocity.tx + (ox / 8) * scale * (touchInput ? 1 : -1);

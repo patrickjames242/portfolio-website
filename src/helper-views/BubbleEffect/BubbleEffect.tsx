@@ -88,7 +88,7 @@ function mouseCoordinateWithinElement(
   event: MouseEvent,
   element: HTMLElement,
 ): Coordinate {
-  let rect = element.getBoundingClientRect();
+  const rect = element.getBoundingClientRect();
   return {
     x: event.clientX - rect.left,
     y: event.clientY - rect.top,

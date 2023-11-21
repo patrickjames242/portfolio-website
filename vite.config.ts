@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { join, resolve } from 'path';
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
 import EnvironmentPlugin from 'vite-plugin-environment';
