@@ -2,6 +2,7 @@
   "name": "portfolio-website",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "vite",
     "format": "prettier --write **.{js,jsx,ts,tsx,html,css,scss,json}",

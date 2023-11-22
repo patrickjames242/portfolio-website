@@ -21,6 +21,12 @@ export interface SlideUpSentenceProps
   extends React.HTMLAttributes<HTMLDivElement> {
   alignment: Alignment;
   children: string | React.ReactNode[];
+  /**
+   * if false, set timeout will be used to animate the sentence
+   * with a 0 second delay, which will cause the sentence to animate
+   * in the next run loop cycle
+   *
+   */
   slideUpImmediately?: boolean; // defaults to true
 }
 

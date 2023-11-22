@@ -1,6 +1,7 @@
 import { MainScreenContext } from 'App/MainScreen/helpers';
 import { BubbleTextAnchor } from 'helper-views/BubbleTextButton/BubbleTextButton';
-import React, { useContext, useLayoutEffect, useRef } from 'react';
+import { useContext, useLayoutEffect, useRef } from 'react';
+import { extend } from 'react-extend-components';
 import { useNavigate } from 'react-router-dom';
 import MenuSVG from '../MenuSVG';
 import NavLink from '../NavLink/NavLink';
@@ -8,12 +9,7 @@ import { RouteType, appRoutes, useRouteTypeForCurrentRoute } from '../helpers';
 import styles from './NavBarHorizontal.module.scss';
 import BracketsSVG from './brackets-icon';
 
-export interface NavBarHorizontalProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
-
-function NavBarHorizontal({
-  ...reactProps
-}: NavBarHorizontalProps): JSX.Element {
+const NavBarHorizontal = extend('nav')((Root) => {
   const mainScreenContext = useContext(MainScreenContext);
   const navigate = useNavigate();
   const currentRouteType = useRouteTypeForCurrentRoute();
@@ -39,11 +35,7 @@ function NavBarHorizontal({
   }, []);
 
   return (
-    <nav
-      {...reactProps}
-      className={[styles.NavBar, reactProps.className].asClassString()}
-      ref={navBarRef}
-    >
+    <Root className={styles.NavBar} ref={navBarRef}>
       <a
         className={[styles.nameBox].asClassString()}
         href="/"
@@ -83,8 +75,8 @@ function NavBarHorizontal({
           <MenuSVG />
         </button>
       </div>
-    </nav>
+    </Root>
   );
-}
+});
 
 export default NavBarHorizontal;
