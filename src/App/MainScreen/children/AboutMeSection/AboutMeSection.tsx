@@ -1,22 +1,17 @@
 import { usePresentationController } from 'helpers/AnimationController';
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { extend } from 'react-extend-components';
 import styles from './AboutMeSection.module.scss';
-import {
-  TechnologiesSection,
-  TechnologiesSectionRef,
-} from './TechnologiesSection';
 import {
   IntroductionSection,
   IntroductionSectionRef,
 } from './IntroductionSection';
+import {
+  TechnologiesSection,
+  TechnologiesSectionRef,
+} from './TechnologiesSection';
 
-export interface AboutMeSectionProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
-
-const AboutMeSection: React.ForwardRefRenderFunction<
-  HTMLDivElement,
-  AboutMeSectionProps
-> = ({ ...htmlAttributes }, ref) => {
+const AboutMeSection = extend('div')((Root) => {
   const introductionRef = useRef<IntroductionSectionRef>(null);
   const technologiesRef = useRef<TechnologiesSectionRef>(null);
   const presentationController = usePresentationController();
@@ -35,19 +30,12 @@ const AboutMeSection: React.ForwardRefRenderFunction<
   }, [presentationController]);
 
   return (
-    <div
-      {...htmlAttributes}
-      ref={ref}
-      className={[
-        styles.AboutMeSection,
-        htmlAttributes.className,
-      ].asClassString()}
-    >
+    <Root className={styles.AboutMeSection}>
       <div className={styles.backgroundView} />
       <IntroductionSection ref={introductionRef} />
       <TechnologiesSection ref={technologiesRef} />
-    </div>
+    </Root>
   );
-};
+});
 
-export default React.forwardRef(AboutMeSection);
+export default AboutMeSection;

@@ -1,9 +1,8 @@
+import { clampNum } from '@/helpers/general/general';
 import SectionHeader from 'helper-views/SectionHeader/SectionHeader';
 import { PresentationSection } from 'helpers/AnimationController';
-import { clampNum } from 'helpers/general';
 import { useCallbackRef, useMediaQuery } from 'helpers/hooks';
-import React from 'react';
-import { useImperativeHandle, useLayoutEffect, useRef } from 'react';
+import React, { useImperativeHandle, useLayoutEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { filter } from 'rxjs';
 import styles from './AboutMeSection.module.scss';

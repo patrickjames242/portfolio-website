@@ -4,7 +4,7 @@ import {
   getAnimationStack,
   mapOptional,
   numberSort,
-} from './general';
+} from './general/general';
 import { useUnmounted } from './hooks';
 import { animateSlideUpElement } from './slide-up-animation/slide-up-animation';
 

@@ -1,6 +1,6 @@
+import { clampNum } from '@/helpers/general/general';
 import { animated, useSpring } from '@react-spring/web';
 import { MainScreenContext } from 'App/MainScreen/helpers';
-import { clampNum } from 'helpers/general';
 import React, {
   useContext,
   useEffect,

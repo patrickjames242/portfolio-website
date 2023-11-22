@@ -4,8 +4,9 @@ $compact-nav-bar-height: 70px;
 $max-shortened-horizontal-nav-bar-width: 850px;
 
 :export {
-  expandedNavBarHeight: $expanded-nav-bar-height / 1px;
-  compactNavBarHeight: $compact-nav-bar-height / 1px;
-  maxShortenedHorizontalNavBarWidth: $max-shortened-horizontal-nav-bar-width /
-    1px;
+  expandedNavBarHeight: calc($expanded-nav-bar-height / 1px);
+  compactNavBarHeight: calc($compact-nav-bar-height / 1px);
+  maxShortenedHorizontalNavBarWidth: calc(
+    $max-shortened-horizontal-nav-bar-width / 1px
+  );
 }

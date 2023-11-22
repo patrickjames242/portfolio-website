@@ -1,19 +1,12 @@
-import React from 'react';
+import { extend } from 'react-extend-components';
 import GithubIcon from './GithubIcon';
 import LinkedInIcon from './LinkedInIcon';
 import MailIcon from './MailIcon';
 import styles from './PageFooter.module.scss';
 
-export interface PageFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const PageFooter: React.FC<PageFooterProps> = ({
-  ...htmlAttributes
-}: PageFooterProps) => {
+const PageFooter = extend('footer')((Root) => {
   return (
-    <footer
-      {...htmlAttributes}
-      className={[styles.PageFooter, htmlAttributes.className].asClassString()}
-    >
+    <Root className={styles.PageFooter}>
       <div className={styles.content}>
         <div className={styles.icons}>
           {[
@@ -58,8 +51,8 @@ const PageFooter: React.FC<PageFooterProps> = ({
           </a>
         </div>
       </div>
-    </footer>
+    </Root>
   );
-};
+});
 
 export default PageFooter;

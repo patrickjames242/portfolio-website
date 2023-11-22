@@ -12,13 +12,12 @@ import NavDrawer from './children/NavViews/NavDrawer/NavDrawer';
 import PageFooter from './children/PageFooter/PageFooter';
 import ProjectsSection from './children/ProjectsSection/ProjectsSection';
 import {
-  getCompactNavBarHeight,
-  getWindowScrollValueForSection,
   MainScreenContext,
   MainScreenContextValue,
+  getCompactNavBarHeight,
+  getWindowScrollValueForSection,
   useReactSpringWindowScroller,
 } from './helpers';
-import styles from './MainScreen.module.scss';
 
 export default function MainScreen(): JSX.Element {
   const [shouldDrawerBeOpen, setShouldDrawerBeOpen] = useState(false);
@@ -140,17 +139,25 @@ export default function MainScreen(): JSX.Element {
   return (
     <MainScreenContext.Provider value={contextValue}>
       <NavDrawer>
-        <div className={styles.MainScreen}>
-          <NavBarHorizontal className={styles.NavBarHorizontal} />
-          <div className={styles.content}>
-            <HomeSection
-              ref={sectionRefs[RouteType.home]}
-              className={styles.HomeScreen}
-            />
-            <AboutMeSection ref={sectionRefs[RouteType.aboutMe]} />
-            <ProjectsSection ref={sectionRefs[RouteType.projects]} />
-            <ContactMeSection ref={sectionRefs[RouteType.contactMe]} />
-            <PageFooter className={styles.PageFooter} />
+        <div className="pointer-events-none relative">
+          <NavBarHorizontal className="sticky top-0" />
+          <div className="max-w-[1200px] mx-auto">
+            <div className="mx-[var(--screen-side-insets)]">
+              <HomeSection ref={sectionRefs[RouteType.home]} />
+              <AboutMeSection
+                className="pointer-events-auto mt-[clamp(100px,_16vw,_200px)]"
+                ref={sectionRefs[RouteType.aboutMe]}
+              />
+              <ProjectsSection
+                className="pointer-events-auto mt-[clamp(100px,_16vw,_200px)]"
+                ref={sectionRefs[RouteType.projects]}
+              />
+              <ContactMeSection
+                className="pointer-events-auto mt-[clamp(100px,_16vw,_200px)]"
+                ref={sectionRefs[RouteType.contactMe]}
+              />
+              <PageFooter className="pointer-events-auto mt-[clamp(100px,_9vw,_130px)]" />
+            </div>
           </div>
         </div>
       </NavDrawer>

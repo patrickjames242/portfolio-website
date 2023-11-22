@@ -12,7 +12,7 @@
   }
 
   > div {
-    padding-top: ((3/5) * 100) * 1%;
+    padding-top: (calc(3 / 5) * 100) * 1%;
     position: relative;
 
     > img {
