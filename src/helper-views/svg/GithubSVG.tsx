@@ -1,5 +1,3 @@
-import React from 'react';
-
 function GithubSVG(): JSX.Element {
   return (
     <svg

@@ -1,5 +1,3 @@
-import React from 'react';
-
 function LinkedInIcon(): JSX.Element {
   return (
     <svg

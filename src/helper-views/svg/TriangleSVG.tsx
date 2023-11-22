@@ -1,5 +1,3 @@
-import React from 'react';
-
 function TriangleIconSVG(): JSX.Element {
   return (
     <svg

@@ -1,8 +1,7 @@
 import SectionHeader from 'helper-views/SectionHeader/SectionHeader';
 import { PresentationSection } from 'helpers/AnimationController';
 import { technologiesList } from 'helpers/technologies/technologies';
-import React from 'react';
-import { useImperativeHandle, useRef } from 'react';
+import React, { useImperativeHandle, useRef } from 'react';
 import styles from './AboutMeSection.module.scss';
 
 export interface TechnologiesSectionRef {

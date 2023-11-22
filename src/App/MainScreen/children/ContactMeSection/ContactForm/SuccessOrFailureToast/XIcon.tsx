@@ -1,5 +1,3 @@
-import React from 'react';
-
 function XIcon(): JSX.Element {
   return (
     <svg

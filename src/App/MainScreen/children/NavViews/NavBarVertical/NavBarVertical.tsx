@@ -1,7 +1,7 @@
 import { BubbleTextAnchor } from 'helper-views/BubbleTextButton/BubbleTextButton';
 import React from 'react';
-import { appRoutes } from '../helpers';
 import NavLink from '../NavLink/NavLink';
+import { appRoutes } from '../helpers';
 import styles from './NavBarVertical.module.scss';
 
 export interface NavBarVerticalProps

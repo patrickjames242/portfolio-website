@@ -1,5 +1,3 @@
-import React from 'react';
-
 const AndroidIconSVG = (): JSX.Element => {
   return (
     <svg viewBox="2.993 .918 26.014 30.687" xmlns="http://www.w3.org/2000/svg">

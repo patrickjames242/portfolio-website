@@ -2,8 +2,8 @@ import { MainScreenContext } from 'App/MainScreen/helpers';
 import React, { useContext, useMemo } from 'react';
 import TriangleIconSVG from '../../../../../helper-views/svg/TriangleSVG';
 import {
-  getInfoForRouteType,
   RouteType,
+  getInfoForRouteType,
   useRouteTypeNavigation,
 } from '../helpers';
 import styles from './NavLink.module.scss';

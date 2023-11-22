@@ -8,8 +8,8 @@ import { useCallbackRef } from 'helpers/hooks';
 import { addStarEffectToCanvas } from 'helpers/starsBackgoundEffect/starsBackgroundEffect';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import {
-  getInfoForRouteType,
   RouteType,
+  getInfoForRouteType,
   useRouteTypeNavigation,
 } from '../NavViews/helpers';
 import styles from './HomeSection.module.scss';

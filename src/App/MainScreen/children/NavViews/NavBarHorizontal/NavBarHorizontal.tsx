@@ -2,11 +2,11 @@ import { MainScreenContext } from 'App/MainScreen/helpers';
 import { BubbleTextAnchor } from 'helper-views/BubbleTextButton/BubbleTextButton';
 import React, { useContext, useLayoutEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { appRoutes, RouteType, useRouteTypeForCurrentRoute } from '../helpers';
 import MenuSVG from '../MenuSVG';
 import NavLink from '../NavLink/NavLink';
-import BracketsSVG from './brackets-icon';
+import { RouteType, appRoutes, useRouteTypeForCurrentRoute } from '../helpers';
 import styles from './NavBarHorizontal.module.scss';
+import BracketsSVG from './brackets-icon';
 
 export interface NavBarHorizontalProps
   extends React.HTMLAttributes<HTMLDivElement> {}
