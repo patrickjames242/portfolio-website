@@ -5,7 +5,6 @@ import {
 import { useEffect, useImperativeHandle, useRef } from 'react';
 import { extend } from 'react-extend-components';
 import ContactForm, { ContactFormRef } from './ContactForm/ContactForm';
-import styles from './ContactMeSection.module.scss';
 
 const ContactMeSection = extend('div')((Root) => {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -26,7 +25,7 @@ const ContactMeSection = extend('div')((Root) => {
   }, [presentationController, rootRef]);
 
   return (
-    <Root ref={rootRef} className={styles.ContactMeSection}>
+    <Root ref={rootRef} className="">
       <ContactSectionHeader ref={sectionHeaderRef} />
       <ContactForm ref={contactFormRef} />
     </Root>
@@ -69,14 +68,23 @@ const ContactSectionHeader = extend('div')<{}, ContactSectionHeaderRef>((
   );
 
   return (
-    <Root className={styles.ContactSectionHeader}>
-      <div ref={subtitleRef} className={styles.subtitle}>
+    <Root className="text-center justify-items-center grid">
+      <div
+        ref={subtitleRef}
+        className="text-accent font-medium text-[20px] mb-[15px]"
+      >
         Like what you see?
       </div>
-      <h2 ref={titleRef} className={styles.title}>
+      <h2
+        ref={titleRef}
+        className="font-semibold text-[clamp(40px,_5vw,_60px)] leading-[1] mb-[10px]"
+      >
         Get In Touch
       </h2>
-      <p ref={description} className={styles.description}>
+      <p
+        ref={description}
+        className="text-[20px] text-lighter-text max-w-[500px] leading-[1.3]"
+      >
         You can send me an email at{' '}
         <a
           href="mailto:contact@patrickhanna.dev"

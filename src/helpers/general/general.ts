@@ -8,10 +8,11 @@ export function getNumberList(
 ): number[] {
   if (endNumber < startNumber)
     throw new Error('end number cannot be less than start number');
-  const x = startNumber;
+  let x = startNumber;
   const numbers: number[] = [];
   while (x <= endNumber) {
     numbers.push(x);
+    x++;
   }
   return numbers;
 }

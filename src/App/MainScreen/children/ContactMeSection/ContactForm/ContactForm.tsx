@@ -3,7 +3,8 @@ import { Formik, FormikErrors } from 'formik';
 import { BubbleTextButton } from 'helper-views/BubbleTextButton/BubbleTextButton';
 import LoadingSpinner from 'helper-views/LoadingSpinner/LoadingSpinner';
 import { PresentationItem } from 'helpers/AnimationController';
-import React, { useImperativeHandle, useRef } from 'react';
+import { useImperativeHandle, useRef } from 'react';
+import { extend } from 'react-extend-components';
 import FormField from '../FormField/FormField';
 import styles from './ContactForm.module.scss';
 import SuccessOrFailureToast, {
@@ -13,9 +14,6 @@ import SuccessOrFailureToast, {
 export interface ContactFormRef {
   getPresentationItems(): PresentationItem[];
 }
-
-export interface ContactFormProps
-  extends React.HTMLAttributes<HTMLFormElement> {}
 
 type Validator = (value: string) => { errorMessage: string | null };
 
@@ -41,10 +39,7 @@ const Validators = (() => {
   return { required, email };
 })();
 
-const ContactForm: React.ForwardRefRenderFunction<
-  ContactFormRef,
-  ContactFormProps
-> = ({ ...htmlAttributes }, ref) => {
+const ContactForm = extend('form')<{}, ContactFormRef>((Root, { ref }) => {
   type FormValues = {
     fullName: string;
     email: string;
@@ -141,14 +136,7 @@ const ContactForm: React.ForwardRefRenderFunction<
       >
         {({ handleSubmit, isSubmitting, setTouched }) => {
           return (
-            <form
-              {...htmlAttributes}
-              className={[
-                styles.ContactForm,
-                htmlAttributes.className,
-              ].asClassString()}
-              onSubmit={handleSubmit}
-            >
+            <Root className={styles.ContactForm} onSubmit={handleSubmit}>
               <div className={styles.formColumns}>
                 <div className={styles.col1}>
                   <FormField
@@ -195,12 +183,12 @@ const ContactForm: React.ForwardRefRenderFunction<
                   }}
                 />
               </div>
-            </form>
+            </Root>
           );
         }}
       </Formik>
     </>
   );
-};
+});
 
-export default React.forwardRef(ContactForm);
+export default ContactForm;
