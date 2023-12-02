@@ -1,24 +1,27 @@
-import { AnchorHTMLAttributes } from 'react';
-import styles from './OrangeImageView.module.scss';
+import { twClassNames } from '@/helpers/general/twClassNames';
+import { extend } from 'react-extend-components';
 
-export default function OrangeImageView({
-  imageUrl,
-  className,
-  ...props
-}: AnchorHTMLAttributes<HTMLAnchorElement> & {
-  imageUrl: string;
-}): JSX.Element {
+const OrangeImageView = extend('a')<{ imageUrl: string }>((
+  Root,
+  { imageUrl },
+) => {
+  const paddingTop = (3 / 5) * 100 + '%';
   return (
-    <a
+    <Root
       target="_blank"
       rel="noreferrer"
-      {...props}
-      className={[styles.OrangeImageView, className].asClassString()}
+      className={twClassNames('group relative rounded-[10px] overflow-hidden')}
     >
-      <div>
-        <img src={imageUrl} alt="" />
+      <div className="relative" style={{ paddingTop }}>
+        <img
+          className="block absolute left-0 top-0 w-full object-contain grayscale-[70%] transition-[filter] duration-[0.4s] group-hover:grayscale-0"
+          src={imageUrl}
+          alt=""
+        />
       </div>
-      <div className={styles.imageCover}></div>
-    </a>
+      <div className="absolute inset-0 bg-accent/60 transition-[opacity] duration-[0.4s] group-hover:opacity-0"></div>
+    </Root>
   );
-}
+});
+
+export default OrangeImageView;

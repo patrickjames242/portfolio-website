@@ -1,3 +1,4 @@
+import { twClassNames } from '@/helpers/general/twClassNames';
 import OrangeImageView from 'helper-views/OrangeImageView/OrangeImageView';
 import SectionHeader from 'helper-views/SectionHeader/SectionHeader';
 import AndroidIconSVG from 'helper-views/svg/AndroidIconSVG';
@@ -39,7 +40,7 @@ const ProjectsSection = extend('div')((Root) => {
   return (
     <Root ref={rootRef} className={styles.ProjectsSection}>
       <SectionHeader ref={sectionHeaderRef} titleText="Examples of My Work" />
-      <div className={styles.projectsBox}>
+      <div className="grid mt-[75px] gap-y-[clamp(40px,_8.33vw,_100px)]">
         {allProjects.map((project, index) => (
           <ProjectView
             ref={projectRefs[index]}
@@ -90,66 +91,112 @@ const ProjectView = extend('div')<{
   return (
     <Root
       ref={rootRef}
-      className={[styles.ProjectView, styles[alignment]].asClassString()}
+      className={twClassNames(
+        styles.ProjectView,
+        styles[alignment],
+        'grid  gap-[20px] items-center',
+        {
+          'project-wide-layout:grid-cols-[1.5fr_2fr]': alignment === 'left',
+          'project-wide-layout:grid-cols-[2fr_1.5fr]': alignment === 'right',
+        },
+      )}
     >
-      <div ref={titleSectionRef} className={styles.titleSection}>
-        <div className={styles.subtitle}>{project.subtitle}</div>
-        <div className={styles.title}>{project.title}</div>
+      <div
+        ref={titleSectionRef}
+        className={twClassNames(styles.titleSection, 'grid gap-[5px]')}
+      >
+        <div className="text-[16px] text-accent font-medium">
+          {project.subtitle}
+        </div>
+        <div className="text-[28px] font-medium">{project.title}</div>
       </div>
-      <div ref={detailsSectionRef} className={styles.detailsSection}>
-        <div className={styles.descriptionBox}>{project.description}</div>
-        <div className={styles.technologiesBox}>
+      <div
+        ref={detailsSectionRef}
+        className={twClassNames('grid gap-[15px] z-[5]', {
+          'project-wide-layout:text-right': alignment === 'right',
+        })}
+        style={{ gridArea: 'detailsSection' }}
+      >
+        <div
+          className={twClassNames(
+            'bg-lighter-background p-[25px] rounded-[20px] text-lighter-text leading-[1.3] text-[18px] grid-area',
+            {
+              'project-wide-layout:mr-[-80px]': alignment === 'left',
+              'project-wide-layout:ml-[-80px]': alignment === 'right',
+            },
+          )}
+        >
+          {project.description}
+        </div>
+        <div
+          className={twClassNames(
+            'text-[16px] flex flex-row flex-wrap ml-[-1.1em] mt-[calc(-1.1em_+_10px)] mb-[7px]',
+            {
+              'justify-start project-wide-layout:justify-end':
+                alignment === 'right',
+            },
+          )}
+        >
           {project.technologies.map((x, index) => (
             <a
-              className={styles.technology}
+              className="grid grid-flow-col gap-[5px] ml-[1.1em] mt-[1.1em] group"
               href={x.url}
               target="_blank"
               rel="noreferrer"
               key={index}
             >
-              <TriangleIconSVG />
-              <div className={styles.text}>{x.name}</div>
+              <TriangleIconSVG className="h-[10px] w-[10px] fill-light-text transition-colors group-hover:fill-accent" />
+              <div className="text-light-text leading-[1] duration-[0.2s] transition-colors group-hover:text-accent">
+                {x.name}
+              </div>
             </a>
           ))}
         </div>
-        <div className={styles.linkButtons}>
+        <div
+          className={twClassNames('grid  grid-flow-col gap-[15px]', {
+            'justify-start': alignment === 'left',
+            'justify-start project-wide-layout:justify-end':
+              alignment === 'right',
+          })}
+        >
           {[
             {
               href: project.githubLink,
-              svg: <GithubSVG />,
+              svg: GithubSVG,
             },
             {
               href: project.playStoreLink,
-              svg: <AndroidIconSVG />,
+              svg: AndroidIconSVG,
             },
             {
               href: project.appStoreLink,
-              svg: <AppleIconSVG />,
+              svg: AppleIconSVG,
             },
             {
-              className: styles.externalLink,
+              className: '[&>svg]:fill-none [&>svg]:stroke-accent',
               href: project.websiteLink,
-              svg: <ExternalLink />,
+              svg: ExternalLink,
             },
           ].compactMap((x, i) =>
             x.href == null ? null : (
               <a
-                className={x.className}
+                className={twClassNames('fade-on-hover', x.className)}
                 href={x.href}
                 target="_blank"
                 rel="noreferrer"
                 key={i}
               >
-                {x.svg}
+                {<x.svg className="w-[28px] h-[28px] fill-accent" />}
               </a>
             ),
           )}
         </div>
       </div>
       <OrangeImageView
-        className={styles.imageView}
+        className=""
         imageUrl={project.imageUrl}
         href={project.websiteLink}
+        style={{ gridArea: 'imageView' }}
       />
     </Root>
   );

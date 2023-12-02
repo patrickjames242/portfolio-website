@@ -3,6 +3,10 @@ module.exports = {
   theme: {
     // we want to extend tailwind's default colors and not replace it
     extend: {
+      screens: {
+        'project-wide-layout': '650px',
+        // => @media (min-width: 650px) { ... }
+      },
       colors: {
         current: 'currentColor',
         background: 'rgb(0, 20, 58)',

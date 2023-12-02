@@ -116,3 +116,17 @@ a.underline-on-hover {
     transform: translateY(0);
   }
 }
+
+.fade-on-hover {
+  transition: 0.2s opacity;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.fade-to-accent-on-hover {
+  transition: 0.2s color;
+  &:hover {
+    color: colors.$accent;
+  }
+}
