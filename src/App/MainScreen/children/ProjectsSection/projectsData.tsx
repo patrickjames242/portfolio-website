@@ -8,7 +8,7 @@ import swapacropImage from './projectImages/swapacrop.png';
 import teleconnect from './projectImages/teleconnect.jpg';
 
 export interface Project {
-  imageUrl: string;
+  imageUrls: string[];
   subtitle: string;
   title: string;
   technologies: Technology[];
@@ -22,7 +22,7 @@ export interface Project {
 const tech = technologies;
 export const allProjects: Project[] = [
   {
-    imageUrl: teleconnect,
+    imageUrls: [teleconnect],
     title: 'TeleConnect',
     subtitle: 'Web & Mobile Application',
     technologies: [tech.react, tech.reactNative, tech.php, tech.laravel],
@@ -37,7 +37,7 @@ export const allProjects: Project[] = [
     websiteLink: 'https://dhconnect.doctorshosp.com',
   },
   {
-    imageUrl: swapacropImage,
+    imageUrls: [swapacropImage, swapacropImage],
     title: 'Swapacrop',
     subtitle: 'Web Application',
     technologies: [tech.angular, tech.typescript, tech.scss, tech.rxjs],
@@ -52,7 +52,7 @@ export const allProjects: Project[] = [
     websiteLink: 'https://swapacrop.com/',
   },
   {
-    imageUrl: betterLivingImage,
+    imageUrls: [betterLivingImage, betterLivingImage, betterLivingImage],
     title: 'Better Living Website',
     subtitle: 'Website Landing Page',
     technologies: [tech.react, tech.typescript, tech.scss],
@@ -67,7 +67,7 @@ export const allProjects: Project[] = [
     websiteLink: 'https://betterlivingnassau.com/',
   },
   {
-    imageUrl: betterLivingApp,
+    imageUrls: [betterLivingApp],
     title: 'Better Living App',
     subtitle: 'Cross Platform App',
     technologies: [
@@ -101,7 +101,7 @@ export const allProjects: Project[] = [
       'https://apps.apple.com/lr/app/better-living-health-center/id1541047557',
   },
   {
-    imageUrl: screwsWorldImage,
+    imageUrls: [screwsWorldImage],
     title: 'Screws World Website',
     subtitle: 'Website Landing Page',
     technologies: [
@@ -131,7 +131,7 @@ export const allProjects: Project[] = [
     websiteLink: 'https://screwsworldbahamas.com/',
   },
   {
-    imageUrl: chatCam,
+    imageUrls: [chatCam],
     title: 'ChatCam',
     subtitle: 'Native iOS App',
     technologies: [tech.swift, tech.xcode, tech.firebase],

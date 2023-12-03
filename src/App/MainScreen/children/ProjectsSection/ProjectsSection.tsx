@@ -194,7 +194,7 @@ const ProjectView = extend('div')<{
       </div>
       <OrangeImageView
         className=""
-        imageUrl={project.imageUrl}
+        imageUrls={project.imageUrls}
         href={project.websiteLink}
         style={{ gridArea: 'imageView' }}
       />
