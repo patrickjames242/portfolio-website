@@ -1,22 +1,14 @@
+import { twClassNames } from '@/helpers/general/twClassNames';
 import { MainScreenContext } from 'App/MainScreen/helpers';
-import React, { useContext, useMemo } from 'react';
-import TriangleIconSVG from '../../../../../helper-views/svg/TriangleSVG';
+import { useContext, useMemo } from 'react';
+import { extend } from 'react-extend-components';
 import {
   RouteType,
   getInfoForRouteType,
   useRouteTypeNavigation,
 } from '../helpers';
-import styles from './NavLink.module.scss';
 
-export interface NavLinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  routeType: RouteType;
-}
-
-const NavLink: React.FC<NavLinkProps> = ({
-  routeType,
-  ...reactProps
-}: NavLinkProps) => {
+const NavLink = extend('a')<{ routeType: RouteType }>((Root, { routeType }) => {
   const navigateToRouteType = useRouteTypeNavigation();
   const routeInfo = getInfoForRouteType(routeType);
   const mainScreenContext = useContext(MainScreenContext);
@@ -34,13 +26,12 @@ const NavLink: React.FC<NavLinkProps> = ({
     routeType,
   ]);
   return (
-    <a
-      {...reactProps}
-      className={[
-        styles.NavLink,
-        isSelected ? styles.selected : undefined,
-        reactProps.className,
-      ].asClassString()}
+    <Root
+      className={twClassNames(
+        'text-[19px] text-lighter-text font-medium grid grid-flow-col gap-[0.4em] items-center transition-[color] duration-[0.3s] pointer-events-auto',
+        'hover:text-accent hover:font-medium',
+        { 'text-accent font-medium': isSelected },
+      )}
       href={routeInfo.path}
       onClick={(event) => {
         event.preventDefault();
@@ -56,10 +47,17 @@ const NavLink: React.FC<NavLinkProps> = ({
         }, 0);
       }}
     >
-      <TriangleIconSVG />
-      <div className={styles.text}>{routeInfo.name}</div>
-    </a>
+      <div className="leading-[1] flex-row flex gap-[0.2em] items-center">
+        <div className="text-[1.6em] opacity-40 translate-y-[0.05em] font-bold">
+          {'< '}
+        </div>
+        {routeInfo.name}
+        <div className=" text-[1.3em] opacity-40 translate-y-[0.05em] font-bold">
+          {' />'}
+        </div>
+      </div>
+    </Root>
   );
-};
+});
 
 export default NavLink;
