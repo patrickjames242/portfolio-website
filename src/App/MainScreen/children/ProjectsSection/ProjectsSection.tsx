@@ -1,3 +1,7 @@
+import {
+  DocumentViewer,
+  DocumentViewerRef,
+} from '@/App/MainScreen/children/ProjectsSection/DocumentViewer/DocumentViewer';
 import { twClassNames } from '@/helpers/general/twClassNames';
 import OrangeImageView from 'helper-views/OrangeImageView/OrangeImageView';
 import SectionHeader from 'helper-views/SectionHeader/SectionHeader';
@@ -62,6 +66,7 @@ const ProjectView = extend('div')<{
   const rootRef = useRef<HTMLDivElement>(null);
   const detailsSectionRef = useRef<HTMLDivElement>(null);
   const titleSectionRef = useRef<HTMLDivElement>(null);
+  const documentViewerRef = useRef<DocumentViewerRef>(null);
 
   useLayoutEffect(() => {
     const matcher = window.matchMedia(
@@ -195,9 +200,12 @@ const ProjectView = extend('div')<{
       <OrangeImageView
         className=""
         imageUrls={project.imageUrls}
-        href={project.websiteLink}
         style={{ gridArea: 'imageView' }}
+        onClick={() => {
+          documentViewerRef.current?.show(project.imageUrls[0]);
+        }}
       />
+      <DocumentViewer ref={documentViewerRef} />
     </Root>
   );
 });

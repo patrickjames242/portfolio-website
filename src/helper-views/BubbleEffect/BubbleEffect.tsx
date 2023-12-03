@@ -1,4 +1,6 @@
-import React, { useCallback, useImperativeHandle, useRef } from 'react';
+import { twClassNames } from '@/helpers/general/twClassNames';
+import { useCallback, useImperativeHandle, useRef } from 'react';
+import { extend } from 'react-extend-components';
 import { BehaviorSubject, Observable } from 'rxjs';
 import styles from './BubbleEffect.module.scss';
 
@@ -6,16 +8,10 @@ export interface BubbleEffectRef {
   isBubbled$: Observable<boolean>;
 }
 
-export interface BubbleEffectProps
-  extends React.HTMLAttributes<HTMLDivElement> {
-  bubbleColor?: string;
-  bubbleAnimationSeconds?: number;
-}
-
-const BubbleEffect: React.ForwardRefRenderFunction<
-  BubbleEffectRef,
-  BubbleEffectProps
-> = ({ bubbleColor, bubbleAnimationSeconds, ...reactProps }, ref) => {
+const BubbleEffect = extend('div')<
+  { bubbleColor?: string; bubbleAnimationSeconds?: number },
+  BubbleEffectRef
+>((Root, { ref, bubbleColor, bubbleAnimationSeconds }) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const bubbleRef = useRef<HTMLDivElement>(null);
   const isBubbled$ = useRef(new BehaviorSubject(false)).current;
@@ -62,10 +58,9 @@ const BubbleEffect: React.ForwardRefRenderFunction<
   );
 
   return (
-    <div
-      {...reactProps}
+    <Root
       ref={rootRef}
-      className={[styles.BubbleEffect, reactProps.className].asClassString()}
+      className={twClassNames(styles.BubbleEffect)}
       onMouseEnter={(event) => animateBubble('expand', event.nativeEvent)}
       onMouseLeave={(event) => animateBubble('contract', event.nativeEvent)}
     >
@@ -74,9 +69,9 @@ const BubbleEffect: React.ForwardRefRenderFunction<
         className={styles.bubbleView}
         style={{ backgroundColor: bubbleColor }}
       ></div>
-    </div>
+    </Root>
   );
-};
+});
 
 type Coordinate = { x: number; y: number };
 
@@ -95,4 +90,4 @@ function mouseCoordinateWithinElement(
   };
 }
 
-export default React.forwardRef(BubbleEffect);
+export default BubbleEffect;

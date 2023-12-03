@@ -1,5 +1,6 @@
 module.exports = {
   content: ['./(src|public)/**/*.{html,js,jsx,ts,tsx,css,scss}'],
+  plugins: [require('tailwindcss-size')],
   theme: {
     // we want to extend tailwind's default colors and not replace it
     extend: {

@@ -3,7 +3,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import range from 'lodash/fp/range';
 import { extend } from 'react-extend-components';
 
-const OrangeImageView = extend('a')<{ imageUrls: string[] }>((
+const OrangeImageView = extend('button')<{ imageUrls: string[] }>((
   Root,
   { imageUrls },
 ) => {
@@ -11,8 +11,6 @@ const OrangeImageView = extend('a')<{ imageUrls: string[] }>((
 
   return (
     <Root
-      target="_blank"
-      rel="noreferrer"
       className={twClassNames('group relative rounded-[10px] overflow-hidden')}
     >
       <div className="relative" style={{ paddingTop }}>
@@ -39,9 +37,9 @@ const OrangeImageView = extend('a')<{ imageUrls: string[] }>((
       </div>
       <div className="absolute inset-0 bg-accent/60 transition-[opacity] duration-[0.4s] group-hover:opacity-0"></div>
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-        <button className="h-[60px] w-[60px] rounded-full bg-accent flex items-center justify-center group-hover:scale-125 transition-[transform] duration-[0.35s] drop-shadow-lg ">
+        <div className="h-[60px] w-[60px] rounded-full bg-accent flex items-center justify-center group-hover:scale-125 transition-[transform] duration-[0.35s] drop-shadow-lg ">
           <FullscreenIcon className="text-white h-[30px] w-[30px] " />
-        </button>
+        </div>
       </div>
     </Root>
   );
