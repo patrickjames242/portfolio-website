@@ -1,18 +1,40 @@
 import { BubbleIconButton } from '@/helper-views/BubbleIconButton/BubbleIconButton';
 import colors from '@/helpers/_colors.module.scss';
 import { twClassNames } from '@/helpers/general/twClassNames';
+import { useDisableBodyScroll } from '@/helpers/hooks/useDisableBodyScroll';
 import { Transition } from '@headlessui/react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import FocusTrap from 'focus-trap-react';
-import { useCallback, useEffect, useImperativeHandle, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react';
 import { createPortal } from 'react-dom';
 import { extend } from 'react-extend-components';
+import { Project } from '../projectsData';
 import { DocumentViewerHeader } from './DocumentViewerHeader';
 import { ImageViewer } from './ImageViewer';
 
+export interface DocumentViewerItem {
+  imageUrl: string;
+  description?: string;
+  project: Project;
+}
+
+export interface DocumentViewerCollection {
+  initialItem: DocumentViewerItem;
+  getNextItem?: (currentItem: DocumentViewerItem) => DocumentViewerItem | null;
+  getPreviousItem?: (
+    currentIndex: DocumentViewerItem,
+  ) => DocumentViewerItem | null;
+}
+
 export interface DocumentViewerRef {
-  show: (imageUrl: string) => void;
+  show: (collection: DocumentViewerCollection) => void;
   hide: () => void;
 }
 export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
@@ -20,18 +42,25 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
   { ref },
 ) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [collection, setCollection] = useState<DocumentViewerCollection | null>(
+    null,
+  );
+  const [currentItem, setCurrentItem] = useState<DocumentViewerItem | null>(
+    null,
+  );
 
   const hide = useCallback(() => {
     setIsOpen(false);
   }, []);
 
+  useDisableBodyScroll(isOpen);
+
   useImperativeHandle(
     ref,
     () => ({
-      show: (imageUrl) => {
-        setImageUrl(imageUrl);
+      show: (collection) => {
+        setCollection(collection);
+        setCurrentItem(collection.initialItem);
         setIsOpen(true);
       },
       hide,
@@ -46,6 +75,16 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
     window.addEventListener('keyup', listener);
     return () => window.removeEventListener('keyup', listener);
   }, []);
+
+  const nextItem = useMemo(() => {
+    if (currentItem == null) return null;
+    return collection?.getNextItem?.(currentItem) ?? null;
+  }, [collection, currentItem]);
+
+  const previousItem = useMemo(() => {
+    if (currentItem == null) return null;
+    return collection?.getPreviousItem?.(currentItem) ?? null;
+  }, [collection, currentItem]);
 
   return createPortal(
     <Root className="fixed inset-0 z-[100] " as="div" show={isOpen}>
@@ -62,24 +101,34 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
             }}
           />
           <div className="pointer-events-none relative flex h-full flex-col">
-            <Transition.Child
-              as={DocumentViewerHeader}
-              title={'Blah'}
-              hide={() => {
-                hide();
-              }}
-              className="pointer-events-auto transition-[transform_opacity] duration-300"
-              enterFrom="translate-y-[-50px] opacity-0"
-              enterTo="translate-y-0 opacity-100"
-              leaveFrom="translate-y-0 opacity-100"
-              leaveTo="translate-y-[-50px] opacity-0"
-            />
-            <div className="relative flex flex-1 flex-col  items-center p-[10px] sm:p-[50px]">
-              <ArrowButton type="left" />
-              <ArrowButton type="right" />
+            {currentItem && (
+              <Transition.Child
+                as={DocumentViewerHeader}
+                project={currentItem.project}
+                hide={() => {
+                  hide();
+                }}
+                className="pointer-events-auto transition-[transform_opacity] duration-300 "
+                enterFrom="translate-y-[-50px] opacity-0"
+                enterTo="translate-y-0 opacity-100"
+                leaveFrom="translate-y-0 opacity-100"
+                leaveTo="translate-y-[-50px] opacity-0"
+              />
+            )}
+            <div className="relative flex flex-1 flex-row items-center px-[10px] pb-[10px] sm:px-[20px] sm:pb-[20px] gap-[10px] sm:gap-[20px]">
+              <ArrowButton
+                type="left"
+                buttonProps={{
+                  className: twClassNames({
+                    'pointer-events-none opacity-30': previousItem == null,
+                  }),
+                  onClick: () => setCurrentItem(previousItem),
+                }}
+              />
+
               <Transition.Child
                 className={twClassNames(
-                  'w-full max-w-[1000px] flex-1 transition-[transform_opacity] duration-300',
+                  'flex-1 self-stretch transition-[transform_opacity] duration-300',
                 )}
                 enterFrom="scale-75 translate-y-0 opacity-0"
                 enterTo="scale-100 translate-y-0 opacity-100"
@@ -87,10 +136,22 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
                 leaveTo="scale-75 translate-y-0 opacity-0"
               >
                 {(() => {
-                  if (imageUrl == null) return null;
-                  return <ImageViewer src={imageUrl} />;
+                  if (currentItem == null) return null;
+                  return (
+                    <ImageViewer className="" src={currentItem?.imageUrl} />
+                  );
                 })()}
               </Transition.Child>
+
+              <ArrowButton
+                type="right"
+                buttonProps={{
+                  className: twClassNames({
+                    'pointer-events-none opacity-30': nextItem == null,
+                  }),
+                  onClick: () => setCurrentItem(nextItem),
+                }}
+              />
             </div>
           </div>
         </div>
@@ -100,14 +161,16 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
   );
 });
 
-const ArrowButton = extend(Transition.Child<'div'>)<{
+const ArrowButton = extend(Transition.Child<'div'>, {
+  Button: BubbleIconButton,
+})<{
   type: 'left' | 'right';
-}>((Root, { type }) => {
+}>((Root, { Button }, { type }) => {
   return (
     <Root
       as="div"
       className={twClassNames(
-        'absolute top-[50%] z-[3] translate-y-[-50%] rounded-full  transition-[opacity_transform] duration-300',
+        'rounded-full transition-[opacity_transform] duration-300 pointer-events-auto',
         {
           'left-[20px]': type === 'left',
           'right-[20px]': type === 'right',
@@ -124,13 +187,13 @@ const ArrowButton = extend(Transition.Child<'div'>)<{
         'translate-x-[30px]': type === 'right',
       })}
     >
-      <BubbleIconButton
-        className={twClassNames('pointer-events-auto bg-accent')}
+      <Button
+        className={twClassNames('bg-accent')}
         Icon={type === 'left' ? ArrowBackIcon : ArrowForwardIcon}
         bubbleColor="white"
         iconColor="white"
         hoverIconColor={colors.accent}
-      ></BubbleIconButton>
+      ></Button>
     </Root>
   );
 });

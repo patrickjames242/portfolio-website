@@ -28,7 +28,7 @@ const NavLink = extend('a')<{ routeType: RouteType }>((Root, { routeType }) => {
   return (
     <Root
       className={twClassNames(
-        'text-[19px] text-lighter-text font-medium grid grid-flow-col gap-[0.4em] items-center transition-[color] duration-[0.3s] pointer-events-auto',
+        'text-[19px] text-lighter-text font-medium grid grid-flow-col gap-[0.4em] items-center transition-[color] duration-[0.3s] pointer-events-auto relative',
         'hover:text-accent hover:font-medium',
         { 'text-accent font-medium': isSelected },
       )}
@@ -52,7 +52,7 @@ const NavLink = extend('a')<{ routeType: RouteType }>((Root, { routeType }) => {
           {'< '}
         </div>
         {routeInfo.name}
-        <div className=" text-[1.3em] opacity-40 translate-y-[0.05em] font-bold">
+        <div className=" text-[1.2em] opacity-40 translate-y-[0.05em] font-bold">
           {' />'}
         </div>
       </div>

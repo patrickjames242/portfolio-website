@@ -18,7 +18,7 @@ const SectionHeader = extend('h3')<{
           {'< '}
         </span>
         {titleText}
-        <span className="relative top-[0.05em] text-[1.3em] text-accent font-bold">
+        <span className="relative top-[0.05em] text-[1.1em] text-accent font-bold">
           {' />'}
         </span>
       </div>

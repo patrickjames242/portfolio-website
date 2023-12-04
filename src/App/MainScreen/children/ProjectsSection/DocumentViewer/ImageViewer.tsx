@@ -15,25 +15,48 @@ export const ImageViewer = extend('div')<{ src: string }>((Div, { src }) => {
 
   const actualDimensions = useMemo(() => {
     if (imageDimensions == null) return null;
-    if (imageDimensions.height >= imageDimensions.width) {
+
+    function getImageSizeWithOneDimension(
+      imageDimensions: { height: number; width: number },
+      singleDimension: { width: number } | { height: number },
+    ): { width: number; height: number } {
+      if ('height' in singleDimension) {
+        const height = imageDimensions.height.clamp({ max: rootSize.height });
+        return {
+          height: height,
+          width: height * (imageDimensions.width / imageDimensions.height),
+        };
+      } else {
+        const width = imageDimensions.width.clamp({ max: rootSize.width });
+        return {
+          height: width * (imageDimensions.height / imageDimensions.width),
+          width: width,
+        };
+      }
+    }
+
+    const shouldUseHeightAsBaseline =
+      (imageDimensions.height >= imageDimensions.width &&
+        getImageSizeWithOneDimension(imageDimensions, {
+          height: rootSize.height,
+        }).width <= rootSize.width) ||
+      (imageDimensions.width >= imageDimensions.height &&
+        getImageSizeWithOneDimension(imageDimensions, { width: rootSize.width })
+          .height > rootSize.height);
+
+    if (shouldUseHeightAsBaseline) {
       const height = imageDimensions.height.clamp({ max: rootSize.height });
-      return {
-        height: height,
-        width: height * (imageDimensions.width / imageDimensions.height),
-      };
+      return getImageSizeWithOneDimension(imageDimensions, { height: height });
     } else {
       const width = imageDimensions.width.clamp({ max: rootSize.width });
-      return {
-        height: width * (imageDimensions.height / imageDimensions.width),
-        width: width,
-      };
+      return getImageSizeWithOneDimension(imageDimensions, { width: width });
     }
   }, [imageDimensions, rootSize.height, rootSize.width]);
 
   return (
     <Div
       ref={rootSizeRef}
-      className="pointer-events-none relative overflow-hidden s-full"
+      className="pointer-events-none relative overflow-hidden s-full "
     >
       <DocumentViewerWrapper
         className={twClassNames(

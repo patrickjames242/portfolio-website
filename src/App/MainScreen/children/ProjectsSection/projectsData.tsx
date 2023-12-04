@@ -37,7 +37,7 @@ export const allProjects: Project[] = [
     websiteLink: 'https://dhconnect.doctorshosp.com',
   },
   {
-    imageUrls: [swapacropImage, swapacropImage],
+    imageUrls: [swapacropImage],
     title: 'Swapacrop',
     subtitle: 'Web Application',
     technologies: [tech.angular, tech.typescript, tech.scss, tech.rxjs],
@@ -52,7 +52,7 @@ export const allProjects: Project[] = [
     websiteLink: 'https://swapacrop.com/',
   },
   {
-    imageUrls: [betterLivingImage, betterLivingImage, betterLivingImage],
+    imageUrls: [betterLivingImage],
     title: 'Better Living Website',
     subtitle: 'Website Landing Page',
     technologies: [tech.react, tech.typescript, tech.scss],

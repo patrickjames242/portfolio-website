@@ -5,6 +5,8 @@
   color: colors.$light-text;
   font-family: Calibre;
 
+  color-scheme: dark;
+
   /// height when the nav bar is expanded to include the logo, the hamburger menu, and the nav links
   --expanded-nav-bar-height: 100px;
   /// height when the nav bar is shortened to only include the logo and the hamburger menu
