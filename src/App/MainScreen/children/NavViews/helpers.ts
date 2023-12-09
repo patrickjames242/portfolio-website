@@ -1,6 +1,19 @@
 import { MainScreenContext } from 'App/MainScreen/helpers';
 import { useContext } from 'react';
 import { matchPath, useLocation, useNavigate } from 'react-router-dom';
+import {
+  DocumentViewerCollection,
+  documentViewerWebsiteDemo,
+} from '../ProjectsSection/DocumentViewer/helpers';
+
+export function resumeDocumentViewerCollection(): DocumentViewerCollection {
+  return {
+    initialItem: {
+      title: 'Patrick Hanna Resume',
+      data: documentViewerWebsiteDemo('/resume.pdf'),
+    },
+  };
+}
 
 export enum RouteType {
   home,

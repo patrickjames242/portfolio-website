@@ -1,12 +1,16 @@
 import { BubbleIconButton } from '@/helper-views/BubbleIconButton/BubbleIconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { extend } from 'react-extend-components';
-import { Project } from '../projectsData';
+
+export type DocumentViewerHeaderButton = {
+  title: string;
+} & ({ href: string } | { onClick: () => void });
 
 export const DocumentViewerHeader = extend('div')<{
   hide: () => void;
-  project: Project;
-}>((Div, { hide, project }) => {
+  title?: string;
+  buttons?: DocumentViewerHeaderButton[];
+}>((Div, { hide, title }) => {
   return (
     <Div className=" flex flex-row items-center gap-[10px] px-[20px] py-[10px] pointer-events-none">
       <BubbleIconButton
@@ -17,7 +21,7 @@ export const DocumentViewerHeader = extend('div')<{
         }}
       />
       <div className="flex-1 text-[23px] font-bold text-white mt-[0.2em]">
-        {project.title}
+        {title}
       </div>
     </Div>
   );

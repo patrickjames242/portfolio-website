@@ -1,12 +1,16 @@
 import { twClassNames } from '@/helpers/general/twClassNames';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import range from 'lodash/fp/range';
+import { CSSProperties } from 'react';
 import { extend } from 'react-extend-components';
 
-const OrangeImageView = extend('button')<{ imageUrls: string[] }>((
-  Root,
-  { imageUrls },
-) => {
+export type ImageViewImage =
+  | string
+  | { url: string; imageStyle?: CSSProperties };
+
+const OrangeImageView = extend('button')<{
+  images: ImageViewImage[];
+}>((Root, { images }) => {
   const paddingTop = (3 / 5) * 100 + '%';
 
   return (
@@ -14,12 +18,12 @@ const OrangeImageView = extend('button')<{ imageUrls: string[] }>((
       className={twClassNames('group relative rounded-[10px] overflow-hidden')}
     >
       <div className="relative" style={{ paddingTop }}>
-        {imageUrls.length > 1 ? (
+        {images.length > 1 ? (
           <div className="absolute inset-0 grid grid-cols-[1fr_1fr] grid-rows-[1fr_1fr] gap-[7px] p-[7px]">
             {range(0, 4).map((i) => {
               return (
                 <IndividualImageView
-                  src={imageUrls[i] ?? null}
+                  image={images[i] ?? null}
                   key={i}
                   className="relative"
                 />
@@ -29,7 +33,7 @@ const OrangeImageView = extend('button')<{ imageUrls: string[] }>((
         ) : (
           <div className="absolute inset-[7px]">
             <IndividualImageView
-              src={imageUrls[0]}
+              image={images[0]}
               className="absolute inset-0"
             />
           </div>
@@ -45,16 +49,21 @@ const OrangeImageView = extend('button')<{ imageUrls: string[] }>((
   );
 });
 
-const IndividualImageView = extend('div')<{ src: string | null }>((
+const IndividualImageView = extend('div')<{ image: ImageViewImage | null }>((
   Root,
-  { src },
+  { image },
 ) => {
+  const imageUrl =
+    typeof image === 'string' || image == null ? image : image?.url;
+  const imageStyle =
+    image && typeof image === 'object' ? image.imageStyle : undefined;
   return (
     <Root className="relative overflow-hidden rounded-[5px] bg-[#142547]">
-      {src && (
+      {imageUrl && (
         <img
-          className="block absolute left-0 top-0 w-full  grayscale-[70%] transition-[filter] duration-[0.4s] group-hover:grayscale-0"
-          src={src}
+          className="block absolute left-0 top-0 w-full grayscale-[70%] transition-[filter] duration-[0.4s] group-hover:grayscale-0"
+          src={imageUrl}
+          style={imageStyle}
           alt=""
         />
       )}

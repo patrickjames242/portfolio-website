@@ -1,6 +1,5 @@
 import {
   DocumentViewer,
-  DocumentViewerItem,
   DocumentViewerRef,
 } from '@/App/MainScreen/children/ProjectsSection/DocumentViewer/DocumentViewer';
 import SectionHeader from 'helper-views/SectionHeader/SectionHeader';
@@ -8,6 +7,7 @@ import { usePresentationController } from 'helpers/AnimationController';
 import React, { useEffect, useRef } from 'react';
 import { extend } from 'react-extend-components';
 import { ProjectView } from './ProjectView';
+import { ProjectsDocumentViewerCollection } from './ProjectsDocumentViewerCollection';
 import styles from './ProjectsSection.module.scss';
 import { allProjects } from './projectsData';
 
@@ -48,61 +48,9 @@ const ProjectsSection = extend('div')((Root) => {
             alignment={index % 2 === 0 ? 'right' : 'left'}
             key={index}
             onShowImageClicked={() => {
-              documentViewerRef.current?.show({
-                initialItem: {
-                  imageUrl: project.imageUrls[0],
-                  project: project,
-                },
-                getNextItem: (currentItem: DocumentViewerItem) => {
-                  const currentProjectIndex = allProjects.indexOf(
-                    currentItem.project,
-                  );
-                  const currentImageIndex =
-                    currentItem.project.imageUrls.indexOf(currentItem.imageUrl);
-                  if (
-                    currentImageIndex <
-                    currentItem.project.imageUrls.length - 1
-                  ) {
-                    return {
-                      imageUrl:
-                        currentItem.project.imageUrls[currentImageIndex + 1],
-                      project: currentItem.project,
-                    };
-                  } else {
-                    const nextProject = allProjects[currentProjectIndex + 1];
-                    if (nextProject == null) return null;
-                    return {
-                      imageUrl: nextProject.imageUrls[0],
-                      project: nextProject,
-                    };
-                  }
-                },
-                getPreviousItem: (currentItem: DocumentViewerItem) => {
-                  const currentProjectIndex = allProjects.indexOf(
-                    currentItem.project,
-                  );
-                  const currentImageIndex =
-                    currentItem.project.imageUrls.indexOf(currentItem.imageUrl);
-                  if (currentImageIndex > 0) {
-                    return {
-                      imageUrl:
-                        currentItem.project.imageUrls[currentImageIndex - 1],
-                      project: currentItem.project,
-                    };
-                  } else {
-                    const previousProject =
-                      allProjects[currentProjectIndex - 1];
-                    if (previousProject == null) return null;
-                    return {
-                      imageUrl:
-                        previousProject.imageUrls[
-                          previousProject.imageUrls.length - 1
-                        ],
-                      project: previousProject,
-                    };
-                  }
-                },
-              });
+              documentViewerRef.current?.show(
+                new ProjectsDocumentViewerCollection(allProjects, index),
+              );
             }}
           />
         ))}

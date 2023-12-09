@@ -48,11 +48,11 @@ const NavLink = extend('a')<{ routeType: RouteType }>((Root, { routeType }) => {
       }}
     >
       <div className="leading-[1] flex-row flex gap-[0.2em] items-center">
-        <div className="text-[1.6em] opacity-40 translate-y-[0.05em] font-bold">
+        <div className="text-[1.6em] opacity-40 translate-y-[0.05em] font-medium">
           {'< '}
         </div>
         {routeInfo.name}
-        <div className=" text-[1.2em] opacity-40 translate-y-[0.05em] font-bold">
+        <div className=" text-[1.2em] opacity-40 translate-y-[0.05em] font-medium">
           {' />'}
         </div>
       </div>

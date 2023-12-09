@@ -150,7 +150,7 @@ export const ProjectView = extend('div')<{
       </div>
       <OrangeImageView
         className=""
-        imageUrls={project.imageUrls}
+        images={project.imageUrls}
         style={{ gridArea: 'imageView' }}
         onClick={() => {
           onShowImageClicked();

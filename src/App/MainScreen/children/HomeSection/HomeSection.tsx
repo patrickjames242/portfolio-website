@@ -87,7 +87,7 @@ const HomeSection = extend('div')((Root) => {
             ]}
           </SlideUpSentence>
         </h1>
-        <h2 className="text-lighter-text mt-[13px] text-[clamp(45px,_8vw,_70px)] font-semibold leading-[1]">
+        <h2 className="text-lighter-text mt-[13px] text-[clamp(38px,_7vw,_60px)] font-semibold leading-[1]">
           <SlideUpSentence
             ref={subtitleSentenceRef}
             alignment={Alignment.left}

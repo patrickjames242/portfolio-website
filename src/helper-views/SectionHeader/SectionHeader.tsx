@@ -14,7 +14,7 @@ const SectionHeader = extend('h3')<{
       style={{ gridAutoColumns: '1fr' }}
     >
       <div className="leading-[1] font-medium">
-        <span className=" relative top-[0.1em] text-[1.6em] text-accent  font-bold">
+        <span className="relative top-[0.1em] right-[-0.1em] text-[1.4em] text-accent font-bold">
           {'< '}
         </span>
         {titleText}

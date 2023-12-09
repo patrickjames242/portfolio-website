@@ -1,14 +1,20 @@
 import { technologies, Technology } from 'helpers/technologies/technologies';
-import React from 'react';
-import betterLivingApp from './projectImages/better-living-app.png';
+import React, { CSSProperties } from 'react';
+import { DocumentViewerHeaderButton } from './DocumentViewer/DocumentViewerHeader';
+import {
+  DocumentViewerItem,
+  documentViewerItemImage,
+  documentViewerWebsiteDemo,
+} from './DocumentViewer/helpers';
+import betterLivingAppImage from './projectImages/better-living-app.png';
 import betterLivingImage from './projectImages/better-living-site.png';
-import chatCam from './projectImages/chat-cam-image.png';
+import chatCamImage from './projectImages/chat-cam-image.png';
 import screwsWorldImage from './projectImages/screws-world-site.png';
 import swapacropImage from './projectImages/swapacrop.png';
-import teleconnect from './projectImages/teleconnect.jpg';
+import teleconnectImage from './projectImages/teleconnect.jpg';
 
 export interface Project {
-  imageUrls: string[];
+  imageUrls: (string | { url: string; imageStyle?: CSSProperties })[];
   subtitle: string;
   title: string;
   technologies: Technology[];
@@ -17,12 +23,44 @@ export interface Project {
   websiteLink: string;
   appStoreLink?: string;
   playStoreLink?: string;
+  documentViewerItems: DocumentViewerItem[];
+}
+
+function project(
+  project: Omit<Project, 'documentViewerItems'> & {
+    documentViewerItems: {
+      data: DocumentViewerItem.Data;
+      description?: string;
+      title?: string;
+      headerButtons?: DocumentViewerHeaderButton;
+    }[];
+  },
+): Project {
+  return {
+    ...project,
+    documentViewerItems: project.documentViewerItems.map<DocumentViewerItem>(
+      (item) => ({
+        ...item,
+        headerButtons: [],
+        title: project.title,
+      }),
+    ),
+  };
 }
 
 const tech = technologies;
 export const allProjects: Project[] = [
-  {
-    imageUrls: [teleconnect],
+  project({
+    imageUrls: [
+      {
+        url: teleconnectImage,
+        imageStyle: {
+          height: '100%',
+          objectFit: 'contain',
+          backgroundColor: '#63a8f8',
+        },
+      },
+    ],
     title: 'TeleConnect',
     subtitle: 'Web & Mobile Application',
     technologies: [tech.react, tech.reactNative, tech.php, tech.laravel],
@@ -35,8 +73,13 @@ export const allProjects: Project[] = [
       </>
     ),
     websiteLink: 'https://dhconnect.doctorshosp.com',
-  },
-  {
+    documentViewerItems: [
+      {
+        data: documentViewerItemImage(teleconnectImage),
+      },
+    ],
+  }),
+  project({
     imageUrls: [swapacropImage],
     title: 'Swapacrop',
     subtitle: 'Web Application',
@@ -50,8 +93,13 @@ export const allProjects: Project[] = [
       </>
     ),
     websiteLink: 'https://swapacrop.com/',
-  },
-  {
+    documentViewerItems: [
+      {
+        data: documentViewerItemImage(swapacropImage),
+      },
+    ],
+  }),
+  project({
     imageUrls: [betterLivingImage],
     title: 'Better Living Website',
     subtitle: 'Website Landing Page',
@@ -65,9 +113,12 @@ export const allProjects: Project[] = [
     ),
     githubLink: 'https://github.com/patrickjames242/better-living-website',
     websiteLink: 'https://betterlivingnassau.com/',
-  },
-  {
-    imageUrls: [betterLivingApp],
+    documentViewerItems: [
+      { data: documentViewerWebsiteDemo('https://betterlivingnassau.com') },
+    ],
+  }),
+  project({
+    imageUrls: [betterLivingAppImage],
     title: 'Better Living App',
     subtitle: 'Cross Platform App',
     technologies: [
@@ -99,8 +150,11 @@ export const allProjects: Project[] = [
       'https://play.google.com/store/apps/details?id=com.patrickhanna.betterliving',
     appStoreLink:
       'https://apps.apple.com/lr/app/better-living-health-center/id1541047557',
-  },
-  {
+    documentViewerItems: [
+      { data: documentViewerItemImage(betterLivingAppImage) },
+    ],
+  }),
+  project({
     imageUrls: [screwsWorldImage],
     title: 'Screws World Website',
     subtitle: 'Website Landing Page',
@@ -129,9 +183,12 @@ export const allProjects: Project[] = [
     ),
     githubLink: 'https://github.com/patrickjames242/screws-world-website',
     websiteLink: 'https://screwsworldbahamas.com/',
-  },
-  {
-    imageUrls: [chatCam],
+    documentViewerItems: [
+      { data: documentViewerWebsiteDemo('https://screwsworldbahamas.com') },
+    ],
+  }),
+  project({
+    imageUrls: [chatCamImage],
     title: 'ChatCam',
     subtitle: 'Native iOS App',
     technologies: [tech.swift, tech.xcode, tech.firebase],
@@ -142,8 +199,8 @@ export const allProjects: Project[] = [
         their memories or send to other users.
       </>
     ),
-    githubLink: 'https://github.com/patrickjames242/ChatCam',
     websiteLink: 'https://apps.apple.com/us/app/chatcam/id1611648925',
     appStoreLink: 'https://apps.apple.com/us/app/chatcam/id1611648925',
-  },
+    documentViewerItems: [{ data: documentViewerItemImage(chatCamImage) }],
+  }),
 ];

@@ -1,11 +1,20 @@
 import { MainScreenContext } from 'App/MainScreen/helpers';
-import { BubbleTextAnchor } from 'helper-views/BubbleTextButton/BubbleTextButton';
+import { BubbleTextButton } from 'helper-views/BubbleTextButton/BubbleTextButton';
 import { useContext, useLayoutEffect, useRef } from 'react';
 import { extend } from 'react-extend-components';
 import { useNavigate } from 'react-router-dom';
+import {
+  DocumentViewer,
+  DocumentViewerRef,
+} from '../../ProjectsSection/DocumentViewer/DocumentViewer';
 import MenuSVG from '../MenuSVG';
 import NavLink from '../NavLink/NavLink';
-import { RouteType, appRoutes, useRouteTypeForCurrentRoute } from '../helpers';
+import {
+  RouteType,
+  appRoutes,
+  resumeDocumentViewerCollection,
+  useRouteTypeForCurrentRoute,
+} from '../helpers';
 import styles from './NavBarHorizontal.module.scss';
 import BracketsSVG from './brackets-icon';
 
@@ -14,6 +23,8 @@ const NavBarHorizontal = extend('nav')((Root) => {
   const navigate = useNavigate();
   const currentRouteType = useRouteTypeForCurrentRoute();
   const navBarRef = useRef<HTMLDivElement>(null);
+
+  const documentViewerRef = useRef<DocumentViewerRef>(null);
 
   useLayoutEffect(() => {
     const listener = (): void => {
@@ -58,12 +69,14 @@ const NavBarHorizontal = extend('nav')((Root) => {
         {appRoutes.map(({ routeType, name }) => (
           <NavLink key={name} routeType={routeType} />
         ))}
-        <BubbleTextAnchor
+        <BubbleTextButton
           titleText="Résumé"
           className={styles.resumeButton}
-          target="_blank"
-          href="resume.pdf"
-        ></BubbleTextAnchor>
+          onClick={() => {
+            documentViewerRef.current?.show(resumeDocumentViewerCollection());
+          }}
+        />
+        <DocumentViewer ref={documentViewerRef} />
         <button
           className={[styles.menuButton].asClassString()}
           onClick={() =>

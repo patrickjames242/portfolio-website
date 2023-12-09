@@ -15,23 +15,10 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { extend } from 'react-extend-components';
-import { Project } from '../projectsData';
 import { DocumentViewerHeader } from './DocumentViewerHeader';
+import { IframeViewer } from './IframeViewer';
 import { ImageViewer } from './ImageViewer';
-
-export interface DocumentViewerItem {
-  imageUrl: string;
-  description?: string;
-  project: Project;
-}
-
-export interface DocumentViewerCollection {
-  initialItem: DocumentViewerItem;
-  getNextItem?: (currentItem: DocumentViewerItem) => DocumentViewerItem | null;
-  getPreviousItem?: (
-    currentIndex: DocumentViewerItem,
-  ) => DocumentViewerItem | null;
-}
+import { DocumentViewerCollection, DocumentViewerItem } from './helpers';
 
 export interface DocumentViewerRef {
   show: (collection: DocumentViewerCollection) => void;
@@ -104,7 +91,8 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
             {currentItem && (
               <Transition.Child
                 as={DocumentViewerHeader}
-                project={currentItem.project}
+                title={currentItem.title}
+                buttons={currentItem.headerButtons}
                 hide={() => {
                   hide();
                 }}
@@ -137,12 +125,33 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
               >
                 {(() => {
                   if (currentItem == null) return null;
-                  return (
-                    <ImageViewer className="" src={currentItem?.imageUrl} />
-                  );
+                  switch (currentItem?.data.type) {
+                    case 'image':
+                      return (
+                        <ImageViewer
+                          className=""
+                          src={currentItem.data.imageUrl}
+                        />
+                      );
+                    case 'website-demo':
+                      return (
+                        <IframeViewer
+                          className=""
+                          src={currentItem.data.websiteUrl}
+                        />
+                      );
+                    case 'pdf-file':
+                      return (
+                        <IframeViewer
+                          className=""
+                          src={currentItem.data.fileUrl}
+                        />
+                      );
+                    default:
+                      return null;
+                  }
                 })()}
               </Transition.Child>
-
               <ArrowButton
                 type="right"
                 buttonProps={{

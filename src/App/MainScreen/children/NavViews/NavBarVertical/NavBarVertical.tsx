@@ -1,23 +1,19 @@
-import { BubbleTextAnchor } from 'helper-views/BubbleTextButton/BubbleTextButton';
-import React from 'react';
+import { BubbleTextButton } from 'helper-views/BubbleTextButton/BubbleTextButton';
+import { useRef } from 'react';
+import { extend } from 'react-extend-components';
+import {
+  DocumentViewer,
+  DocumentViewerRef,
+} from '../../ProjectsSection/DocumentViewer/DocumentViewer';
 import NavLink from '../NavLink/NavLink';
-import { appRoutes } from '../helpers';
+import { appRoutes, resumeDocumentViewerCollection } from '../helpers';
 import styles from './NavBarVertical.module.scss';
 
-export interface NavBarVerticalProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+const NavBarVertical = extend('div')((Root) => {
+  const documentViewerRef = useRef<DocumentViewerRef>(null);
 
-const NavBarVertical: React.FC<NavBarVerticalProps> = ({
-  ...htmlAttributes
-}: NavBarVerticalProps) => {
   return (
-    <div
-      {...htmlAttributes}
-      className={[
-        styles.NavBarVertical,
-        htmlAttributes.className,
-      ].asClassString()}
-    >
+    <Root className={styles.NavBarVertical}>
       {appRoutes.map(({ routeType, name }) => (
         <NavLink
           key={name}
@@ -25,14 +21,16 @@ const NavBarVertical: React.FC<NavBarVerticalProps> = ({
           style={{ fontSize: 21, fontWeight: 400 }}
         ></NavLink>
       ))}
-      <BubbleTextAnchor
+      <BubbleTextButton
         titleText="Résumé"
         className={styles.resumeButton}
-        target="_blank"
-        href="resume.pdf"
-      ></BubbleTextAnchor>
-    </div>
+        onClick={() => {
+          documentViewerRef.current?.show(resumeDocumentViewerCollection());
+        }}
+      ></BubbleTextButton>
+      <DocumentViewer ref={documentViewerRef} />
+    </Root>
   );
-};
+});
 
 export default NavBarVertical;
