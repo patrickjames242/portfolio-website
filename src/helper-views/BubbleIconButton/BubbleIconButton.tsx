@@ -1,7 +1,6 @@
 import colors from '@/helpers/_colors.module.scss';
-import { CSSProperties } from 'react';
+import { CSSProperties, ComponentType } from 'react';
 import { extend } from 'react-extend-components';
-import { ComponentType } from 'react-spring';
 import BubbleEffect from '../BubbleEffect/BubbleEffect';
 
 export const BubbleIconButton = extend('button')<{
@@ -11,13 +10,18 @@ export const BubbleIconButton = extend('button')<{
   hoverIconColor?: string;
 }>((
   Root,
-  { Icon, bubbleColor = colors.accent, iconColor = 'white', hoverIconColor },
+  {
+    Icon,
+    bubbleColor = colors.accent,
+    iconColor = 'white',
+    hoverIconColor = 'white',
+  },
 ) => {
   return (
     <Root className="s-[50px] relative flex items-center justify-center rounded-full overflow-hidden group ">
-      <BubbleEffect className="absolute s-full" bubbleColor={bubbleColor} />
+      <BubbleEffect className="absolute inset-0" bubbleColor={bubbleColor} />
       <Icon
-        className="relative !s-[30px] pointer-events-none text-[var(--BubbleIconButton-iconColor)] group-hover:text-[var(--BubbleIconButton-hoverIconButton)] !transition-[color] !duration-400"
+        className="relative !s-[30px] pointer-events-none text-[var(--BubbleIconButton-iconColor)] group-hover:text-[var(--BubbleIconButton-hoverIconButton)] !transition-[color,_fill] !duration-400"
         style={
           {
             '--BubbleIconButton-iconColor': iconColor,

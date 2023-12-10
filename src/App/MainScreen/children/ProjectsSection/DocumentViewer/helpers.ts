@@ -25,6 +25,7 @@ export interface DocumentViewerItem {
   description?: string;
   title: string;
   headerButtons?: DocumentViewerHeaderButton[];
+  viewerMaxWidth?: number | string;
 }
 
 export interface DocumentViewerCollection {

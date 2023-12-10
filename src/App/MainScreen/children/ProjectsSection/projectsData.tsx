@@ -1,4 +1,9 @@
-import { technologies, Technology } from 'helpers/technologies/technologies';
+import { includeFnIf } from '@/helpers/general/includeIf';
+import AndroidIconSVG from 'helper-views/svg/AndroidIconSVG';
+import AppleIconSVG from 'helper-views/svg/AppleIconSVG';
+import ExternalLink from 'helper-views/svg/ExternalLinkSVG';
+import GithubSVG from 'helper-views/svg/GithubSVG';
+import { Technology, technologies } from 'helpers/technologies/technologies';
 import React, { CSSProperties } from 'react';
 import { DocumentViewerHeaderButton } from './DocumentViewer/DocumentViewerHeader';
 import {
@@ -41,7 +46,28 @@ function project(
     documentViewerItems: project.documentViewerItems.map<DocumentViewerItem>(
       (item) => ({
         ...item,
-        headerButtons: [],
+        headerButtons: [
+          ...includeFnIf(project.githubLink, (href) => ({
+            title: 'Github Repo',
+            href,
+            Icon: GithubSVG,
+          })),
+          ...includeFnIf(project.appStoreLink, (href) => ({
+            title: 'Apple App Store Page',
+            href,
+            Icon: AppleIconSVG,
+          })),
+          ...includeFnIf(project.playStoreLink, (href) => ({
+            title: 'Play Store Page',
+            href,
+            Icon: AndroidIconSVG,
+          })),
+          ...includeFnIf(project.websiteLink, (href) => ({
+            title: 'Website Link',
+            href,
+            Icon: ExternalLink,
+          })),
+        ],
         title: project.title,
       }),
     ),

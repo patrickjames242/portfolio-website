@@ -1,7 +1,9 @@
+/* eslint-disable max-lines */
 import { BubbleIconButton } from '@/helper-views/BubbleIconButton/BubbleIconButton';
 import colors from '@/helpers/_colors.module.scss';
 import { twClassNames } from '@/helpers/general/twClassNames';
 import { useDisableBodyScroll } from '@/helpers/hooks/useDisableBodyScroll';
+import { useElementSizeWithTransform } from '@/helpers/hooks/useElementSizeWithTransform';
 import { Transition } from '@headlessui/react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -15,6 +17,7 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 import { extend } from 'react-extend-components';
+import { map } from 'rxjs';
 import { DocumentViewerHeader } from './DocumentViewerHeader';
 import { IframeViewer } from './IframeViewer';
 import { ImageViewer } from './ImageViewer';
@@ -35,6 +38,12 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
   const [currentItem, setCurrentItem] = useState<DocumentViewerItem | null>(
     null,
   );
+
+  const [rootSizeRef, shouldShowForwardBackButtonsOnSide] =
+    useElementSizeWithTransform(
+      useCallback((size$) => size$.pipe(map((x) => x.width >= 700)), []),
+      { defaultValue: true, sendInitialSizeImmediately: false },
+    );
 
   const hide = useCallback(() => {
     setIsOpen(false);
@@ -73,8 +82,39 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
     return collection?.getPreviousItem?.(currentItem) ?? null;
   }, [collection, currentItem]);
 
+  const previousButton = collection?.getPreviousItem && (
+    <ArrowButton
+      type="left"
+      buttonProps={{
+        className: twClassNames({
+          'pointer-events-none opacity-30': previousItem == null,
+          'rounded-[15px] !w-full !block': !shouldShowForwardBackButtonsOnSide,
+        }),
+        onClick: () => setCurrentItem(previousItem),
+      }}
+    />
+  );
+
+  const nextButton = collection?.getNextItem && (
+    <ArrowButton
+      type="right"
+      buttonProps={{
+        className: twClassNames({
+          'pointer-events-none opacity-30': nextItem == null,
+          'rounded-[15px] !w-full !block': !shouldShowForwardBackButtonsOnSide,
+        }),
+        onClick: () => setCurrentItem(nextItem),
+      }}
+    />
+  );
+
   return createPortal(
-    <Root className="fixed inset-0 z-[100] " as="div" show={isOpen}>
+    <Root
+      className="fixed inset-0 z-[100] "
+      as="div"
+      show={isOpen}
+      ref={rootSizeRef}
+    >
       <FocusTrap focusTrapOptions={{ initialFocus: false }}>
         <div className="flex flex-col s-full ">
           <Transition.Child
@@ -90,77 +130,83 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
           <div className="pointer-events-none relative flex h-full flex-col">
             {currentItem && (
               <Transition.Child
-                as={DocumentViewerHeader}
-                title={currentItem.title}
-                buttons={currentItem.headerButtons}
-                hide={() => {
-                  hide();
-                }}
-                className="pointer-events-auto transition-[transform_opacity] duration-300 "
+                as="div"
+                className="transition-[transform,_opacity] duration-300 "
                 enterFrom="translate-y-[-50px] opacity-0"
                 enterTo="translate-y-0 opacity-100"
                 leaveFrom="translate-y-0 opacity-100"
                 leaveTo="translate-y-[-50px] opacity-0"
-              />
-            )}
-            <div className="relative flex flex-1 flex-row items-center px-[10px] pb-[10px] sm:px-[20px] sm:pb-[20px] gap-[10px] sm:gap-[20px]">
-              <ArrowButton
-                type="left"
-                buttonProps={{
-                  className: twClassNames({
-                    'pointer-events-none opacity-30': previousItem == null,
-                  }),
-                  onClick: () => setCurrentItem(previousItem),
-                }}
-              />
-
-              <Transition.Child
-                className={twClassNames(
-                  'flex-1 self-stretch transition-[transform_opacity] duration-300',
-                )}
-                enterFrom="scale-75 translate-y-0 opacity-0"
-                enterTo="scale-100 translate-y-0 opacity-100"
-                leaveFrom="scale-100 translate-y-0 opacity-100"
-                leaveTo="scale-75 translate-y-0 opacity-0"
               >
-                {(() => {
-                  if (currentItem == null) return null;
-                  switch (currentItem?.data.type) {
-                    case 'image':
-                      return (
-                        <ImageViewer
-                          className=""
-                          src={currentItem.data.imageUrl}
-                        />
-                      );
-                    case 'website-demo':
-                      return (
-                        <IframeViewer
-                          className=""
-                          src={currentItem.data.websiteUrl}
-                        />
-                      );
-                    case 'pdf-file':
-                      return (
-                        <IframeViewer
-                          className=""
-                          src={currentItem.data.fileUrl}
-                        />
-                      );
-                    default:
-                      return null;
-                  }
-                })()}
+                <DocumentViewerHeader
+                  title={currentItem.title}
+                  buttons={currentItem.headerButtons}
+                  hide={() => {
+                    hide();
+                  }}
+                />
               </Transition.Child>
-              <ArrowButton
-                type="right"
-                buttonProps={{
-                  className: twClassNames({
-                    'pointer-events-none opacity-30': nextItem == null,
-                  }),
-                  onClick: () => setCurrentItem(nextItem),
-                }}
-              />
+            )}
+            <div
+              className={twClassNames(
+                'relative flex flex-1  px-[10px] pb-[10px] sm:px-[20px] sm:pb-[20px] gap-[10px] sm:gap-[20px]',
+                {
+                  'flex-row items-center': shouldShowForwardBackButtonsOnSide,
+                  'flex-col items-stretch': !shouldShowForwardBackButtonsOnSide,
+                },
+              )}
+            >
+              {shouldShowForwardBackButtonsOnSide && previousButton}
+              <div
+                className="flex-1 self-stretch mx-auto w-full"
+                style={{ maxWidth: currentItem?.viewerMaxWidth }}
+              >
+                <Transition.Child
+                  className={twClassNames(
+                    's-full transition-[transform,_opacity] duration-300',
+                  )}
+                  enterFrom="scale-75 translate-y-0 opacity-0"
+                  enterTo="scale-100 translate-y-0 opacity-100"
+                  leaveFrom="scale-100 translate-y-0 opacity-100"
+                  leaveTo="scale-75 translate-y-0 opacity-0"
+                >
+                  {(() => {
+                    if (currentItem == null) return null;
+                    switch (currentItem?.data.type) {
+                      case 'image':
+                        return (
+                          <ImageViewer
+                            className=""
+                            src={currentItem.data.imageUrl}
+                          />
+                        );
+                      case 'website-demo':
+                        return (
+                          <IframeViewer
+                            className=""
+                            src={currentItem.data.websiteUrl}
+                          />
+                        );
+                      case 'pdf-file':
+                        return (
+                          <IframeViewer
+                            className=""
+                            src={currentItem.data.fileUrl}
+                          />
+                        );
+                      default:
+                        return null;
+                    }
+                  })()}
+                </Transition.Child>
+              </div>
+              {shouldShowForwardBackButtonsOnSide && nextButton}
+              {!shouldShowForwardBackButtonsOnSide &&
+                (nextButton || previousButton) && (
+                  <div className="flex flex-row gap-[10px] pb-[env(safe-area-inset-bottom)]">
+                    <div className="flex-1">{previousButton}</div>
+                    <div className="flex-1">{nextButton}</div>
+                  </div>
+                )}
             </div>
           </div>
         </div>

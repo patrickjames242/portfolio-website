@@ -11,6 +11,7 @@ export function resumeDocumentViewerCollection(): DocumentViewerCollection {
     initialItem: {
       title: 'Patrick Hanna Resume',
       data: documentViewerWebsiteDemo('/resume.pdf'),
+      viewerMaxWidth: '900px',
     },
   };
 }
