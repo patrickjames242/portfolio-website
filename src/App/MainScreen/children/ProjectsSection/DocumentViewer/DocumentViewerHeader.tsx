@@ -1,5 +1,7 @@
 import { BubbleIconButton } from '@/helper-views/BubbleIconButton/BubbleIconButton';
+import { downloadFile } from '@/helpers/general/downloadFile';
 import { twClassNames } from '@/helpers/general/twClassNames';
+import { useAsObservable } from '@/helpers/hooks/useAsObservable';
 import { useElementSize$ } from '@/helpers/hooks/useElementSize$';
 import { useObservableValue } from '@/helpers/hooks/useObservableValue';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -17,7 +19,11 @@ import { combineLatest, distinctUntilChanged, map } from 'rxjs';
 export type DocumentViewerHeaderButton = {
   title: string;
   Icon: ComponentType<{ className?: string; style?: CSSProperties }>;
-} & ({ href: string } | { onClick: () => void });
+} & (
+  | { href: string }
+  | { onClick: () => void }
+  | { downloadUrl: string; fileName?: string }
+);
 
 export const DocumentViewerHeader = extend('div')<{
   hide: () => void;
@@ -28,25 +34,35 @@ export const DocumentViewerHeader = extend('div')<{
     sendInitialSizeImmediately: false,
   });
   const rootRef = useRef<HTMLDivElement>(null);
-  const [iconsViewSizeRef, iconsViewSize$] = useElementSize$({
-    sendInitialSizeImmediately: false,
-  });
+
+  const buttons$ = useAsObservable(buttons);
 
   const shouldBeTwoRows$ = useMemo(() => {
     return combineLatest({
       rootSize: rootSize$,
-      iconsViewSize: iconsViewSize$,
+      buttons: buttons$,
     }).pipe(
-      map(({ rootSize, iconsViewSize }) => {
-        return iconsViewSize.width / (rootSize.width - 200) > 0.7;
+      map(({ rootSize, buttons }) => {
+        if (buttons == null) return false;
+
+        const BUTTON_LENGTH = 50;
+        const BUTTON_SPACING = 5;
+
+        const totalButtonBoxLength =
+          buttons.length * BUTTON_LENGTH +
+          (buttons.length - 1) * BUTTON_SPACING;
+
+        return totalButtonBoxLength / (rootSize.width - 200) > 0.7;
       }),
       distinctUntilChanged(),
     );
-  }, [iconsViewSize$, rootSize$]);
+  }, [buttons$, rootSize$]);
 
   const shouldBeTwoRows = useObservableValue(shouldBeTwoRows$, false);
 
   useEffect(() => {
+    // this is a hack to force the root element to re-paint so that the
+    // position of the header on ios is not messed up
     rootRef.current!.style.display = 'none';
     rootRef.current!.offsetHeight;
     rootRef.current!.style.display = '';
@@ -68,16 +84,13 @@ export const DocumentViewerHeader = extend('div')<{
             hide();
           }}
         />
-        <div className="flex-1 text-[23px] font-bold text-white mt-[0.2em]">
+        <div className="flex-1 text-[23px] font-bold text-white mt-[0.2em] leading-[1.2]">
           {title}
         </div>
       </div>
 
       <div className="flex flex-row justify-center">
-        <div
-          ref={iconsViewSizeRef}
-          className={twClassNames('flex flex-row gap-[5px]')}
-        >
+        <div className={twClassNames('flex flex-row gap-[5px]')}>
           {buttons?.map((button, i) => {
             const { Icon, title } = button;
             return (
@@ -89,6 +102,12 @@ export const DocumentViewerHeader = extend('div')<{
                   onClick={() => {
                     if ('href' in button) {
                       window.open(button.href, '_blank');
+                    } else if ('downloadUrl' in button) {
+                      downloadFile(
+                        button.downloadUrl,
+                        button.fileName,
+                        rootRef.current ?? undefined,
+                      );
                     } else {
                       button.onClick();
                     }

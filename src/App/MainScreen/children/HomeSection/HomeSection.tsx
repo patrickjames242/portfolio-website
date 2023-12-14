@@ -93,7 +93,7 @@ const HomeSection = extend('div')((Root) => {
             alignment={Alignment.left}
             slideUpImmediately={false}
           >
-            {"I'm an experienced software developer."}
+            {"I'm an experienced software engineer."}
           </SlideUpSentence>
         </h2>
         <p
@@ -101,7 +101,7 @@ const HomeSection = extend('div')((Root) => {
           className="mt-[20px] text-[20px] text-lighter-text max-w-[500px] leading-[26px] font-light"
         >
           {
-            "I'm a software developer with a focus on front-end and back-end web development, cross platform app development, and native iOS development."
+            "I'm a software engineer with a focus on front-end and back-end web development, cross platform app development, and native iOS development."
           }
         </p>
         <div ref={getInTouchButtonHolderRef} className="mt-[30px]">

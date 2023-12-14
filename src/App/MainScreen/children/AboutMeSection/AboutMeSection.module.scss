@@ -101,28 +101,4 @@ $imageLinedUpWithDescriptionMaxWidth: 1000px;
       }
     }
   }
-
-  > .TechnologiesSection {
-    display: grid;
-    gap: 30px;
-    max-width: 900px;
-
-    > .technologiesGrid {
-      $img-size: 55px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, $img-size);
-      gap: 25px;
-      justify-content: space-around;
-      > a {
-        transition: transform 0.3s;
-        > img {
-          @include setprops(width height, $img-size);
-        }
-
-        &:hover {
-          transform: scale(1.2);
-        }
-      }
-    }
-  }
 }

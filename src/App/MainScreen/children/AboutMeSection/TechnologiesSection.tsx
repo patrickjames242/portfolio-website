@@ -1,75 +1,63 @@
+import Tooltip from '@mui/material/Tooltip';
 import SectionHeader from 'helper-views/SectionHeader/SectionHeader';
 import { PresentationSection } from 'helpers/AnimationController';
 import { technologiesList } from 'helpers/technologies/technologies';
-import React, { useImperativeHandle, useRef } from 'react';
-import styles from './AboutMeSection.module.scss';
+import { useImperativeHandle, useRef } from 'react';
+import { extend } from 'react-extend-components';
 
 export interface TechnologiesSectionRef {
   getPresentationSection(): PresentationSection;
 }
 
-export interface TechnologiesSectionProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
-export const TechnologiesSection = (() => {
-  const TechnologiesSection: React.ForwardRefRenderFunction<
-    TechnologiesSectionRef,
-    TechnologiesSectionProps
-  > = ({ ...htmlAttributes }, forwardedRef) => {
-    const rootRef = useRef<HTMLDivElement>(null);
-    const sectionHeaderRef = useRef<HTMLDivElement>(null);
-    const technologiesGridRef = useRef<HTMLDivElement>(null);
+export const TechnologiesSection = extend('div')<{}, TechnologiesSectionRef>((
+  Root,
+  { ref },
+) => {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const sectionHeaderRef = useRef<HTMLDivElement>(null);
+  const technologiesGridRef = useRef<HTMLDivElement>(null);
 
-    useImperativeHandle(
-      forwardedRef,
-      () => ({
-        getPresentationSection() {
-          return {
-            sectionRoot: rootRef.current!,
-            threshold: 0.05,
-            presentationItems: [
-              { slideUpElement: sectionHeaderRef.current! },
-              { slideUpElement: technologiesGridRef.current! },
-            ],
-          };
-        },
-      }),
-      [],
-    );
+  useImperativeHandle(
+    ref,
+    () => ({
+      getPresentationSection() {
+        return {
+          sectionRoot: rootRef.current!,
+          threshold: 0.05,
+          presentationItems: [
+            { slideUpElement: sectionHeaderRef.current! },
+            { slideUpElement: technologiesGridRef.current! },
+          ],
+        };
+      },
+    }),
+    [],
+  );
 
-    return (
+  return (
+    <Root className="grid gap-[30px] max-w-[900px]" ref={rootRef}>
+      <SectionHeader
+        ref={sectionHeaderRef}
+        titleText="Technologies I'm Experienced With"
+        includeLine={false}
+        className="slide-up-element"
+      />
       <div
-        {...htmlAttributes}
-        className={[
-          styles.TechnologiesSection,
-          htmlAttributes.className,
-        ].asClassString()}
-        ref={rootRef}
+        ref={technologiesGridRef}
+        className="grid grid-cols-[repeat(auto-fill,_55px)] gap-[25px] justify-around"
       >
-        <SectionHeader
-          ref={sectionHeaderRef}
-          titleText="Technologies I've Used"
-          includeLine={false}
-          className="slide-up-element"
-        />
-        <div
-          ref={technologiesGridRef}
-          className={[styles.technologiesGrid].asClassString()}
-        >
-          {technologiesList.map((x) => (
-            <a
-              key={x.name}
-              href={x.url}
-              title={x.name}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img src={x.iconSrc} alt={x.name} />
+        {technologiesList.map((x) => (
+          <Tooltip key={x.name} title={x.name}>
+            <a className="group" href={x.url} target="_blank" rel="noreferrer">
+              <img
+                src={x.iconSrc}
+                alt={x.name}
+                className="s-[55px] object-contain transition-transform duration-[0.3s] group-hover:scale-[1.2]"
+              />
             </a>
-          ))}
-        </div>
+          </Tooltip>
+        ))}
       </div>
-    );
-  };
-
-  return React.forwardRef(TechnologiesSection);
-})();
+    </Root>
+  );
+});

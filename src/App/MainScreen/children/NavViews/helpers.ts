@@ -1,4 +1,6 @@
+import DownloadIcon from '@mui/icons-material/Download';
 import { MainScreenContext } from 'App/MainScreen/helpers';
+import ExternalLink from 'helper-views/svg/ExternalLinkSVG';
 import { useContext } from 'react';
 import { matchPath, useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -12,6 +14,19 @@ export function resumeDocumentViewerCollection(): DocumentViewerCollection {
       title: 'Patrick Hanna Resume',
       data: documentViewerWebsiteDemo('/resume.pdf'),
       viewerMaxWidth: '900px',
+      headerButtons: [
+        {
+          Icon: DownloadIcon,
+          title: 'Download',
+          downloadUrl: '/resume.pdf',
+          fileName: 'Patrick Hanna Resume.pdf',
+        },
+        {
+          Icon: ExternalLink,
+          title: 'Open In New Tab',
+          href: '/resume.pdf',
+        },
+      ],
     },
   };
 }

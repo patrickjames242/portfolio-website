@@ -6,7 +6,9 @@ import git from './technologyIcons/git.svg';
 import heroku from './technologyIcons/heroku.svg';
 import html from './technologyIcons/html.svg';
 import javascript from './technologyIcons/javascript.svg';
+import jest from './technologyIcons/jest.svg';
 import laravel from './technologyIcons/laravel.svg';
+import mysql from './technologyIcons/mysql.svg';
 import nodeJs from './technologyIcons/nodejs.svg';
 import php from './technologyIcons/php.svg';
 import postgres from './technologyIcons/postgresql.svg';
@@ -18,7 +20,9 @@ import rxjs from './technologyIcons/rxjs.svg';
 import sass from './technologyIcons/sass.svg';
 import swift from './technologyIcons/swift.svg';
 import typescript from './technologyIcons/typescript.svg';
+import vite from './technologyIcons/vite.svg';
 import xcode from './technologyIcons/xcode.png';
+
 export interface Technology {
   name: string;
   url: string;
@@ -147,6 +151,21 @@ export const technologies = (() => {
       iconSrc: laravel,
       url: 'https://laravel.com/',
     },
+    jest: {
+      name: 'Jest',
+      iconSrc: jest,
+      url: 'https://jestjs.io/',
+    },
+    vite: {
+      name: 'Vite',
+      iconSrc: vite,
+      url: 'https://vitejs.dev/',
+    },
+    mySQL: {
+      name: 'MySQL',
+      iconSrc: mysql,
+      url: 'https://www.mysql.com/',
+    },
   };
   const technologies: Record<keyof typeof x, Technology> = x;
   return technologies;
@@ -155,24 +174,25 @@ export const technologies = (() => {
 export const technologiesList: Technology[] = (() => {
   const t = technologies;
   return [
-    t.git,
-    t.swift,
-    t.xcode,
-    t.reactNative,
     t.html,
     t.css,
     t.javascript,
     t.typescript,
     t.scss,
     t.react,
+    t.reactNative,
+    t.redux,
     t.angular,
     t.rxjs,
-    t.redux,
     t.nodeJS,
-    t.python,
-    t.django,
-    t.postgres,
+    t.jest,
+    t.php,
+    t.laravel,
+    t.mySQL,
+    t.swift,
+    t.xcode,
+    t.git,
     t.firebase,
-    t.heroku,
+    t.vite,
   ];
 })();

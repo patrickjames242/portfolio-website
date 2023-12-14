@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { includeFnIf } from '@/helpers/general/includeIf';
 import AndroidIconSVG from 'helper-views/svg/AndroidIconSVG';
 import AppleIconSVG from 'helper-views/svg/AppleIconSVG';
@@ -14,6 +15,7 @@ import {
 import betterLivingAppImage from './projectImages/better-living-app.png';
 import betterLivingImage from './projectImages/better-living-site.png';
 import chatCamImage from './projectImages/chat-cam-image.png';
+import reactExtendComponents from './projectImages/react-extend-components.png';
 import screwsWorldImage from './projectImages/screws-world-site.png';
 import swapacropImage from './projectImages/swapacrop.png';
 import teleconnectImage from './projectImages/teleconnect.jpg';
@@ -76,6 +78,26 @@ function project(
 
 const tech = technologies;
 export const allProjects: Project[] = [
+  project({
+    imageUrls: [reactExtendComponents],
+    title: 'React Extend Components',
+    subtitle: 'NPM Package',
+    technologies: [tech.react, tech.typescript, tech.jest],
+    description: (
+      <>
+        {
+          'This is a package I created myself that makes it simple and intuitive to create reusable, customizable components that are based on existing components, while handling prop merging, ref forwarding, and typing (with TypeScript), automatically.'
+        }
+      </>
+    ),
+    websiteLink: 'https://www.npmjs.com/package/react-extend-components',
+    githubLink: 'https://github.com/patrickjames242/react-extend-components',
+    documentViewerItems: [
+      {
+        data: documentViewerItemImage(reactExtendComponents),
+      },
+    ],
+  }),
   project({
     imageUrls: [
       {
