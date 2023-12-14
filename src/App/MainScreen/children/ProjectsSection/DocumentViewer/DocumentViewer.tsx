@@ -12,6 +12,7 @@ import {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useLayoutEffect,
   useMemo,
   useState,
 } from 'react';
@@ -22,6 +23,7 @@ import { DocumentViewerHeader } from './DocumentViewerHeader';
 import { IframeViewer } from './IframeViewer';
 import { ImageViewer } from './ImageViewer';
 import { DocumentViewerCollection, DocumentViewerItem } from './helpers';
+import { useTransitionToNextView } from './useTransitionToNextView';
 
 export interface DocumentViewerRef {
   show: (collection: DocumentViewerCollection) => void;
@@ -64,14 +66,6 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
     [hide],
   );
 
-  useEffect(() => {
-    function listener(e: KeyboardEvent): void {
-      if (e.key === 'Escape') setIsOpen(false);
-    }
-    window.addEventListener('keyup', listener);
-    return () => window.removeEventListener('keyup', listener);
-  }, []);
-
   const nextItem = useMemo(() => {
     if (currentItem == null) return null;
     return collection?.getNextItem?.(currentItem) ?? null;
@@ -81,6 +75,24 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
     if (currentItem == null) return null;
     return collection?.getPreviousItem?.(currentItem) ?? null;
   }, [collection, currentItem]);
+
+  useEffect(() => {
+    function listener(e: KeyboardEvent): void {
+      switch (e.key) {
+        case 'Escape':
+          setIsOpen(false);
+          break;
+        case 'ArrowLeft':
+          if (previousItem) setCurrentItem(previousItem);
+          break;
+        case 'ArrowRight':
+          if (nextItem) setCurrentItem(nextItem);
+          break;
+      }
+    }
+    window.addEventListener('keyup', listener);
+    return () => window.removeEventListener('keyup', listener);
+  }, [nextItem, previousItem]);
 
   const previousButton = collection?.getPreviousItem && (
     <ArrowButton
@@ -107,6 +119,51 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
       }}
     />
   );
+
+  const { transition, content: transitionContent } =
+    useTransitionToNextView<DocumentViewerItem>({
+      initialItem: currentItem,
+      RenderFn: useCallback(({ item, isShown, isFinishedExiting }) => {
+        return (
+          <Transition
+            show={isShown}
+            appear
+            className={twClassNames(
+              'absolute inset-0 transition-[transform,_opacity] duration-300',
+            )}
+            enterFrom="scale-75 translate-y-0 opacity-0"
+            enterTo="scale-100 translate-y-0 opacity-100"
+            leaveFrom="scale-100 translate-y-0 opacity-100"
+            leaveTo="scale-75 translate-y-0 opacity-0"
+            afterLeave={isFinishedExiting}
+          >
+            {(() => {
+              switch (item.data.type) {
+                case 'image':
+                  return <ImageViewer className="" src={item.data.imageUrl} />;
+                case 'website-demo':
+                  return (
+                    <IframeViewer className="" src={item.data.websiteUrl} />
+                  );
+                case 'pdf-file':
+                  return <IframeViewer className="" src={item.data.fileUrl} />;
+                default:
+                  return null;
+              }
+            })()}
+          </Transition>
+        );
+      }, []),
+    });
+
+  useLayoutEffect(() => {
+    if (isOpen) {
+      transition(currentItem);
+    } else {
+      transition(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentItem, isOpen]);
 
   return createPortal(
     <Root
@@ -157,47 +214,10 @@ export const DocumentViewer = extend(Transition<'div'>)<{}, DocumentViewerRef>((
             >
               {shouldShowForwardBackButtonsOnSide && previousButton}
               <div
-                className="flex-1 self-stretch mx-auto w-full"
+                className="relative flex-1 self-stretch mx-auto w-full"
                 style={{ maxWidth: currentItem?.viewerMaxWidth }}
               >
-                <Transition.Child
-                  className={twClassNames(
-                    's-full transition-[transform,_opacity] duration-300',
-                  )}
-                  enterFrom="scale-75 translate-y-0 opacity-0"
-                  enterTo="scale-100 translate-y-0 opacity-100"
-                  leaveFrom="scale-100 translate-y-0 opacity-100"
-                  leaveTo="scale-75 translate-y-0 opacity-0"
-                >
-                  {(() => {
-                    if (currentItem == null) return null;
-                    switch (currentItem?.data.type) {
-                      case 'image':
-                        return (
-                          <ImageViewer
-                            className=""
-                            src={currentItem.data.imageUrl}
-                          />
-                        );
-                      case 'website-demo':
-                        return (
-                          <IframeViewer
-                            className=""
-                            src={currentItem.data.websiteUrl}
-                          />
-                        );
-                      case 'pdf-file':
-                        return (
-                          <IframeViewer
-                            className=""
-                            src={currentItem.data.fileUrl}
-                          />
-                        );
-                      default:
-                        return null;
-                    }
-                  })()}
-                </Transition.Child>
+                {transitionContent}
               </div>
               {shouldShowForwardBackButtonsOnSide && nextButton}
               {!shouldShowForwardBackButtonsOnSide &&
