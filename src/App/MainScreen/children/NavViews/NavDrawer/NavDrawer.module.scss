@@ -1,45 +1,45 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .NavDrawer {
-	position: relative;
+  position: relative;
 
-	> .contentCover {
-		position: absolute;
-		@include setprops(left right top bottom, 0);
-	}
+  > .contentCover {
+    position: absolute;
+    @include setprops(left right top bottom, 0);
+  }
 }
 
 .MenuView {
-	position: fixed;
-	height: 100vh;
-	top: 0;
-	bottom: 0;
-	background-color: colors.$lighter-background;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  bottom: 0;
+  background-color: colors.$lighter-background;
 
-	> .xButton {
-		position: absolute;
-		top: 20px;
-		right: 10px;
-		@include fade-on-hover;
-		> svg {
-			height: 45px;
-			width: 45px;
-			fill: colors.$accent;
-		}
-	}
+  > .xButton {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    @include fade-on-hover;
+    > svg {
+      height: 45px;
+      width: 45px;
+      fill: colors.$accent;
+    }
+  }
 
-	> .content {
-		position: absolute;
-		@include setprops(left right top bottom, 0);
-		display: grid;
-		align-items: center;
-		overflow-y: auto;
+  > .content {
+    position: absolute;
+    @include setprops(left right top bottom, 0);
+    display: grid;
+    align-items: center;
+    overflow-y: auto;
 
-		> .NavBarVertical {
-			position: relative;
-			padding-top: 40px;
-			padding-bottom: 40px;
-		}
-	}
+    > .NavBarVertical {
+      position: relative;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+  }
 }

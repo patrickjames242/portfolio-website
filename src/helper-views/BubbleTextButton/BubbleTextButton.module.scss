@@ -1,51 +1,51 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .BubbleTextButton {
-	$font-weight: 600;
-	$border-radius: 8px;
-	--color: #{colors.$accent};
-	position: relative;
-	display: inline-grid;
-	place-items: center;
-	padding: 1.5em;
-	@include setprops(padding-top padding-bottom, 1em);
-	font-weight: $font-weight;
-	color: var(--color);
-	transition-property: box-shadow;
-	transition-duration: 0.7s;
-	overflow: hidden;
-	border-radius: $border-radius;
-	pointer-events: auto;
-	box-sizing: border-box;
-	box-shadow: colors.$accent 0px 0px 3px 0px;
-	z-index: 1;
-	> .BubbleEffect {
-		@include absolute-pin-all-sides;
-	}
+  $font-weight: 600;
+  $border-radius: 8px;
+  --color: #{colors.$accent};
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  padding: 1.5em;
+  @include setprops(padding-top padding-bottom, 1em);
+  font-weight: $font-weight;
+  color: var(--color);
+  transition-property: box-shadow;
+  transition-duration: 0.7s;
+  overflow: hidden;
+  border-radius: $border-radius;
+  pointer-events: auto;
+  box-sizing: border-box;
+  box-shadow: colors.$accent 0px 0px 3px 0px;
+  z-index: 1;
+  > .BubbleEffect {
+    @include absolute-pin-all-sides;
+  }
 
-	> .border {
-		border: 2px solid colors.$accent;
-		@include absolute-pin-all-sides;
-		border-radius: $border-radius;
-		pointer-events: none;
-	}
+  > .border {
+    border: 2px solid colors.$accent;
+    @include absolute-pin-all-sides;
+    border-radius: $border-radius;
+    pointer-events: none;
+  }
 
-	> .title {
-		transition-property: color;
-		transition-duration: 0.7s;
-		pointer-events: none;
-		position: relative;
-		margin-top: 0.3em;
-	}
+  > .title {
+    transition-property: color;
+    transition-duration: 0.7s;
+    pointer-events: none;
+    position: relative;
+    margin-top: 0.3em;
+  }
 
-	&:hover {
-		font-weight: $font-weight;
-		color: var(--color);
-	}
+  &:hover {
+    font-weight: $font-weight;
+    color: var(--color);
+  }
 
-	&.bubbleActive {
-		--color: #{colors.$main-background};
-		box-shadow: 0 0 1rem colors.$accent;
-	}
+  &.bubbleActive {
+    --color: #{colors.$main-background};
+    box-shadow: 0 0 1rem colors.$accent;
+  }
 }

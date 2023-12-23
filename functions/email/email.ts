@@ -1,50 +1,50 @@
-import bodyParser from "body-parser";
-import cors from "cors";
-import express from "express";
-import mailgun from "mailgun-js";
-import serverless from "serverless-http";
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import express from 'express';
+import mailgun from 'mailgun-js';
+import serverless from 'serverless-http';
 
 const mg = mailgun({
-	apiKey: process.env.MAILGUN_API_KEY,
-	domain: process.env.MAILGUN_DOMAIN,
+  apiKey: process.env.MAILGUN_API_KEY!,
+  domain: process.env.MAILGUN_DOMAIN!,
 });
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.post("/.netlify/functions/email", (request, response) => {
-	const params = (() => {
-		const parsedJson = request.body;
-		if (typeof parsedJson !== "object" || parsedJson == null) return null;
-		let { fullName, email, description } = parsedJson;
-		if (
-			[fullName, email, description].some(
-				(x) => typeof x !== "string" || x.trim().length < 1
-			)
-		)
-			return null;
-		fullName = fullName.trim();
-		email = email.trim();
-		description = description.trim();
-		return { fullName, email, description };
-	})();
+app.post('/.netlify/functions/email', (request, response) => {
+  const params = (() => {
+    const parsedJson = request.body;
+    if (typeof parsedJson !== 'object' || parsedJson == null) return null;
+    let { fullName, email, description } = parsedJson;
+    if (
+      [fullName, email, description].some(
+        (x) => typeof x !== 'string' || x.trim().length < 1,
+      )
+    )
+      return null;
+    fullName = fullName.trim();
+    email = email.trim();
+    description = description.trim();
+    return { fullName, email, description };
+  })();
 
-	if (params == null) {
-		response
-			.json({
-				errorMessage:
-					"non-empty string values for fullName, email, and description must be provided in the json body of this request.",
-			})
-			.status(400);
-		return;
-	}
+  if (params == null) {
+    response
+      .json({
+        errorMessage:
+          'non-empty string values for fullName, email, and description must be provided in the json body of this request.',
+      })
+      .status(400);
+    return;
+  }
 
-	const data = {
-		from: "Patrick's Website <me@samples.mailgun.org>",
-		to: "contact@patrickhanna.dev",
-		subject: `Website Message: ${params.fullName}`,
-		html: `
+  const data = {
+    from: "Patrick's Website <me@samples.mailgun.org>",
+    to: 'contact@patrickhanna.dev',
+    subject: `Website Message: ${params.fullName}`,
+    html: `
 				<html>
 					You just got a new message from your patrickhanna.dev website contact form!!!<br>
 					<br>
@@ -56,19 +56,19 @@ app.post("/.netlify/functions/email", (request, response) => {
 					<pre>"${params.description}"</pre>
 				</html>
 			`,
-	};
+  };
 
-	mg.messages().send(data, function (error, body) {
-		if (error) {
-			response
-				.json({
-					errorMessage: "An error occurred when trying to send the email.",
-				})
-				.status(500);
-		} else {
-			response.end();
-		}
-	});
+  mg.messages().send(data, (error, body) => {
+    if (error) {
+      response
+        .json({
+          errorMessage: 'An error occurred when trying to send the email.',
+        })
+        .status(500);
+    } else {
+      response.end();
+    }
+  });
 });
 
 export const handler = serverless(app);

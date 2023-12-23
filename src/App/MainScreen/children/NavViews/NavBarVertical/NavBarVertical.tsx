@@ -1,38 +1,36 @@
-import { BubbleTextAnchor } from "helper-views/BubbleTextButton/BubbleTextButton";
-import React from "react";
-import { appRoutes } from "../helpers";
-import NavLink from "../NavLink/NavLink";
-import styles from "./NavBarVertical.module.scss";
+import { BubbleTextButton } from 'helper-views/BubbleTextButton/BubbleTextButton';
+import { useRef } from 'react';
+import { extend } from 'react-extend-components';
+import {
+  DocumentViewer,
+  DocumentViewerRef,
+} from '../../ProjectsSection/DocumentViewer/DocumentViewer';
+import NavLink from '../NavLink/NavLink';
+import { appRoutes, resumeDocumentViewerCollection } from '../helpers';
+import styles from './NavBarVertical.module.scss';
 
-export interface NavBarVerticalProps
-	extends React.HTMLAttributes<HTMLDivElement> {}
+const NavBarVertical = extend('div')((Root) => {
+  const documentViewerRef = useRef<DocumentViewerRef>(null);
 
-const NavBarVertical: React.FC<NavBarVerticalProps> = ({
-	...htmlAttributes
-}: NavBarVerticalProps) => {
-	return (
-		<div
-			{...htmlAttributes}
-			className={[
-				styles.NavBarVertical,
-				htmlAttributes.className,
-			].asClassString()}
-		>
-			{appRoutes.map(({ routeType, name }, i) => (
-				<NavLink
-					key={name}
-					routeType={routeType}
-					style={{ fontSize: 21, fontWeight: 400 }}
-				></NavLink>
-			))}
-			<BubbleTextAnchor
-				titleText="Résumé"
-				className={styles.resumeButton}
-				target="_blank"
-				href="resume.pdf"
-			></BubbleTextAnchor>
-		</div>
-	);
-};
+  return (
+    <Root className={styles.NavBarVertical}>
+      {appRoutes.map(({ routeType, name }) => (
+        <NavLink
+          key={name}
+          routeType={routeType}
+          style={{ fontSize: 21, fontWeight: 400 }}
+        ></NavLink>
+      ))}
+      <BubbleTextButton
+        titleText="Résumé"
+        className={styles.resumeButton}
+        onClick={() => {
+          documentViewerRef.current?.show(resumeDocumentViewerCollection());
+        }}
+      ></BubbleTextButton>
+      <DocumentViewer ref={documentViewerRef} />
+    </Root>
+  );
+});
 
 export default NavBarVertical;

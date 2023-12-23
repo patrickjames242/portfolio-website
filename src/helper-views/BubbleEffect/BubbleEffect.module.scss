@@ -1,25 +1,25 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .BubbleEffect {
-	position: relative;
-	overflow: hidden;
+  position: relative;
+  overflow: hidden;
 
-	.bubbleView {
-		--animation-duration: 0.6s;
-		--bubble-radius: 0px;
-		background-color: colors.$accent;
-		border-radius: var(--bubble-radius);
-		height: calc(var(--bubble-radius) * 2);
-		width: calc(var(--bubble-radius) * 2);
-		position: absolute;
-		pointer-events: none;
-		transform: scale(0);
-		transition: transform var(--animation-duration)
-			cubic-bezier(0.165, 0.85, 0.45, 1) 0s;
+  .bubbleView {
+    --animation-duration: 0.6s;
+    --bubble-radius: 0px;
+    background-color: colors.$accent;
+    border-radius: var(--bubble-radius);
+    height: calc(var(--bubble-radius) * 2);
+    width: calc(var(--bubble-radius) * 2);
+    position: absolute;
+    pointer-events: none;
+    transform: scale(0);
+    transition: transform var(--animation-duration)
+      cubic-bezier(0.165, 0.85, 0.45, 1) 0s;
 
-		&.expanded {
-			transform: scale(1);
-		}
-	}
+    &.expanded {
+      transform: scale(1);
+    }
+  }
 }

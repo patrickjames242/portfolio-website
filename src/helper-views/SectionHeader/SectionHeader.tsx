@@ -1,31 +1,32 @@
-import TriangleIconSVG from "helper-views/svg/TriangleSVG";
-import React from "react";
-import styles from "./SectionHeader.module.scss";
+import React from 'react';
+import { extend } from 'react-extend-components';
 
 export interface SectionHeaderProps
-	extends React.HTMLAttributes<HTMLDivElement> {
-	titleText: string;
-	includeLine?: boolean;
-}
+  extends React.HTMLAttributes<HTMLDivElement> {}
 
-const SectionHeader: React.ForwardRefRenderFunction<
-	HTMLHeadingElement,
-	SectionHeaderProps
-> = ({ titleText, includeLine, ...htmlAttributes }, ref) => {
-	return (
-		<h3
-			{...htmlAttributes}
-			className={[
-				styles.SectionHeader,
-				htmlAttributes.className,
-			].asClassString()}
-			ref={ref}
-		>
-			<TriangleIconSVG />
-			<div className={styles.titleText}>{titleText}</div>
-			{(includeLine ?? true) && <div className={styles.line}></div>}
-		</h3>
-	);
-};
+const SectionHeader = extend('h3')<{
+  titleText: string;
+  includeLine?: boolean;
+}>((Root, { titleText, includeLine = true }) => {
+  return (
+    <Root
+      className="flex flex-row items-center gap-[15px] justify-start text-[clamp(28px,_5vw,_37px)]"
+      style={{ gridAutoColumns: '1fr' }}
+    >
+      <div className="leading-[1] font-medium">
+        <span className="relative top-[0.1em] right-[-0.1em] text-[1.4em] text-accent font-bold">
+          {'< '}
+        </span>
+        {titleText}
+        <span className="relative top-[0.05em] text-[1.1em] text-accent font-bold">
+          {' />'}
+        </span>
+      </div>
+      {includeLine && (
+        <div className="h-[1px] bg-[rgb(29,_48,_85)] ml-[15px] flex-1"></div>
+      )}
+    </Root>
+  );
+});
 
-export default React.forwardRef(SectionHeader);
+export default SectionHeader;

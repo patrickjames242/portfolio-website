@@ -1,48 +1,48 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .ContactForm {
-	max-width: 800px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 50px;
-	display: grid;
-	gap: 40px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  display: grid;
+  gap: 40px;
 
-	> .formColumns {
-		$gap: 30px;
-		display: grid;
-		gap: $gap;
-		grid-template-columns: 1fr 1fr;
-		align-items: start;
+  > .formColumns {
+    $gap: 30px;
+    display: grid;
+    gap: $gap;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
 
-		> .col1 {
-			display: grid;
-			gap: $gap;
-		}
-		> .message {
-			height: 100%;
-		}
-	}
+    > .col1 {
+      display: grid;
+      gap: $gap;
+    }
+    > .message {
+      height: 100%;
+    }
+  }
 
-	> .buttonHolder {
-		position: relative;
-		justify-self: center;
-		> .LoadingSpinner {
-			position: absolute;
-			font-size: 4px;
-			@include setprops(left top, 50%);
-			transform: translate(-50%, -50%);
-		}
-	}
+  > .buttonHolder {
+    position: relative;
+    justify-self: center;
+    > .LoadingSpinner {
+      position: absolute;
+      font-size: 4px;
+      @include setprops(left top, 50%);
+      transform: translate(-50%, -50%);
+    }
+  }
 
-	@media (max-width: $project-max-narrow-screen-width) {
-		max-width: 400px;
-		> .formColumns {
-			grid-template-columns: unset;
-			textarea {
-				min-height: 170px;
-			}
-		}
-	}
+  @media (max-width: $project-max-narrow-screen-width) {
+    max-width: 400px;
+    > .formColumns {
+      grid-template-columns: unset;
+      textarea {
+        min-height: 170px;
+      }
+    }
+  }
 }

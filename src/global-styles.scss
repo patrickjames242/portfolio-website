@@ -1,110 +1,132 @@
-@use "helpers/colors.module" as colors;
-@use "helpers/general" as *;
+@use 'helpers/colors.module' as colors;
+@use 'helpers/general' as *;
 
 :root {
-	color: colors.$light-text;
-	font-family: Calibre;
+  color: colors.$light-text;
+  font-family: Calibre;
 
-	--screen-side-insets: 40px;
+  color-scheme: dark;
 
-	@media (max-width: 500px) {
-		--screen-side-insets: 30px;
-	}
+  /// height when the nav bar is expanded to include the logo, the hamburger menu, and the nav links
+  --expanded-nav-bar-height: 100px;
+  /// height when the nav bar is shortened to only include the logo and the hamburger menu
+  --compact-nav-bar-height: 70px;
+
+  /// the global left and right padding of everything on the screen
+  --screen-side-insets: 40px;
+
+  @media (max-width: 500px) {
+    --screen-side-insets: 30px;
+  }
 }
 
 body {
-	overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 * {
-	margin: 0;
-	padding: 0.02px;
-	&::selection {
-		background-color: rgba(192, 84, 33, 0.8);
-		color: colors.$light-text;
-	}
+  margin: 0;
+  padding: 0.02px;
+  &::selection {
+    background-color: rgba(192, 84, 33, 0.8);
+    color: colors.$light-text;
+  }
 }
 
 body {
-	background-color: colors.$main-background;
+  background-color: colors.$main-background;
 }
 
 a,
 a:hover {
-	color: inherit;
-	text-decoration: none;
-	font-weight: inherit;
+  color: inherit;
+  text-decoration: none;
+  font-weight: inherit;
 }
 
 button {
-	background-color: transparent;
-	border: none;
-	color: inherit;
-	font-size: inherit;
-	font-family: inherit;
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
 }
 
 button,
 a {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 button:focus,
 input:focus,
 textarea:focus,
 select:focus {
-	outline: none;
+  outline: none;
 }
 
 select {
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	appearance: none;
-	word-break: break-word;
-	// for microsoft edge on windows
-	word-wrap: break-word;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  word-break: break-word;
+  // for microsoft edge on windows
+  word-wrap: break-word;
 }
 
 textarea,
 input,
 select {
-	border: none;
-	font-family: inherit;
-	background-color: transparent;
-	font-size: inherit;
-	font-weight: inherit;
+  border: none;
+  font-family: inherit;
+  background-color: transparent;
+  font-size: inherit;
+  font-weight: inherit;
 }
 
 textarea,
 input {
-	min-width: 0;
-	-webkit-appearance: none;
+  min-width: 0;
+  -webkit-appearance: none;
 }
 
 .underline-on-hover,
 a.underline-on-hover {
-	position: relative;
-	color: colors.$accent;
-	pointer-events: auto;
-	display: inline-block;
+  position: relative;
+  color: colors.$accent;
+  pointer-events: auto;
+  display: inline-block;
 
-	&::before {
-		content: "";
-		height: 0.16em;
-		width: 100%;
-		position: absolute;
-		bottom: 0em;
-		@include setprops(left right, 0);
-		border-radius: 100000000000px;
-		background-color: colors.$accent;
-		transition-duration: 0.3s;
-		transform: translateY(0.3em);
-		opacity: 0;
-		transition-property: transform, opacity;
-	}
+  &::before {
+    content: '';
+    height: 0.16em;
+    width: 100%;
+    position: absolute;
+    bottom: 0em;
+    @include setprops(left right, 0);
+    border-radius: 100000000000px;
+    background-color: colors.$accent;
+    transition-duration: 0.3s;
+    transform: translateY(0.3em);
+    opacity: 0;
+    transition-property: transform, opacity;
+  }
 
-	&:hover::before {
-		opacity: 1;
-		transform: translateY(0);
-	}
+  &:hover::before {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-on-hover {
+  transition: 0.2s opacity;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.fade-to-accent-on-hover {
+  transition: 0.2s color;
+  &:hover {
+    color: colors.$accent;
+  }
 }

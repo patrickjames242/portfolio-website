@@ -1,65 +1,63 @@
-import { MainScreenContext } from "App/MainScreen/helpers";
-import React, { useContext, useMemo } from "react";
-import TriangleIconSVG from "../../../../../helper-views/svg/TriangleSVG";
+import { twClassNames } from '@/helpers/general/twClassNames';
+import { MainScreenContext } from 'App/MainScreen/helpers';
+import { useContext, useMemo } from 'react';
+import { extend } from 'react-extend-components';
 import {
-	getInfoForRouteType,
-	RouteType,
-	useRouteTypeNavigation,
-} from "../helpers";
-import styles from "./NavLink.module.scss";
+  RouteType,
+  getInfoForRouteType,
+  useRouteTypeNavigation,
+} from '../helpers';
 
-export interface NavLinkProps
-	extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-	routeType: RouteType;
-}
+const NavLink = extend('a')<{ routeType: RouteType }>((Root, { routeType }) => {
+  const navigateToRouteType = useRouteTypeNavigation();
+  const routeInfo = getInfoForRouteType(routeType);
+  const mainScreenContext = useContext(MainScreenContext);
+  const isSelected = useMemo(() => {
+    if (mainScreenContext.screenSectionCurrentlyBeingAnimatedTo != null) {
+      return (
+        mainScreenContext.screenSectionCurrentlyBeingAnimatedTo === routeType
+      );
+    } else {
+      return mainScreenContext.currentlyVisibleScreenSection === routeType;
+    }
+  }, [
+    mainScreenContext.currentlyVisibleScreenSection,
+    mainScreenContext.screenSectionCurrentlyBeingAnimatedTo,
+    routeType,
+  ]);
+  return (
+    <Root
+      className={twClassNames(
+        'text-[19px] text-lighter-text font-medium grid grid-flow-col gap-[0.4em] items-center transition-[color] duration-[0.3s] pointer-events-auto relative',
+        'hover:text-accent hover:font-medium',
+        { 'text-accent font-medium': isSelected },
+      )}
+      href={routeInfo.path}
+      onClick={(event) => {
+        event.preventDefault();
+        mainScreenContext.setMenuDrawerOpened(false);
 
-const NavLink: React.FC<NavLinkProps> = ({
-	routeType,
-	...reactProps
-}: NavLinkProps) => {
-	const navigateToRouteType = useRouteTypeNavigation();
-	const routeInfo = getInfoForRouteType(routeType);
-	const mainScreenContext = useContext(MainScreenContext);
-	const isSelected = useMemo(() => {
-		if (mainScreenContext.screenSectionCurrentlyBeingAnimatedTo != null) {
-			return (
-				mainScreenContext.screenSectionCurrentlyBeingAnimatedTo === routeType
-			);
-		} else {
-			return mainScreenContext.currentlyVisibleScreenSection === routeType;
-		}
-	}, [
-		mainScreenContext.currentlyVisibleScreenSection,
-		mainScreenContext.screenSectionCurrentlyBeingAnimatedTo,
-		routeType,
-	]);
-	return (
-		<a
-			{...reactProps}
-			className={[
-				styles.NavLink,
-				isSelected ? styles.selected : undefined,
-				reactProps.className,
-			].asClassString()}
-			href={routeInfo.path}
-			onClick={(event) => {
-				event.preventDefault();
-				mainScreenContext.setMenuDrawerOpened(false);
-
-				/*
+        /*
 					The disappearance and reappearance of the scroll bar (caused by the showing and 
 					hiding of the menu) messes with our calculation of the scroll position of screen 
 					sections. I'm using set timeout to give the scroll bar a chance to show up before we try scrolling to the appropriate section
 				*/
-				setTimeout(() => {
-					navigateToRouteType(routeType);
-				}, 0);
-			}}
-		>
-			<TriangleIconSVG />
-			<div className={styles.text}>{routeInfo.name}</div>
-		</a>
-	);
-};
+        setTimeout(() => {
+          navigateToRouteType(routeType);
+        }, 0);
+      }}
+    >
+      <div className="leading-[1] flex-row flex gap-[0.2em] items-center">
+        <div className="text-[1.6em] opacity-40 translate-y-[0.05em] font-medium">
+          {'< '}
+        </div>
+        {routeInfo.name}
+        <div className=" text-[1.2em] opacity-40 translate-y-[0.05em] font-medium">
+          {' />'}
+        </div>
+      </div>
+    </Root>
+  );
+});
 
 export default NavLink;

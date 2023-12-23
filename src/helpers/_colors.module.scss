@@ -1,21 +1,21 @@
 $orange-and-blue: (
-	"background": rgb(0, 20, 58),
-	"accent": rgb(227, 99, 39),
-	"light-text": rgb(218, 212, 248),
-	"lighter-text": rgb(145, 140, 173),
+  'background': rgb(0, 20, 58),
+  'accent': rgb(227, 99, 39),
+  'light-text': rgb(218, 212, 248),
+  'lighter-text': rgb(145, 140, 173),
 );
 
 $theme: $orange-and-blue;
 
-$main-background: map-get($theme, "background");
+$main-background: map-get($theme, 'background');
 $lighter-background: rgb(1, 30, 82);
-$accent: map-get($theme, "accent");
-$light-text: map-get($theme, "light-text");
-$lighter-text: map-get($theme, "lighter-text");
+$accent: map-get($theme, 'accent');
+$light-text: map-get($theme, 'light-text');
+$lighter-text: map-get($theme, 'lighter-text');
 
 :export {
-	mainBackground: $main-background;
-	accent: $accent;
-	lightText: $light-text;
-	lighterText: $lighter-text;
+  mainBackground: $main-background;
+  accent: $accent;
+  lightText: $light-text;
+  lighterText: $lighter-text;
 }

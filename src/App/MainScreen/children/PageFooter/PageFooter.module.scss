@@ -1,41 +1,41 @@
-@use "helpers/general" as *;
-@use "helpers/colors.module" as colors;
+@use 'helpers/general' as *;
+@use 'helpers/colors.module' as colors;
 
 .PageFooter {
-	padding-bottom: 25px;
-	position: relative;
-	> .content {
-		position: relative;
-		text-align: center;
-		font-size: 18px;
-		display: grid;
-		justify-items: center;
-		gap: 5px;
-		color: colors.$lighter-text;
+  padding-bottom: 25px;
+  position: relative;
+  > .content {
+    position: relative;
+    text-align: center;
+    font-size: 18px;
+    display: grid;
+    justify-items: center;
+    gap: 5px;
+    color: colors.$lighter-text;
 
-		> .icons {
-			display: grid;
-			grid-auto-flow: column;
-			gap: 15px;
-			align-items: start;
-			margin-bottom: 5px;
+    > .icons {
+      display: grid;
+      grid-auto-flow: column;
+      gap: 15px;
+      align-items: start;
+      margin-bottom: 5px;
 
-			> a {
-				display: block;
-				> svg {
-					display: block;
-					transition-property: fill;
-					transition-duration: 0.3s;
-					@include setprops(height width, 26px);
-					fill: colors.$lighter-text;
-				}
+      > a {
+        display: block;
+        > svg {
+          display: block;
+          transition-property: fill;
+          transition-duration: 0.3s;
+          @include setprops(height width, 26px);
+          fill: colors.$lighter-text;
+        }
 
-				&:hover {
-					> svg {
-						fill: colors.$accent;
-					}
-				}
-			}
-		}
-	}
+        &:hover {
+          > svg {
+            fill: colors.$accent;
+          }
+        }
+      }
+    }
+  }
 }
