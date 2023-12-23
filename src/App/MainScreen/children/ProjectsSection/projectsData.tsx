@@ -15,10 +15,15 @@ import {
 import betterLivingAppImage from './projectImages/better-living-app.png';
 import betterLivingImage from './projectImages/better-living-site.png';
 import chatCamImage from './projectImages/chat-cam-image.png';
+import triblockDashboardRedesign from './projectImages/dashboard-redesign.png';
 import reactExtendComponents from './projectImages/react-extend-components.png';
 import screwsWorldImage from './projectImages/screws-world-site.png';
+import triblockSplashScreenRedesign from './projectImages/splash-screen-redesign.png';
+import triblockSplashScreen from './projectImages/splash-screen.png';
 import swapacropImage from './projectImages/swapacrop.png';
 import teleconnectImage from './projectImages/teleconnect.jpg';
+import triblockGlobalSearch from './projectImages/triblock-global-search.png';
+import triblockPersonDetail from './projectImages/triblock-person-detail.png';
 
 export interface Project {
   imageUrls: (string | { url: string; imageStyle?: CSSProperties })[];
@@ -78,6 +83,54 @@ function project(
 
 const tech = technologies;
 export const allProjects: Project[] = [
+  project({
+    imageUrls: [
+      triblockSplashScreenRedesign,
+      triblockDashboardRedesign,
+      triblockGlobalSearch,
+      triblockPersonDetail,
+      triblockSplashScreen,
+    ],
+    title: 'TriblockHR',
+    subtitle: 'Web App',
+    technologies: [
+      tech.react,
+      tech.typescript,
+      tech.php,
+      tech.laravel,
+      tech.mySQL,
+    ],
+    description: (
+      <>
+        This is{' '}
+        <a className="underline-on-hover" href="https://www.platoalpha.com/">
+          {"Plato Alpha's"}
+        </a>{' '}
+        flagship SAAS product that helps companies manage HR and payroll
+        processes. I lead the way in redesigning significant parts of the UI,
+        and rewriting / refactoring the codebase to make it more maintainable
+        and scalable. I also implemented a number of big features in the app.
+      </>
+    ),
+    websiteLink: 'https://www.triblockhr.com/',
+    documentViewerItems: [
+      {
+        data: documentViewerItemImage(triblockSplashScreenRedesign),
+      },
+      {
+        data: documentViewerItemImage(triblockDashboardRedesign),
+      },
+      {
+        data: documentViewerItemImage(triblockGlobalSearch),
+      },
+      {
+        data: documentViewerItemImage(triblockPersonDetail),
+      },
+      {
+        data: documentViewerItemImage(triblockSplashScreen),
+      },
+    ],
+  }),
   project({
     imageUrls: [reactExtendComponents],
     title: 'React Extend Components',
