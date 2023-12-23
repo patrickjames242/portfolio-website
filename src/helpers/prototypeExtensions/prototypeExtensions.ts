@@ -19,7 +19,7 @@ declare global {
   }
 }
 
-Array.prototype.compactMap = function transform<Result>(
+Array.prototype.compactMap = function _transform<Result>(
   this: Array<any>,
   transform: (initial: any, index: number) => Result | null | undefined,
 ): Result[] {

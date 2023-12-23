@@ -19,27 +19,14 @@ export default defineConfig(() => ({
     },
   },
   build: {
-    manifest: true,
     outDir: './build',
     rollupOptions: {
       input: [
+        './index.html',
         // '/resources/js/app.tsx',
         // '/resources/css/app.scss',
         // '/node_modules/primereact/resources/primereact.min.css',
       ],
-    },
-    commonjsOptions: {
-      defaultIsModuleExports(id) {
-        try {
-          const module = require(id);
-          if (module?.default) {
-            return false;
-          }
-          return 'auto';
-        } catch (error) {
-          return 'auto';
-        }
-      },
     },
   },
   plugins: [
